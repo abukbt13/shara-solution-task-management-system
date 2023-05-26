@@ -6,6 +6,26 @@
         <div class="main d-flex ">
           <div class="tasks w-50">
               <h2>Todays Tasks</h2>
+              <ol class="todays">
+                <li>Take Breakfast</li>
+                <li>Do some cleaning</li>
+                <li>Start Coding</li>
+                <li>Go strolling</li>
+              </ol>
+              <div class="weeklytheme">
+                <h3>Weekly Theme</h3>
+                <ol class="theme">
+                  <li>Do something new everyday</li>
+                  <li>Earth is hard</li>
+                </ol>
+              </div>
+              <div class="yearlytheme">
+                <h3>Theme of the year</h3>
+                <ol class="theme">
+                  <li>To be a whole rounded person</li>
+                  <li>Make one step at a time</li>
+                </ol>
+              </div>
           </div>
           <div class="reviews ">
               <h2 class="text-align-left">Reviews</h2>
@@ -23,5 +43,11 @@
 .main{
   width: 100vw;
   height: 73vh;
+}
+.todays li{
+  background: #ffe5e5;
+  color: darkred;
+  padding: 5px;
+  margin-left: 35px;
 }
 </style>
