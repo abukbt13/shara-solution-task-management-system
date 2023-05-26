@@ -17,8 +17,7 @@
                 <li class="one">Take Breakfast</li>
                 <li>Do some cleaning</li>
                 <li>Start Coding</li>
-                <li>Go strolling</li>
-                <li>learn Vue js</li>
+
               </ol>
               <div class="weeklytheme">
                 <h3>Weekly Theme</h3>
