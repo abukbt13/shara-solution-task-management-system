@@ -16,6 +16,9 @@
               <ol class="todays">
                 <li class="one">Take Breakfast</li>
                 <li>Do some cleaning</li>
+                <li>Do some cleaning</li>
+                <li>Do some cleaning</li>
+                <li>Do some cleaning</li>
                 <li>Start Coding</li>
 
               </ol>
