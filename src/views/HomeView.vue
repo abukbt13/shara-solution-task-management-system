@@ -14,11 +14,19 @@
           <div class="tasks w-50 justify-content-center d-flex flex-column align-items-center">
               <h2>Todays Tasks</h2>
               <ol class="todays">
+<<<<<<< HEAD
                 <li class="one">Take Breakfast</li>
                 <li>Do some cleaning</li>
                 <li>Start Coding</li>
                 <li>Go strolling</li>
                 <li>learn Vue js</li>
+=======
+                <li>Take Breakfast</li>
+                <li>Do some cleaning</li>
+                <li>Start Coding</li>
+                <li>Go strolling</li>
+>>>>>>> 192d54e833505cfec8df1488f2bc7eecf3096842
+
               </ol>
               <div class="weeklytheme">
                 <h3>Weekly Theme</h3>
@@ -66,6 +74,7 @@
 
 </script>
 <style>
+<<<<<<< HEAD
 nav{
   display: flex;
   align-items: center;
@@ -74,15 +83,23 @@ nav{
 .container{
   border: 3px solid black;
   border-style: dashed;
+=======
+.container{
+  background-color: #eafae3;
+>>>>>>> 192d54e833505cfec8df1488f2bc7eecf3096842
 }
 .main{
   width: 100vw;
   height: 73vh;
 }
+<<<<<<< HEAD
 .todays li{
   background: #ffe5e5;
   color: darkred;
   padding: 5px;
   margin-left: 35px;
 }
+=======
+
+>>>>>>> 192d54e833505cfec8df1488f2bc7eecf3096842
 </style>
