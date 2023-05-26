@@ -40,14 +40,12 @@
 
 </script>
 <style>
+.container{
+  background-color: #eafae3;
+}
 .main{
   width: 100vw;
   height: 73vh;
 }
-.todays li{
-  background: #ffe5e5;
-  color: darkred;
-  padding: 5px;
-  margin-left: 35px;
-}
+
 </style>
