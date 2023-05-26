@@ -11,9 +11,29 @@
         <h2 class="text-center text-decoration-underline">My todays planning 26/05/2023</h2>
         <p class="text-center text-decoration-underline">Good morning Benard</p>
         <div class="main d-flex ">
-          <div class="tasks w-50">
-            <p>hello teee</p>
+          <div class="tasks w-50 justify-content-center d-flex flex-column align-items-center">
               <h2>Todays Tasks</h2>
+              <ol class="todays">
+                <li class="one">Take Breakfast</li>
+                <li>Do some cleaning</li>
+                <li>Start Coding</li>
+                <li>Go strolling</li>
+                <li>learn Vue js</li>
+              </ol>
+              <div class="weeklytheme">
+                <h3>Weekly Theme</h3>
+                <ol class="theme">
+                  <li>Do something new everyday</li>
+                  <li>Earth is hard</li>
+                </ol>
+              </div>
+              <div class="yearlytheme">
+                <h3>Theme of the year</h3>
+                <ol class="theme">
+                  <li>To be a whole rounded person</li>
+                  <li>Make one step at a time</li>
+                </ol>
+              </div>
           </div>
           <div class="reviews">
             <div class="get-review">
@@ -58,5 +78,11 @@ nav{
 .main{
   width: 100vw;
   height: 73vh;
+}
+.todays li{
+  background: #ffe5e5;
+  color: darkred;
+  padding: 5px;
+  margin-left: 35px;
 }
 </style>
