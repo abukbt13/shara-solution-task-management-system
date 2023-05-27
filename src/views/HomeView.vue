@@ -1,9 +1,8 @@
 <template>
   <nav>
-    <a href="" class="btn btn-secondary">About</a>
+    <a href="" class="btn btn-secondary">Home</a>
     <a href="" class="btn btn-secondary mx-2">About</a>
-
-    <a href="" class="btn btn-secondary">About</a>
+    <a href="" class="btn btn-secondary">Logout</a>
 
   </nav>
   <div class="container">
@@ -12,22 +11,85 @@
         <p class="text-center text-decoration-underline">Good morning Benard</p>
         <div class="main d-flex ">
           <div class="tasks w-50 justify-content-center d-flex flex-column align-items-center">
-              <h2>Todays Tasks</h2>
-              <ol class="todays">
-                <li class="one">Take Breakfast</li>
-                <li>Do some cleaning</li>
-                <li>Do some cleaning</li>
-                <li>Do some cleaning</li>
-                <li>Do some cleaning</li>
-                <li>Start Coding</li>
-
-              </ol>
+              <h3>Todays Tasks</h3>
+            <div class="card-body">
+              <div class="d-flex flex-row align-items-center">
+                    <input type="text" class="form-control form-control-md" id="exampleFormControlInput1"
+                      placeholder="Add new task...">
+                    <div>
+                      <button type="button" class="btn btn-primary">Add</button>
+                    </div>
+                  </div>
+              <table class="table mb-8">
+              <thead>
+                <tr>
+                  <th scope="col">No.</th>
+                  <th scope="col">Todo item</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Prepare breakfast</td>
+                  <td>In progress</td>
+                  <td>
+                    <a href="/" data-mdb-toggle="edit" title="Edit">
+                      <i class="fas fa-pencil-alt" @click="editItem" style="font-size: 20px; "></i>
+                    </a>
+                      &nbsp;
+                    <a href="/" data-mdb-toggle="delete" title="Delete">
+                      <i class="fas fa-trash-alt" @click="deleteItem" style="font-size: 20px; "></i>
+                    </a> 
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>Watch news</td>
+                  <td>In progress</td>
+                  <td>
+                    <a href="/" data-mdb-toggle="edit" title="Edit">
+                      <i class="fas fa-pencil-alt" @click="editItem" style="font-size: 20px; "></i>
+                    </a>
+                      &nbsp;
+                    <a href="/" data-mdb-toggle="delete" title="Delete">
+                      <i class="fas fa-trash-alt" @click="deleteItem" style="font-size: 20px; "></i>
+                    </a> 
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>
+                  <td>Take online course</td>
+                  <td>In progress</td>
+                  <td>
+                    <a href="/" data-mdb-toggle="edit" title="Edit">
+                      <i class="fas fa-pencil-alt" @click="editItem" style="font-size: 20px; "></i>
+                    </a>
+                      &nbsp;
+                    <a href="/" data-mdb-toggle="delete" title="Delete">
+                      <i class="fas fa-trash-alt" @click="deleteItem" style="font-size: 20px; "></i>
+                    </a> 
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            </div>
               <div class="weeklytheme">
-                <h3>Weekly Theme</h3>
-                <ol class="theme">
-                  <li>Do something new everyday</li>
-                  <li>Earth is hard</li>
-                </ol>
+                <h3 style="text-align: center;">Weekly Theme</h3>
+                <figure class="text-center mb-0">
+                  <blockquote class="blockquote">
+                    <p class="pb-3">
+                      <i class="fas fa-quote-left fa-xs text-primary"></i>
+                      <span class="lead font-italic">Many of life's failures are people who did not realize how
+                    close they were to success when they gave up.</span>
+                  <i class="fas fa-quote-right fa-xs text-primary"></i>
+                </p>
+              </blockquote>
+              <figcaption class="blockquote-footer mb-0">
+                Thomas Edison
+              </figcaption>
+            </figure>
               </div>
               <div class="yearlytheme">
                 <h3>Theme of the year</h3>
@@ -76,7 +138,7 @@ nav{
 .container{
   border: 3px solid black;
   border-style: dashed;
-  background-color: yellow;
+  background-color: #eafae3;
 }
 .main{
   width: 100vw;
@@ -87,5 +149,9 @@ nav{
   color: darkred;
   padding: 5px;
   margin-left: 35px;
+}
+.weeklytheme{
+  width: 30vw;
+  height: 73vh;
 }
 </style>
