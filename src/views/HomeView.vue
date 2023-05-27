@@ -15,11 +15,15 @@
               <h2>Todays Tasks</h2>
               <ol class="todays">
                 <li class="one">Take Breakfast</li>
-                <li>Do some cleaning</li>
-                <li>Do some cleaning</li>
-                <li>Do some cleaning</li>
-                <li>Do some cleaning</li>
-                <li>Start Coding</li>
+                <li>Do some cleaning<button class="btn btn-success">Edit</button><button class="btn btn-danger">Delete</button></li>
+                <li>Do some cleaning<button class="btn btn-success">Edit</button><button class="btn btn-danger">Delete</button></li>
+                
+                <li>Do some cleaning<button class="btn btn-success">Edit</button><button class="btn btn-danger">Delete</button></li>
+                
+                <li>Do some cleaning<button class="btn btn-success">Edit</button><button class="btn btn-danger">Delete</button></li>
+                
+                <li>Start Coding<button class="btn btn-success">Edit</button><button class="btn btn-danger">Delete</button></li>
+                
 
               </ol>
               <div class="weeklytheme">
@@ -61,13 +65,37 @@
         </div>
 </div>
 
+  <div class="add-todo" v-show="addtodo">
+    <div class="content">
+      <h2 class="text-center">Enter todo</h2>
+      <textarea name="todo" id="" cols="30" rows="3" class="form-control" placeholder="Enter the to do here ....."></textarea>
+      <br>
+      <button class="btn btn-primary">Add to do</button>
+    </div>
+
+  </div>
 </template>
 
-<script>
+<script setup>
 // @ is an alias to /src
+import {ref} from "vue";
+
+const addtodo=ref(false)
 
 </script>
 <style>
+.add-todo{
+  position: absolute;
+  top: 16rem;
+  left: 29rem;
+  width: 25rem;
+  background: dimgrey;
+  display: flex;
+  justify-content: center;
+  //align-items: center;
+  //height: 100vh;
+padding-bottom: 3rem;
+}
 nav{
   display: flex;
   align-items: center;
