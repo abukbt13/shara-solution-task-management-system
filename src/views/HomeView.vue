@@ -1,7 +1,7 @@
 <template>
 
   <div class="container mt-1">
-    <span class="date text-decoration-underline">Today 27/05/2023</span>
+    <span class="date text-decoration-underline">Today 22/05/2023</span>
     
         <h2 class="text-center text-decoration-underline text-primary">My daily planning 26/05/2023</h2>
         <p style="color: #4A76A1;" class="text-center text-decoration-underline">Good morning Benard</p>
@@ -16,90 +16,42 @@
             <div class="card-body">
 
               <table class="table  mb-8">
-              <thead>
+                <thead>
                 <tr>
-                  <th scope="col">No.</th>
-                  <th scope="col">Todo item</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Actions</th>
+                  <th>ID</th>
+                  <th>Todo</th>
+                  <th>Status</th>
+                  <th>Actions</th>
                 </tr>
-              </thead>
-              <tbody>
-
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Prepare breakfastPreparere breakfastPreparere breakfastPreparere breakfastPreparere breakfastPrepare  breakfast</td>
-                  <td>progress</td>
+                </thead>
+                <tbody>
+                <tr v-for="item in todos" :key="item">
                   <td>
-                    <a href="/" data-mdb-toggle="edit" title="Edit">
-                      <i class="fas fa-pencil-alt" @click="editItem" style="font-size: 20px; "></i>
-                    </a>
-                      &nbsp;
-                    <a href="/" data-mdb-toggle="delete" title="Delete">
-                      <i class="fas fa-trash-alt" @click="deleteItem" style="font-size: 20px; "></i>
-                    </a>
+                    {{item.id }}
                   </td>
-                </tr>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Prepare breakfastPreparere breakfastPreparere breakfastPreparere breakfastPreparere breakfastPrepare  breakfast</td>
-                  <td>progress</td>
                   <td>
-                    <a href="/" data-mdb-toggle="edit" title="Edit">
-                      <i class="fas fa-pencil-alt" @click="editItem" style="font-size: 20px; "></i>
-                    </a>
-                      &nbsp;
-                    <a href="/" data-mdb-toggle="delete" title="Delete">
-                      <i class="fas fa-trash-alt" @click="deleteItem" style="font-size: 20px; "></i>
-                    </a>
+                    {{item.todo }}
                   </td>
-                </tr>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Prepare breakfastPreparere breakfastPreparere breakfastPreparere breakfastPreparere breakfastPrepare  breakfast</td>
-                  <td>progress</td>
                   <td>
-                    <a href="/" data-mdb-toggle="edit" title="Edit">
-                      <i class="fas fa-pencil-alt" @click="editItem" style="font-size: 20px; "></i>
-                    </a>
-                      &nbsp;
-                    <a href="/" data-mdb-toggle="delete" title="Delete">
-                      <i class="fas fa-trash-alt" @click="deleteItem" style="font-size: 20px; "></i>
-                    </a>
+                    {{item.status }}
+                  </td>
+                  <td>
+                  <a href="/" data-mdb-toggle="edit" title="Edit">
+                    <i class="fas fa-pencil-alt" @click="editItem" style="font-size: 20px; "></i>
+                  </a>
+                  &nbsp;
+                  <a href="/" data-mdb-toggle="delete" title="Delete">
+                    <i class="fas fa-trash-alt" @click="deleteItem" style="font-size: 20px; "></i>
+                  </a>
                   </td>
                 </tr>
 
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Prepare breakfastPrepare  breakfast</td>
-                  <td>progress</td>
-                  <td>
-                    <a href="/" data-mdb-toggle="edit" title="Edit">
-                      <i class="fas fa-pencil-alt" @click="editItem" style="font-size: 20px; "></i>
-                    </a>
-                    &nbsp;
-                    <a href="/" data-mdb-toggle="delete" title="Delete">
-                      <i class="fas fa-trash-alt" @click="deleteItem" style="font-size: 20px; "></i>
-                    </a>
-                  </td></tr>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Prepare breakfastPrepare  breakfast</td>
-                  <td>progress</td>
-                  <td>
-                    <a href="/" data-mdb-toggle="edit" title="Edit">
-                      <i class="fas fa-pencil-alt" @click="editItem" style="font-size: 20px; "></i>
-                    </a>
-                    &nbsp;
-                    <a href="/" data-mdb-toggle="delete" title="Delete">
-                      <i class="fas fa-trash-alt" @click="deleteItem" style="font-size: 20px; "></i>
-                    </a>
-                  </td></tr>
               </tbody>
             </table>
 
             </div>
         </div>
+
 
 
               <div class="weeklytheme">
@@ -141,8 +93,13 @@
               <textarea name="review" class="form-control" id="review" cols="30" rows="3" placeholder="describe your experience or say something concerning this "></textarea>
              <button class="mt-3 w-50 btn btn-sm btn-secondary">add review</button>
             </div>
+<!--            <div style="justify-content:center;align-items:center;display:flex;width: 8rem;height: 8rem;border-radius: 50%; border:12px solid blue;" class="rectangle">-->
+<!--              <div class="square">-->
+<!--                <p style="transition: ease-in-out; transition-property: background-position;tran">love wins</p>-->
+<!--              </div>-->
+<!--            </div>-->
           </div>
-          
+
         </div>
 </div>
 
@@ -158,16 +115,25 @@
 
       </form>
        </div>
-
   </div>
 </template>
 
 <script setup>
 // @ is an alias to /src
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import axios from "axios";
-
+import router from "@/router";
+import {useRouter} from "vue-router";
+const showdate=ref('')
 const addtodo=ref(false)
+const r= useRouter()
+
+const token=localStorage.getItem('token');
+if(!token){
+  r.push('/login')
+}
+// alert(token)
+
 function showAddbtn(){
   addtodo.value=true
 }
@@ -178,25 +144,44 @@ const k=ref('')
 const todo=ref('')
 
 const submit=async ()=> {
+  console.log(todo)
   const formData = new FormData();
 
   formData.append('todo', todo.value);
+  const headers = {
+    'Authorization': `Bearer ${token}`,
+  };
 
-  const res = await axios.post('http://localhost:3000/todos/new', todo.value)
-  if (res.status == 200) {
-  alert('nice')
+  const res = await axios.post('http://127.0.0.1:8000/api/tasks', formData, {
+    headers: headers
+  });
+  if(res.status==200){
+  window.location.reload();
   }
-  else{
-    alert('No url found')
-  }
+
+
 }
+
+const todos=ref([])
+const getTodos=async () =>{
+  const res = await axios.get('http://127.0.0.1:8000/api/tasks')
+  // console.log(res)
+  if(res.status===200){
+    todos.value=  res.data
+  }
+
+}
+onMounted(()=>{
+  getTodos()
+})
 </script>
 <style>
 .date{
   position: absolute;
   font-size: 23px;
   top: 1rem;
-  background: #2E2AB9;
+  background: #
+  2E2AB9;
   color: white;
   right: 6rem;
   text-outline: 2rem;
@@ -240,7 +225,5 @@ nav{
   padding: 5px;
   margin-left: 35px;
 }
-.weeklytheme{
 
-}
 </style>
