@@ -21,7 +21,7 @@
                   <th>ID</th>
                   <th>Todo</th>
                   <th>Status</th>
-                  <th>Status</th>
+                  <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -30,10 +30,19 @@
                     {{item.id }}
                   </td>
                   <td>
-                  ghhh
+                    {{item.todo }}
                   </td>
                   <td>
-                    ghhh
+                    {{item.status }}
+                  </td>
+                  <td>
+                  <a href="/" data-mdb-toggle="edit" title="Edit">
+                    <i class="fas fa-pencil-alt" @click="editItem" style="font-size: 20px; "></i>
+                  </a>
+                  &nbsp;
+                  <a href="/" data-mdb-toggle="delete" title="Delete">
+                    <i class="fas fa-trash-alt" @click="deleteItem" style="font-size: 20px; "></i>
+                  </a>
                   </td>
                 </tr>
 
@@ -42,17 +51,8 @@
 
             </div>
         </div>
-<!--            <a href="/" data-mdb-toggle="edit" title="Edit">-->
-<!--              <i class="fas fa-pencil-alt" @click="editItem" style="font-size: 20px; "></i>-->
-<!--            </a>-->
-<!--            &nbsp;-->
-<!--            <a href="/" data-mdb-toggle="delete" title="Delete">-->
-<!--              <i class="fas fa-trash-alt" @click="deleteItem" style="font-size: 20px; "></i>-->
-<!--            </a>-->
-<ul v-for="tutu in todos" :key="tutu.id">
-  <li>tutu.id['0']</li>
-</ul>
-{{todos}}
+
+
 
               <div class="weeklytheme">
                 <h5 style="text-align: center;">Weekly Goals</h5>
@@ -167,9 +167,7 @@ const getTodos=async () =>{
   const res = await axios.get('http://127.0.0.1:8000/api/tasks')
   // console.log(res)
   if(res.status===200){
-    alert
-    todos.value=res.data
-    console.log(res.data)
+    todos.value=  res.data
   }
 
 }
