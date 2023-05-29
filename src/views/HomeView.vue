@@ -150,7 +150,6 @@
     <div class="content">
 
       <i @click="close" class="close fas fa-close"></i>
-      {{k}}
       <form @submit.prevent="submit">
         <h2 class="mt-4 mb-2 text-center">Enter todo</h2>
         <textarea name="todo" v-model="todo" id="" cols="30" rows="3" class="form-control" placeholder="Enter the to do here ....."></textarea>
