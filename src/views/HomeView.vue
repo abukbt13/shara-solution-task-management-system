@@ -1,7 +1,7 @@
 <template>
 
   <div class="container mt-1">
-    <span class="date text-decoration-underline">Today 27/05/2023</span>
+    <span class="date text-decoration-underline">Today 22/05/2023</span>
     
         <h2 class="text-center text-decoration-underline text-primary">My daily planning 26/05/2023</h2>
         <p style="color: #4A76A1;" class="text-center text-decoration-underline">Good morning Benard</p>
@@ -141,8 +141,13 @@
               <textarea name="review" class="form-control" id="review" cols="30" rows="3" placeholder="describe your experience or say something concerning this "></textarea>
              <button class="mt-3 w-50 btn btn-sm btn-secondary">add review</button>
             </div>
+<!--            <div style="justify-content:center;align-items:center;display:flex;width: 8rem;height: 8rem;border-radius: 50%; border:12px solid blue;" class="rectangle">-->
+<!--              <div class="square">-->
+<!--                <p style="transition: ease-in-out; transition-property: background-position;tran">love wins</p>-->
+<!--              </div>-->
+<!--            </div>-->
           </div>
-          
+
         </div>
 </div>
 
@@ -159,7 +164,6 @@
 
       </form>
        </div>
-
   </div>
 </template>
 
@@ -167,7 +171,7 @@
 // @ is an alias to /src
 import {ref} from "vue";
 import axios from "axios";
-
+const showdate=ref('')
 const addtodo=ref(false)
 function showAddbtn(){
   addtodo.value=true
@@ -197,7 +201,8 @@ const submit=async ()=> {
   position: absolute;
   font-size: 23px;
   top: 1rem;
-  background: #2E2AB9;
+  background: #
+  2E2AB9;
   color: white;
   right: 6rem;
   text-outline: 2rem;
