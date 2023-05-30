@@ -242,8 +242,7 @@ onMounted(()=>{
   background: dimgrey;
   display: flex;
   justify-content: center;
-  //align-items: center;
-  //height: 100vh;
+
 padding-bottom: 2rem;
 }
 .close{
