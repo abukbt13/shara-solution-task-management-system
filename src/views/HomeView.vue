@@ -25,7 +25,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="item in todos" :key="item">
+                <tr v-for="item in tasks" :key="item">
                   <td>
                     {{item.id }}
                   </td>
@@ -36,13 +36,10 @@
                     {{item.status }}
                   </td>
                   <td>
-                  <a href="/" data-mdb-toggle="edit" title="Edit">
-                    <i class="fas fa-pencil-alt" @click="editItem" style="font-size: 20px; "></i>
-                  </a>
+                    <i class="fas  fa-pencil-alt" @click="editTask(item.id)" style="font-size: 25px; color: blue;"></i>
+
                   &nbsp;
-                  <a href="/" data-mdb-toggle="delete" title="Delete">
-                    <i class="fas fa-trash-alt" @click="deleteItem" style="font-size: 20px; "></i>
-                  </a>
+                    <i class="fas fa-trash-alt" @click="deleteItem(item.id)" style="color:red; font-size: 20px; "></i>
                   </td>
                 </tr>
 
@@ -122,15 +119,15 @@
 // @ is an alias to /src
 import {onMounted, ref} from "vue";
 import axios from "axios";
-import router from "@/router";
-import {useRouter} from "vue-router";
-const showdate=ref('')
-const addtodo=ref(false)
-const r= useRouter()
 
+import {useRouter} from "vue-router";
+import {filter} from "core-js/internals/array-iteration";
+const addtodo=ref(false)
+const router= useRouter()
+const jobs=ref('')
 const token=localStorage.getItem('token');
 if(!token){
-  r.push('/login')
+  // router.push('/login')
 }
 // alert(token)
 
@@ -140,17 +137,15 @@ function showAddbtn(){
 function close(){
       addtodo.value=false
 }
-const k=ref('')
 const todo=ref('')
-
+const headers = {
+  'Authorization': `Bearer ${token}`,
+};
 const submit=async ()=> {
   console.log(todo)
   const formData = new FormData();
-
   formData.append('todo', todo.value);
-  const headers = {
-    'Authorization': `Bearer ${token}`,
-  };
+
 
   const res = await axios.post('http://127.0.0.1:8000/api/tasks', formData, {
     headers: headers
@@ -158,19 +153,67 @@ const submit=async ()=> {
   if(res.status==200){
   window.location.reload();
   }
-
-
 }
+const authUser = async () => {
+  try {
+    const response = await axios.get('http://127.0.0.1:8000/api/user', {
+      headers: headers
+    });
+  } catch (error) {
+    if (error.response.status === 401) {
+      router.push('/login');
+    }
+  }
+};
+authUser()
+const tasks=ref([])
 
-const todos=ref([])
 const getTodos=async () =>{
-  const res = await axios.get('http://127.0.0.1:8000/api/tasks')
-  // console.log(res)
+
+  const res = await axios.get('http://127.0.0.1:8000/api/show-tasks', {
+    headers
+  });
+  console.log(res)
   if(res.status===200){
-    todos.value=  res.data
+    tasks.value=  res.data
+
   }
 
 }
+const deleteItem=async (id)=>{
+  // alert(id)
+  const response = await axios.delete(`http://127.0.0.1:8000/api/tasks/${id}`);
+  if(res.status===200){
+    console.log(res.data)
+    alert()
+  }
+}
+// const job=tasks
+function editTask(id) {
+ const kazi= [
+    {
+      "id": 17,
+      "user_id": 15,
+      "todo": "hhdhdhdh"
+    },
+    {
+      "id": 18,
+      "user_id": 15,
+      "todo": "Do a MERN study before the day ends to understand the basics of mongo db and react js with node js",
+    }
+  ]
+  addtodo.value = true;
+  if (Array.isArray(tasks)) {
+    const tasktoedit = tasks.filter(tasks => tasks.id === id);
+    console.log(tasktoedit);
+  } else {
+    console.log('job is not an array');
+  }
+  // const tasktoedit = tasks.filter(tasks => tasks.id === id);
+  // console.log(tasktoedit);
+}
+
+
 onMounted(()=>{
   getTodos()
 })

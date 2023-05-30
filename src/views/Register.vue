@@ -50,13 +50,14 @@ const submit = async  () =>{
   formData.append('c_password',c_password.value)
 
   const res= await axios.post('http://127.0.0.1:8000/api/register',formData)
-      .then(res => {
-          localStorage.setItem('token',res.data.token)
-        router.push('/')
-      })
-      .catch(err =>{
-        console.log(err)
-      })
+  if(res.status==200){
+    if (!res.data.status === 'success') {
+      alert('invalid details')
+    }else {
+      localStorage.setItem('token', res.data.token)
+      router.push('/')
+    }
+  }
 
 }
 

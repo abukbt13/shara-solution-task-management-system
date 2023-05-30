@@ -27,7 +27,7 @@
 
             <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
             <div>
-                <p class="mb-0">Don't have an account? <a href="#!" >Sign Up</a>
+                <p class="mb-0">Don't have an account? <a href="/register" >Sign Up</a>
               </p>
 
             </div>
