@@ -1,10 +1,9 @@
 <template>
 
   <div class="container mt-1">
-    <span class="date text-decoration-underline">Today 22/05/2023</span>
-    
-        <h2 class="text-center text-decoration-underline text-primary">My daily planning 26/05/2023</h2>
-        <p style="color: #4A76A1;" class="text-center text-decoration-underline">Good morning Benard</p>
+    <!-- <span class="date text-decoration-underline">{{ currentDate }}</span> -->
+   <h2 class="text-center text-decoration-underline text-primary">My daily planning {{ currentDate }}</h2>
+        <p style="color: #4A76A1;" class="text-center text-decoration-underline">Good morning {{userName}}</p>
 
         <div class="main d-flex ">
 
@@ -36,7 +35,7 @@
                     {{item.status }}
                   </td>
                   <td>
-                    <i class="fas  fa-pencil-alt" @click="editTask(item.id)" style="font-size: 25px; color: blue;"></i>
+                    <i class="fas  fa-pencil-alt" @click="updateTodo" style="font-size: 25px; color: blue;"></i>
 
                   &nbsp;
                     <i class="fas fa-trash-alt" @click="deleteItem(item.id)" style="color:red; font-size: 20px; "></i>
@@ -54,15 +53,9 @@
               <div class="weeklytheme">
                 <h5 style="text-align: center;">Weekly Goals</h5>
                 <ul style="list-style: disc;">
-                  <li>  Many of life's failures are people who did not realize how
-                    close they were to success when they gave up.
-                  </li>
-                  <li>
-                    Many of life's failures are people who did not realize how.
-                  </li>
-                  <li>
-                    Many of life's failures are people who did not realize how.
-                  </li>
+                  <i class="fa fa-quote-left" aria-hidden="true"></i>
+                  {{ randomWeekGoals.goal }}
+                  <i class="fa fa-quote-right" aria-hidden="true"></i>
                 </ul>
 
               </div>
@@ -79,7 +72,7 @@
             <div class="get-review">
               <h2 style="color: #0E122B;" class="text-align-left text-decoration-underline">Recent Reviews</h2>
               <ol>
-                <li class="mt-2">22/05/2023 <span>Wednesday</span> <span><button class="btn btn-sm btn-primary">click view</button></span></li>
+                <li class="mt-2">{{  }} <span>Wednesday</span> <span><button class="btn btn-sm btn-primary">click view</button></span></li>
                 <li class="mt-2">22/05/2023 <span>Wednesday</span> <span><button class="btn btn-sm btn-primary">click view</button></span></li>
                 <li class="mt-2">22/05/2023 <span>Wednesday</span> <span><button class="btn btn-sm btn-primary">click view</button></span></li>
               </ol>
@@ -87,8 +80,8 @@
 
              <div class="ms-4 add-review">
               <p>How was your day</p>
-              <textarea name="review" class="form-control" id="review" cols="30" rows="3" placeholder="describe your experience or say something concerning this "></textarea>
-             <button class="mt-3 w-50 btn btn-sm btn-secondary">add review</button>
+              <textarea v-model="review" name="review" class="form-control" id="review" cols="30" rows="3" placeholder="describe your experience or say something concerning this "></textarea>
+             <button @click="addReview" type="submit" class="mt-3 w-50 btn btn-sm btn-secondary">add review</button>
             </div>
 <!--            <div style="justify-content:center;align-items:center;display:flex;width: 8rem;height: 8rem;border-radius: 50%; border:12px solid blue;" class="rectangle">-->
 <!--              <div class="square">-->
@@ -145,14 +138,24 @@ const submit=async ()=> {
   console.log(todo)
   const formData = new FormData();
   formData.append('todo', todo.value);
-
-
   const res = await axios.post('http://127.0.0.1:8000/api/tasks', formData, {
     headers: headers
   });
   if(res.status==200){
   window.location.reload();
   }
+}
+const review=ref('');
+const addReview=async ()=>{
+  console.log(review)
+  const formData=new FormData();
+  formData.append('description', review.value);
+  const response=await axios.post('http://127.0.0.1:8000/api/addReview', formData,{
+    headers:headers
+  });
+  if(response.status==200){
+      window.location.reload();
+    }
 }
 const authUser = async () => {
   try {
@@ -183,12 +186,47 @@ const getTodos=async () =>{
 const deleteItem=async (id)=>{
   // alert(id)
   const response = await axios.delete(`http://127.0.0.1:8000/api/tasks/${id}`);
-  if(res.status===200){
-    console.log(res.data)
+  if(response.status===200){
+    console.log(response.data)
     alert()
   }
 }
-// const job=tasks
+
+const randomWeekGoals = ref('');
+
+async function getRandomWeekGoals() {
+  try {
+    const response = await axios.get('http://127.0.0.1:8000/api/getRandomWeekGoal');
+    if (response.status === 200) {
+      randomWeekGoals.value = response.data;
+    } else {
+      console.error('Error fetching random week goals:', error);
+    }
+  } catch (error) {
+    console.error('Error fetching random week goals:', error);
+  }
+}
+
+const currentDate=ref('');
+function updateCurrentDate() {
+  const now = new Date();
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  currentDate.value = now.toLocaleDateString('en-US', options);
+}
+
+const userName = ref('');
+async function fetchUserName() {
+  try {
+    const response = await axios.get('http://127.0.0.1:8000/api/user', {
+    headers
+  });
+    userName.value = response.data.name;
+  } catch (error) {
+    console.error('Error fetching user name:', error);
+  }
+}
+
+const job=tasks
 function editTask(id) {
  const kazi= [
     {
@@ -209,13 +247,17 @@ function editTask(id) {
   } else {
     console.log('job is not an array');
   }
-  // const tasktoedit = tasks.filter(tasks => tasks.id === id);
-  // console.log(tasktoedit);
+  const tasktoedit = tasks.filter(tasks => tasks.id === id);
+  console.log(tasktoedit);
 }
+
 
 
 onMounted(()=>{
   getTodos()
+  getRandomWeekGoals()
+  updateCurrentDate()
+  fetchUserName()
 })
 </script>
 <style>
@@ -223,8 +265,7 @@ onMounted(()=>{
   position: absolute;
   font-size: 23px;
   top: 1rem;
-  background: #
-  2E2AB9;
+  background: #2E2AB9;
   color: white;
   right: 6rem;
   text-outline: 2rem;
