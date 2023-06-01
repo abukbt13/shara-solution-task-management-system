@@ -171,8 +171,11 @@ const etodo=ref('');
       message1.value=res.data
         console.log(res.data)
 
-      // alert('task edited successfully')
-      // window.location.reload();
+      alert('task edited successfully')
+      // window.location.reload()
+      getTodos()
+
+      editsignleTask.value=false
     }
   }
   
@@ -194,7 +197,8 @@ const submit=async ()=> {
     headers: headers
   });
   if(res.status==200){
-  window.location.reload();
+    getTodos()
+    addtodo.value=false
   }
 }
 const review=ref('');
