@@ -35,8 +35,7 @@
                     {{item.status }}
                   </td>
                   <td>
-                    <i class="fas  fa-pencil-alt" @click="updateTodo" style="font-size: 25px; color: blue;"></i>
-
+                    <i class="fas   fa-pencil-alt"  @click="editTask(item.id)" style="font-size: 25px; color: blue;"></i>
                   &nbsp;
                     <i class="fas fa-trash-alt" @click="deleteItem(item.id)" style="color:red; font-size: 20px; "></i>
                   </td>
@@ -106,6 +105,20 @@
       </form>
        </div>
   </div>
+
+  <div class="add-todo" v-show="editsignleTask">
+    <div class="content">
+      <i @click="closeedittask" class="close fas fa-close"></i>
+      <form @submit.prevent="updateTask">
+        <h2 class="mt-4 mb-2 text-center">Edit the todo</h2>
+        <textarea name="todo" v-model="etodo" id="" cols="30" rows="3" class="form-control" >  {{etodo}}</textarea>
+        <br>
+        <button type="submit" class="btn btn-primary w-100">Update Task</button>
+
+      </form>
+    </div>
+  </div>
+
 </template>
 
 <script setup>
@@ -124,6 +137,45 @@ if(!token){
 }
 // alert(token)
 
+function closeedittask(){
+  editsignleTask.value=false
+}
+
+const editsignleTask=ref(false)
+
+const taskstoedit=ref([]);
+
+const editedId = ref(null);
+const editTask = async (id) => {
+
+  editsignleTask.value=true
+  editedId.value = id;
+  const res = await axios.get(`http://127.0.0.1:8000/api/edit-tasks/${id}`,  {
+    headers: headers
+  });
+  if(res.status==200) {
+    taskstoedit.value = res.data
+    etodo.value=res.data.todo
+    // console.log(taskstoedit.value)
+  }
+
+  }
+  const message1=ref('')
+const etodo=ref('');
+  const updateTask = async () => {
+
+    const formData = new FormData();
+    formData.append('etodo', etodo.value);
+    const res = await axios.post(`http://127.0.0.1:8000/api/update-tasks/${editedId.value}`, formData);
+    if (res.status == 200) {
+      message1.value=res.data
+        console.log(res.data)
+
+      // alert('task edited successfully')
+      // window.location.reload();
+    }
+  }
+  
 function showAddbtn(){
   addtodo.value=true
 }
@@ -226,30 +278,7 @@ async function fetchUserName() {
   }
 }
 
-const job=tasks
-function editTask(id) {
- const kazi= [
-    {
-      "id": 17,
-      "user_id": 15,
-      "todo": "hhdhdhdh"
-    },
-    {
-      "id": 18,
-      "user_id": 15,
-      "todo": "Do a MERN study before the day ends to understand the basics of mongo db and react js with node js",
-    }
-  ]
-  addtodo.value = true;
-  if (Array.isArray(tasks)) {
-    const tasktoedit = tasks.filter(tasks => tasks.id === id);
-    console.log(tasktoedit);
-  } else {
-    console.log('job is not an array');
-  }
-  const tasktoedit = tasks.filter(tasks => tasks.id === id);
-  console.log(tasktoedit);
-}
+
 
 
 
