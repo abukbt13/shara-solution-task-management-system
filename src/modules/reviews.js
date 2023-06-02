@@ -1,8 +1,13 @@
 import axios from "axios";
 import {ref} from "vue";
 const reviews = ref([]);
+
+const token=localStorage.getItem('token');
+const head = {
+  'Authorization': `Bearer ${token}`,
+};
 const getReviews = async () => {
-  const response = await axios.get("http://127.0.0.1:8000/api/get-reviews/");
+  const response = await axios.get('http://127.0.0.1:8000/api/get-reviews',{headers:head});
   reviews.value = response.data
 }
 function show_single_review(){
