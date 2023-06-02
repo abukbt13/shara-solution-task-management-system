@@ -47,8 +47,6 @@
             </div>
         </div>
 
-
-
               <div class="weeklytheme">
                 <h5 style="text-align: center;">Weekly Goals</h5>
                 <ul style="list-style: disc;">
@@ -67,14 +65,27 @@
                 </ol>
               </div>
           </div>
+
           <div class="ms-3 reviews">
-            <div class="get-review">
+            <div  style="background: aliceblue;height: 15rem;overflow: scroll;"  class="get-review">
               <h2 style="color: #0E122B;" class="text-align-left text-decoration-underline">Recent Reviews</h2>
-              <ol>
-                <li class="mt-2">{{  }} <span>Wednesday</span> <span><button class="btn btn-sm btn-primary">click view</button></span></li>
-                <li class="mt-2">22/05/2023 <span>Wednesday</span> <span><button class="btn btn-sm btn-primary">click view</button></span></li>
-                <li class="mt-2">22/05/2023 <span>Wednesday</span> <span><button class="btn btn-sm btn-primary">click view</button></span></li>
-              </ol>
+              <ul style="list-style: none;" v-for="review in reviews" :key="review">
+               <li @click="editReview(review.id)" style="background: aliceblue; margin: 1rem" class="mt-2">
+                 {{review.date}}
+                 <button style="border: none; border-bottom: solid blue;" @click="review.id">View</button>
+               </li>
+              </ul>
+            </div>
+
+            <div class="review">
+              <div class="" v-for="editreview in editreviews" :key="editreview">
+                {{editreview.description}}
+
+              <textarea class="form-control" rows="5" cols="30">
+ {{editreview.description}}
+
+              </textarea>
+              </div>
             </div>
 
              <div class="ms-4 add-review">
@@ -82,11 +93,7 @@
               <textarea v-model="review" name="review" class="form-control" id="review" cols="30" rows="3" placeholder="describe your experience or say something concerning this "></textarea>
              <button @click="addReview" type="submit" class="mt-3 w-50 btn btn-sm btn-secondary">add review</button>
             </div>
-<!--            <div style="justify-content:center;align-items:center;display:flex;width: 8rem;height: 8rem;border-radius: 50%; border:12px solid blue;" class="rectangle">-->
-<!--              <div class="square">-->
-<!--                <p style="transition: ease-in-out; transition-property: background-position;tran">love wins</p>-->
-<!--              </div>-->
-<!--            </div>-->
+
           </div>
 
         </div>
@@ -136,6 +143,8 @@ if(!token){
   // router.push('/login')
 }
 // alert(token)
+import modules from './../modules/modules'
+ let {getReviews,reviews,editreviews,exact_review,editReview,show_single_review} =modules
 
 function closeedittask(){
   editsignleTask.value=false
@@ -286,14 +295,15 @@ async function fetchUserName() {
 
 
 
-onMounted(()=>{
+// onMounted(()=>{
   getTodos()
   getRandomWeekGoals()
   updateCurrentDate()
   fetchUserName()
-})
+  getReviews()
+// })
 </script>
-<style>
+<style scoped>
 .date{
   position: absolute;
   font-size: 23px;
@@ -342,5 +352,9 @@ nav{
   padding: 5px;
   margin-left: 35px;
 }
-
+.reviews li:hover{
+  background-color: #2E2AB9;
+  color: seagreen;
+  transform: scale(1.3);
+}
 </style>
