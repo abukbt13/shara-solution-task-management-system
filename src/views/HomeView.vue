@@ -65,10 +65,14 @@
                 </ol>
               </div>
           </div>
-
+<!--
+fetching the reviews from database
+-->
           <div class="ms-3 reviews">
             <div  style="background: aliceblue;height: 15rem;overflow: scroll;"  class="get-review">
               <h2 style="color: #0E122B;" class="text-align-left text-decoration-underline">Recent Reviews</h2>
+
+
               <ul style="list-style: none;" v-for="review in reviews" :key="review">
                <li @click="editReview(review.id)" style="background: aliceblue; margin: 1rem" class="mt-2">
                  {{review.date}}
@@ -76,18 +80,23 @@
                </li>
               </ul>
             </div>
-
+<!--            ####################################################################3-->
+<!--
+display from the database
+-->
             <div class="review">
               <div class="" v-for="editreview in editreviews" :key="editreview">
-                {{editreview.description}}
 
-              <textarea class="form-control" rows="5" cols="30">
- {{editreview.description}}
 
-              </textarea>
+              <p class="form-control">
+                 {{editreview.description}}
+
+              </p>
               </div>
             </div>
-
+<!--#############################################################################################-->
+<!--           write a review
+-->
              <div class="ms-4 add-review">
               <p>How was your day</p>
               <textarea v-model="review" name="review" class="form-control" id="review" cols="30" rows="3" placeholder="describe your experience or say something concerning this "></textarea>
@@ -143,8 +152,11 @@ if(!token){
   // router.push('/login')
 }
 // alert(token)
-import modules from './../modules/modules'
- let {getReviews,reviews,editreviews,exact_review,editReview,show_single_review} =modules
+import modules from '../modules/reviews'
+import todosmodules from '../modules/todos'
+
+ let {getReviews,reviews,editreviews,editReview} =modules
+let {submit,todo}=todosmodules
 
 function closeedittask(){
   editsignleTask.value=false
@@ -182,7 +194,7 @@ const etodo=ref('');
 
       alert('task edited successfully')
       // window.location.reload()
-      getTodos()
+
 
       editsignleTask.value=false
     }
@@ -194,22 +206,10 @@ function showAddbtn(){
 function close(){
       addtodo.value=false
 }
-const todo=ref('')
+
 const headers = {
   'Authorization': `Bearer ${token}`,
 };
-const submit=async ()=> {
-  console.log(todo)
-  const formData = new FormData();
-  formData.append('todo', todo.value);
-  const res = await axios.post('http://127.0.0.1:8000/api/tasks', formData, {
-    headers: headers
-  });
-  if(res.status==200){
-    getTodos()
-    addtodo.value=false
-  }
-}
 const review=ref('');
 const addReview=async ()=>{
   console.log(review)
