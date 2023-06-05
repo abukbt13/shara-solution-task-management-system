@@ -5,7 +5,7 @@ import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import '@fortawesome/fontawesome-free/css/all.css'
 
-
+import dashboard from '../views/dashboard/dashboard.vue'
 const routes = [
   {
     path: '/',
@@ -26,6 +26,11 @@ const routes = [
     path: '/register',
     name: 'register',
     component: Register
+  },
+    {
+    path: '/dashboard',
+    name: 'dashboard',
+    component: dashboard
   }
   ]
 

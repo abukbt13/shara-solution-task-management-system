@@ -143,7 +143,7 @@ if(!token){
   // router.push('/login')
 }
 // alert(token)
-import modules from './../modules/modules'
+import modules from '@/modules/reviews.js'
  let {getReviews,reviews,editreviews,exact_review,editReview,show_single_review} =modules
 
 function closeedittask(){
