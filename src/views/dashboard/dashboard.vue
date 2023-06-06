@@ -183,26 +183,32 @@
 
                 <div class="card-body">
 
-                  <table class="table table-borderless datatable">
+                  <table class="table table-border datatable">
                     <thead>
                       <tr>
                         <th scope="col">#</th>
                         <th scope="col">Tasks</th>
                         <th scope="col">status</th>
-                        <th scope="col">Action</th>
+                        <th scope="col " class="text-center" colspan="3">Action</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr v-for="task in tasks" :key="task">
                         <th scope="row"><a href="#">{{task.id}}</a></th>
                         <td>{{task.todo}}</td>
-                        <td><a href="#" class="text-primary">{{task.status}}</a></td>
-                        <td>
-                        <i class="fas   fa-pencil-alt"  @click="editTask(item.id)" style="font-size: 25px; color: blue;"></i>
+          
+                        <td v-if="task.status === 'active'">Pending</td>
+                        <td v-else>Completed</td>
+                        <td v-if="task.status === 'active'">
+                          <i class="fa fa-check" @click="markComplete(task.id)" aria-hidden="true" style="font-size: 25px; color: blue;" title="Mark as completed"></i> 
+                        </td>
+                        <td v-else>
+                          <i class="fa fa-check" aria-hidden="true" style="font-size: 25px; color: blue;"></i>
+                        </td>
+                        <i class="fas   fa-pencil-alt"  @click="editTask(item.id)" style="font-size: 25px; color: blue;" title="Edit"></i>
                       &nbsp;
-                        <i class="fas fa-trash-alt" @click="deleteItem(task.id)" style="color:red; font-size: 20px; "></i>
-                      </td>
-                        <td><span class=""><button class="btn btn-primary">mark completed</button></span></td>
+                        <i class="fas fa-trash-alt" @click="deleteItem(task.id)" style="color:red; font-size: 20px;" title="Delete"></i>
+              
                       </tr>
 
                     </tbody>
@@ -255,14 +261,40 @@
               <h5 class="card-title">Recent Reviews <span>| Today</span></h5>
 
               <div class="activity">
+                <!-- Button trigger modal -->
 
-                <div class="activity-item d-flex">
-                  <div class="activite-label">32 min</div>
-                  <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                  <div class="activity-content">
-                    Quia quae rerum <a href="#" class="fw-bold text-dark">explicabo officiis</a> beatae
+
+                <!-- Modal -->
+
+                <div data-bs-toggle="modal" @click="editReview(review.id)"  data-bs-target="#staticBackdrop" class="activity-item d-flex" v-for="review in reviews" :key="review">
+                  <div  class="d-flex ">
+                      <div class="activite-label">{{ review.date}}</div>
+                      <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+                      <div class="activity-content">
+                        {{ truncatedDescription(review.description) }} .. <span class="spanview_review" style="border-bottom: 1px black solid;">click to view</span>
+                      </div>
                   </div>
+                  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="staticBackdropLabel">My review</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <div class="" v-for="editreview in editreviews" :key="editreview">
+                              {{editreview.description}}
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
+
 
               </div>
 
@@ -279,36 +311,46 @@
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
-  <footer id="footer" class="footer">
-    <div class="copyright">
-      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
-    </div>
-    <div class="credits">
-      <!-- All the links in the footer should remain intact. -->
-      <!-- You can delete the links only if you purchased the pro version. -->
-      <!-- Licensing information: https://bootstrapmade.com/license/ -->
-      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-    </div>
-  </footer><!-- End Footer -->
+  <Footer />
+  <!-- End Footer -->
 
 
 </template>
 <script setup>
 import todomodules from '@/modules/Dashboard/todomodule'
-import {onMounted} from "vue";
-import Header from "@/views/includes/header.vue"
 import weeklygoalmodule from '@/modules/Dashboard/weeklygoalmodule'
 import dateupdates from '@/modules/Dashboard/dateupdate';
 import todomodule from '@/modules/Dashboard/todomodule'
+import reviewsmodule from "@/modules/reviews";
+import {onMounted, ref} from "vue";
+import Header from "@/views/includes/header.vue";
+import Footer from "@/views/includes/Footer.vue";
 
 let {getRandomWeekGoals, randomWeekGoals}=weeklygoalmodule
-let{getTodos,tasks}=todomodules
 let {currentDate,updateCurrentDate}=dateupdates
 let {submit,todo, deleteItem}=todomodule
 
 
+
+  let{getTodos,tasks}=todomodules
+let  {editreviews, reviews,editReview, markComplete, getReviews, show_single_review }=reviewsmodule
+const truncatedLength = ref(10);
+
+function truncatedDescription(description) {
+  if (description.includes(reviews)) {
+    return description;
+  } else {
+    const words = description.split(' ');
+    if (words.length > truncatedLength.value) {
+      return words.slice(0, truncatedLength.value).join(' ');
+    } else {
+      return description;
+    }
+  }
+}
+
 onMounted(()=>{
+  getReviews()
   getTodos()
   getRandomWeekGoals()
   updateCurrentDate()

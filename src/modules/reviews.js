@@ -20,5 +20,17 @@ function editReview (id){
   // console.log(editreviews.description);
 
 }
-
-export  default {editreviews, reviews,editReview, getReviews, show_single_review };
+const  markComplete = async (id)=>{
+  // alert(id)
+  const res = await axios.get(`http://127.0.0.1:8000/api/mark_completed/${id}`,{
+    headers:head
+  });
+  if(res.status==200) {
+    alert('edited successfully')
+    // console.log(taskstoedit.value)
+  }
+  else {
+    alert('error in network')
+  }
+}
+export  default {editreviews, markComplete, reviews,editReview, getReviews, show_single_review };
