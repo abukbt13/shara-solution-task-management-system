@@ -19,15 +19,13 @@
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="">
           <i class="bi bi-menu-button-wide"></i><span>Tasks</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
+        <ul>
+          <li id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 
-            <i class="bi ms-2 bi-circle"></i> <span style="border-bottom: 2px solid grey;  text-transform:  uppercase;" data-bs-toggle="modal" data-bs-target="#exampleModal">
-              show form
+            <i style="font-size: 11px;margin-left: 2rem;" class="bi  bi-circle"></i> <span style="border-bottom: 2px solid grey;" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Add task
             </span>
          </li>
-
-
 
         </ul>
       </li><!-- End Components Nav -->
@@ -136,7 +134,6 @@
         <!-- Left side columns -->
         <div class="col-lg-8">
           <div class="row">
-<!--##########################-->
             <!-- Button trigger modal -->
 
 
@@ -145,7 +142,7 @@
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add Task</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Aknjn</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
@@ -164,7 +161,7 @@
 <!--            #################################################-->
 
             <div class="col-12">
-              <h5  class="">Recent Tasks <span>| Today</span></h5>
+              <h5  class="">add recent<span>| Today</span></h5>
               <hr>
               <div style="min-height: 12rem;max-height: 16rem;" class="card recent-sales overflow-auto">
 
