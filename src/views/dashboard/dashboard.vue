@@ -161,7 +161,8 @@
 <!--            #################################################-->
 
             <div class="col-12">
-              <h5  class="">add recent<span>| Today</span></h5>
+
+              <h5  class="">Recent Tasks <span>| Today: {{currentDate}}</span></h5>
               <hr>
               <div style="min-height: 12rem;max-height: 16rem;" class="card recent-sales overflow-auto">
 
@@ -180,26 +181,42 @@
 
                 <div class="card-body">
 
-                  <table class="table table-borderless datatable">
+                  <table class="table table-border datatable">
                     <thead>
                       <tr>
                         <th scope="col">#</th>
                         <th scope="col">Tasks</th>
                         <th scope="col">status</th>
-                        <th scope="col">Action</th>
+                        <th style="width: 4rem;" scope="col " class="" colspan="3" >Actions</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr v-for="task in tasks" :key="task">
                         <th scope="row"><a href="#">{{task.id}}</a></th>
                         <td>{{task.todo}}</td>
+          
                         <td v-if="task.status === 'active'">Pending</td>
                         <td v-else>Completed</td>
-                        <td v-if="task.status === 'active'">
-                          <span class=""><button @click="markComplete(task.id)" class="btn btn-primary">mark Complete</button></span>
+
+                        <td>
+
+
+
+                          <i data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="fa fa-pencil" aria-hidden="true" style="font-size: 25px; color: blue;" title="Mark as completed"></i>
+                          <!-- Button trigger modal -->
+
+                          <!-- Modal -->
+
+                        </td>
+                        <td>
+                          <i class="fa fa-trash" @click="deleteTask(task.id)" aria-hidden="true" style="font-size: 25px; color: blue;" title="Mark as completed"></i>
+                        </td>
+
+                        <td  v-if="task.status === 'active'">
+                          <i class="fa fa-check" @click="markComplete(task.id)" aria-hidden="true" style="font-size: 25px; color: blue;" title="Mark as completed"></i>
                         </td>
                         <td v-else>
-                          <span class=""><button disabled class="btn btn-primary">mark Complete</button></span>
+                          <i class="fa fa-check-double"  aria-hidden="true" style="font-size: 25px; color: blue;" title="Mark as completed"></i>
                         </td>
                       </tr>
 
@@ -217,7 +234,7 @@
               <div class="row">
                 <div class="col"><p class="text-center">weekly</p>
                   <ul>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus. </li>
+                    <li>{{ randomWeekGoals.goal }} </li>
                     <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus. </li>
                   </ul>
                 </div><div class="col"><p class="text-center">weekly</p>
@@ -310,15 +327,35 @@
 </template>
 <script setup>
 import todomodules from '@/modules/Dashboard/todomodule'
+import weeklygoalmodule from '@/modules/Dashboard/weeklygoalmodule'
+import dateupdates from '@/modules/Dashboard/dateupdate';
+import todomodule from '@/modules/Dashboard/todomodule'
 import reviewsmodule from "@/modules/reviews";
 import {onMounted, ref} from "vue";
 import Header from "@/views/includes/header.vue";
 import Footer from "@/views/includes/Footer.vue";
+import axios from "axios";
 
-  let{getTodos,tasks}=todomodules
+let {getRandomWeekGoals, randomWeekGoals}=weeklygoalmodule
+let {currentDate,updateCurrentDate}=dateupdates
+let {submit,todo, deleteItem}=todomodule
+
+
+
+let{getTodos,tasks,deleteTask}=todomodules
+
 let  {editreviews, reviews,editReview, markComplete, getReviews, show_single_review }=reviewsmodule
 const truncatedLength = ref(10);
 
+const edit_id = ref('')
+const edit_task=ref([]);
+
+function editTask(id){
+
+  edit_id.value=id
+  // edit_id=id
+  edit_task.value=tasks.value.filter(tasks=>tasks.id === id)
+}
 function truncatedDescription(description) {
   if (description.includes(reviews)) {
     return description;
@@ -335,6 +372,8 @@ function truncatedDescription(description) {
 onMounted(()=>{
   getReviews()
   getTodos()
+  getRandomWeekGoals()
+  updateCurrentDate()
 })
 
 </script>

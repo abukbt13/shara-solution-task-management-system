@@ -18,5 +18,13 @@ const getTodos=async () =>{
 
     }
 }
+const deleteTask=async (id)=>{
+    // alert(id)
+    const response = await axios.delete(`http://127.0.0.1:8000/api/tasks/${id}`);
+    if(response.status===200){
+        console.log(response.data)
+        alert()
+    }
+}
 
-export default { getTodos,tasks}
+export default { getTodos,deleteTask,tasks}

@@ -141,6 +141,8 @@ display from the database
 // @ is an alias to /src
 import {onMounted, ref} from "vue";
 import axios from "axios";
+import modules from '../modules/reviews'
+import todosmodules from '../modules/todos'
 
 import {useRouter} from "vue-router";
 import {filter} from "core-js/internals/array-iteration";
@@ -152,8 +154,7 @@ if(!token){
   // router.push('/login')
 }
 // alert(token)
-import modules from '../modules/reviews'
-import todosmodules from '../modules/todos'
+
 
  let {getReviews,reviews,editreviews,editReview} =modules
 let {submit,todo}=todosmodules
@@ -258,20 +259,20 @@ const deleteItem=async (id)=>{
   }
 }
 
-const randomWeekGoals = ref('');
+// const randomWeekGoals = ref('');
 
-async function getRandomWeekGoals() {
-  try {
-    const response = await axios.get('http://127.0.0.1:8000/api/getRandomWeekGoal');
-    if (response.status === 200) {
-      randomWeekGoals.value = response.data;
-    } else {
-      console.error('Error fetching random week goals:', error);
-    }
-  } catch (error) {
-    console.error('Error fetching random week goals:', error);
-  }
-}
+// async function getRandomWeekGoals() {
+//   try {
+//     const response = await axios.get('http://127.0.0.1:8000/api/getRandomWeekGoal');
+//     if (response.status === 200) {
+//       randomWeekGoals.value = response.data;
+//     } else {
+//       console.error('Error fetching random week goals:', error);
+//     }
+//   } catch (error) {
+//     console.error('Error fetching random week goals:', error);
+//   }
+// }
 
 const currentDate=ref('');
 function updateCurrentDate() {
@@ -280,17 +281,17 @@ function updateCurrentDate() {
   currentDate.value = now.toLocaleDateString('en-US', options);
 }
 
-const userName = ref('');
-async function fetchUserName() {
-  try {
-    const response = await axios.get('http://127.0.0.1:8000/api/user', {
-    headers
-  });
-    userName.value = response.data.name;
-  } catch (error) {
-    console.error('Error fetching user name:', error);
-  }
-}
+// const userName = ref('');
+// async function fetchUserName() {
+//   try {
+//     const response = await axios.get('http://127.0.0.1:8000/api/user', {
+//     headers
+//   });
+//     userName.value = response.data.name;
+//   } catch (error) {
+//     console.error('Error fetching user name:', error);
+//   }
+// }
 
 
 
