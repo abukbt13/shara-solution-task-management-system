@@ -164,7 +164,7 @@
 <!--            #################################################-->
 
             <div class="col-12">
-              <h5  class="">Recent Tasks <span>| Today</span></h5>
+              <h5  class="">Recent Tasks <span>| Today: {{currentDate}}</span></h5>
               <hr>
               <div style="min-height: 12rem;max-height: 16rem;" class="card recent-sales overflow-auto">
 
@@ -197,6 +197,11 @@
                         <th scope="row"><a href="#">{{task.id}}</a></th>
                         <td>{{task.todo}}</td>
                         <td><a href="#" class="text-primary">{{task.status}}</a></td>
+                        <td>
+                        <i class="fas   fa-pencil-alt"  @click="editTask(item.id)" style="font-size: 25px; color: blue;"></i>
+                      &nbsp;
+                        <i class="fas fa-trash-alt" @click="deleteItem(task.id)" style="color:red; font-size: 20px; "></i>
+                      </td>
                         <td><span class=""><button class="btn btn-primary">mark completed</button></span></td>
                       </tr>
 
@@ -214,7 +219,7 @@
               <div class="row">
                 <div class="col"><p class="text-center">weekly</p>
                   <ul>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus. </li>
+                    <li>{{ randomWeekGoals.goal }} </li>
                     <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus. </li>
                   </ul>
                 </div><div class="col"><p class="text-center">weekly</p>
@@ -292,12 +297,21 @@
 <script setup>
 import todomodules from '@/modules/Dashboard/todomodule'
 import {onMounted} from "vue";
-import Header from "@/views/includes/header.vue";
+import Header from "@/views/includes/header.vue"
+import weeklygoalmodule from '@/modules/Dashboard/weeklygoalmodule'
+import dateupdates from '@/modules/Dashboard/dateupdate';
+import todomodule from '@/modules/Dashboard/todomodule'
 
+let {getRandomWeekGoals, randomWeekGoals}=weeklygoalmodule
 let{getTodos,tasks}=todomodules
+let {currentDate,updateCurrentDate}=dateupdates
+let {submit,todo, deleteItem}=todomodule
+
 
 onMounted(()=>{
   getTodos()
+  getRandomWeekGoals()
+  updateCurrentDate()
 })
 
 </script>
