@@ -18,17 +18,29 @@
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="">
           <i class="bi bi-menu-button-wide"></i><span>Tasks</span><i class="bi bi-chevron-down ms-auto"></i>
+
+          <!--            #################################################-->
         </a>
         <ul>
           <li id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 
-            <i style="font-size: 11px;margin-left: 2rem;" class="bi  bi-circle"></i> <span style="border-bottom: 2px solid grey;" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <i style="font-size: 11px;margin-left: 2rem;" class="bi  bi-circle"></i>
+            <span style="border-bottom: 2px solid grey;" data-bs-toggle="modal" data-bs-target="#add">
               Add task
             </span>
          </li>
+          <li id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <!-- Modal -->
+            test
+         </li>
 
         </ul>
-      </li><!-- End Components Nav -->
+      </li>
+
+
+
+
+      <!-- End Components Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
@@ -122,7 +134,30 @@
 
     </ul>
 
-  </aside><!-- End Sidebar-->
+  </aside>
+<!--  Modaal for adding to do-->
+  <div class="modal fade" id="add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Add To Do</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form @submit.prevent="submitTodo">
+            <textarea name="todo" v-model="todo" id="" cols="30" rows="3" class="form-control" placeholder="Enter the to do here ....."></textarea>
+            <br>
+            <button type="submit" data-bs-dismiss="modal" class="btn btn-primary w-100">Add to do</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- End modal for adding to do-->
 
   <main id="main" class="main">
 
@@ -134,31 +169,6 @@
         <!-- Left side columns -->
         <div class="col-lg-8">
           <div class="row">
-            <!-- Button trigger modal -->
-
-
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Aknjn</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                   <form action="">
-                    <textarea v-model="todo" class="form-control" id="" cols="30" rows="5"></textarea>
-                    <button class="btn my-2 form-control btn-primary">Add Task</button>
-                    </form>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-<!--            #################################################-->
 
             <div class="col-12">
 
@@ -201,10 +211,32 @@
                         <td>
 
 
-
-                          <i data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="fa fa-pencil" aria-hidden="true" style="font-size: 25px; color: blue;" title="Mark as completed"></i>
                           <!-- Button trigger modal -->
 
+                          <i @click="edit_Todo(task.id)" data-bs-toggle="modal" data-bs-target="#editTask" class="fa fa-pencil" aria-hidden="true" style="font-size: 25px; color: blue;" title="Edit to do"></i>
+
+
+                          <!-- Modal -->
+                          <div class="modal fade" id="editTask" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h1 class="modal-title fs-5" id="exampleModalLabel">Edit todo</h1>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  <form @submit.prevent="submitTodo">
+                                  <textarea  v-model="todo" cols="30" rows="10" class="form-control"></textarea>
+                                    <button data-bs-dismiss="modal" class="btn mt-2 w-100 btn-secondary">Save changes</button>
+
+                                  </form>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                           <!-- Modal -->
 
                         </td>
@@ -226,7 +258,9 @@
                 </div>
 
               </div>
-            </div><!-- End Recent Sales -->
+            </div>
+            <!-- Button trigger modal -->
+         <!-- End Recent Sales -->
             <div class="card">
               <div class="card-header">
                 <h4 class="text-center">MY Goals</h4>
@@ -338,11 +372,10 @@ import axios from "axios";
 
 let {getRandomWeekGoals, randomWeekGoals}=weeklygoalmodule
 let {currentDate,updateCurrentDate}=dateupdates
-let {submit,todo, deleteItem}=todomodule
 
 
 
-let{getTodos,tasks,deleteTask}=todomodules
+let{getTodos,tasks,deleteTask,submitTodo,todo,edit_Todo,todo_id}=todomodules
 
 let  {editreviews, reviews,editReview, markComplete, getReviews, show_single_review }=reviewsmodule
 const truncatedLength = ref(10);

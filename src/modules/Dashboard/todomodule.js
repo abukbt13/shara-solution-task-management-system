@@ -27,4 +27,36 @@ const deleteTask=async (id)=>{
     }
 }
 
-export default { getTodos,deleteTask,tasks}
+const todo=ref(null)
+const todo_id=ref(null)
+
+const submitTodo=async ()=> {
+    
+    console.log(todo)
+    const formData = new FormData();
+
+    formData.append('todo', todo.value);
+    formData.append('todo_id', todo_id.value);
+
+    const res = await axios.post('http://127.0.0.1:8000/api/tasks', formData,{headers:headers});
+    if(res.status==200){
+        getTodos()
+        // addtodo.value=false
+    }
+}
+function edit_Todo(id){
+
+    todo_id.value=id
+
+   const todo_to_edit = tasks.value.filter(tasks=>tasks.id === id)
+
+
+    if (todo_to_edit.length > 0) {
+        todo.value = todo_to_edit[0].todo; // Replace "name" with the desired property
+    } else {
+        // Handle case when no matching task is found
+    }
+}
+
+
+export default { getTodos,submitTodo,deleteTask,tasks,todo,edit_Todo,todo_id}
