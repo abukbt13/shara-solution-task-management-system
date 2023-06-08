@@ -355,26 +355,27 @@ import {useRouter} from "vue-router";
 const router= useRouter()
 const token=localStorage.getItem('token');
 if(!token){
-  router.push('/login');
+    window.location.href = '/login';
 }
 const auth = {
   'Authorization': `Bearer ${token}`,
 };
 // #######   Authenticate user
-// const authUser = async () => {
-//
-//     const response = await axios.get('http://127.0.0.1:8000/api/user-auth', {
-//       headers: auth
-//     })
-//   .then(response => {
-//       const authenticate = response.data.authenticated;
-//       alert(authenticate)
-//       if (!authenticate) {
-//         localStorage.removeItem('token')
-//         router.push('/login');
-//       }
-//     })
-// };
+const authUser = async () => {
+
+    const response = await axios.get('http://127.0.0.1:8000/api/user-auth', {
+      headers: auth
+    })
+  .then(response => {
+      const authenticate = response.data.authenticated;
+      alert(authenticate)
+      if (!authenticate) {
+        localStorage.removeItem('token')
+        window.location.href = '/login';
+
+      }
+    })
+};
 // End of Auth user
 
 
