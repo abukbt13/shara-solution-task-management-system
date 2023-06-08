@@ -23,15 +23,13 @@
         </a>
         <ul>
           <li id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-
-            <i style="font-size: 11px;margin-left: 2rem;" class="bi  bi-circle"></i>
-            <span style="border-bottom: 2px solid grey;" data-bs-toggle="modal" data-bs-target="#add">
+            <i class="fa fa-plus-square" aria-hidden="true"></i>
+            <span  style="text-align:left; color: blue;" data-bs-toggle="modal" data-bs-target="#add">
               Add task
             </span>
          </li>
           <li id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
             <!-- Modal -->
-            test
          </li>
 
         </ul>
@@ -118,20 +116,6 @@
         </a>
       </li><!-- End Profile Page Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-faq.html">
-          <i class="bi bi-question-circle"></i>
-          <span>F.A.Q</span>
-        </a>
-      </li><!-- End F.A.Q Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-contact.html">
-          <i class="bi bi-envelope"></i>
-          <span>Contact</span>
-        </a>
-      </li><!-- End Contact Page Nav -->
-
     </ul>
 
   </aside>
@@ -139,19 +123,17 @@
   <div class="modal fade" id="add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Add To Do</h1>
+        <div class="modal-header w-100">
+          <h1 class="modal-title fs-5" id="exampleModalLabel" style="font-weight: bold; width: 100%; text-align: center; color:#0000FF;">Add To Do</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <label style="padding-left: 20px;">Enter your todo </label>
         <div class="modal-body">
-          <form @submit.prevent="submitTodo">
             <textarea name="todo" v-model="todo" id="" cols="30" rows="3" class="form-control" placeholder="Enter the to do here ....."></textarea>
+            <span class="text-danger" v-if="error">{{ error }}</span>
             <br>
-            <button type="submit" data-bs-dismiss="modal" class="btn btn-primary w-100">Add to do</button>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button @click="submitTodoForm" type="submit" style="float:right" :data-bs-dismiss="checkModal" class="btn btn-primary ">Add to do</button>
+           
         </div>
       </div>
     </div>
@@ -240,7 +222,7 @@
 
                         </td>
                         <td>
-                          <i class="fa fa-trash" @click="deleteTask(task.id)" aria-hidden="true" style="font-size: 25px; color: blue;" title="Mark as completed"></i>
+                          <i class="fa fa-trash" @click="deleteTask(task.id)" aria-hidden="true" style="font-size: 25px; color: blue;" title="Delete"></i>
                         </td>
 
                         <td  v-if="task.status === 'active'">
@@ -401,13 +383,24 @@ let {currentDate,updateCurrentDate}=dateupdates
 
 
 
-let{getTodos,tasks,deleteTask,submitTodo,todo,edit_Todo,todo_id}=todomodules
+let{getTodos,tasks,deleteTask,submitTodo,error,todo,edit_Todo,todo_id}=todomodules
 let  {editreviews, reviews,editReview, markComplete, getReviews, show_single_review }=reviewsmodule
 const truncatedLength = ref(10);
 
 const edit_id = ref('')
 const edit_task=ref([]);
-
+let checkModal =ref('')
+function submitTodoForm() {
+  //if input is empty give validation data otherwise call the submittodo function
+  if(todo.value === null || todo.value.trim() === ''){
+    error.value = 'Todo cannot be empty';
+   
+} 
+else{
+  checkModal.value = 'modal'
+  submitTodo
+}
+}
 function editTask(id){
 
   edit_id.value=id
