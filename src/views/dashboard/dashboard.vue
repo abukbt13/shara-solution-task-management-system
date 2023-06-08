@@ -383,24 +383,13 @@ let {currentDate,updateCurrentDate}=dateupdates
 
 
 
-let{getTodos,tasks,deleteTask,submitTodo,error,todo,edit_Todo,todo_id}=todomodules
+let{getTodos,tasks,submitTodoForm,deleteTask,submitTodo,checkModal,error,todo,edit_Todo,todo_id}=todomodules
 let  {editreviews, reviews,editReview, markComplete, getReviews, show_single_review }=reviewsmodule
 const truncatedLength = ref(10);
 
 const edit_id = ref('')
 const edit_task=ref([]);
-let checkModal =ref('')
-function submitTodoForm() {
-  //if input is empty give validation data otherwise call the submittodo function
-  if(todo.value === null || todo.value.trim() === ''){
-    error.value = 'Todo cannot be empty';
-   
-} 
-else{
-  checkModal.value = 'modal'
-  submitTodo
-}
-}
+
 function editTask(id){
 
   edit_id.value=id
