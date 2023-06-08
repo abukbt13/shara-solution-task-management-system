@@ -1,7 +1,7 @@
 <script setup>
 import {onMounted} from "vue";
 import loggedinuser from '@/modules/Dashboard/loggedinuser';
-let{fetchUserName, userName, UserProfile}=loggedinuser
+let{fetchUserName, userName, userEmail}=loggedinuser
 onMounted(()=>{
 fetchUserName()
 })
@@ -174,12 +174,15 @@ fetchUserName()
 
         </li><!-- End Messages Nav -->
 
+        
+
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2">{{ userName }}</span>
-          </a><!-- End Profile Iamge Icon -->
+          </a>
+          <!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
@@ -191,11 +194,14 @@ fetchUserName()
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="#">
                 <i class="bi bi-person"></i>
-                <span>My Profile</span>
+                <span data-bs-toggle="modal" data-bs-target="#modal">My Profile</span>
               </a>
+              <li class="dropdown-item d-flex align-items-center" style="color: blue;">{{ userName }}</li>
+              <li class="dropdown-item d-flex align-items-center" style="color: blue;">{{ userEmail }}</li>
             </li>
+
             <li>
               <hr class="dropdown-divider">
             </li>

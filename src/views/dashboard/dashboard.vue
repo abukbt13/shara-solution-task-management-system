@@ -169,7 +169,6 @@
         <!-- Left side columns -->
         <div class="col-lg-8">
           <div class="row">
-
             <div class="col-12">
 
               <h5  class="">Recent Tasks <span>| Today: {{currentDate}}</span></h5>
@@ -403,7 +402,6 @@ let {currentDate,updateCurrentDate}=dateupdates
 
 
 let{getTodos,tasks,deleteTask,submitTodo,todo,edit_Todo,todo_id}=todomodules
-
 let  {editreviews, reviews,editReview, markComplete, getReviews, show_single_review }=reviewsmodule
 const truncatedLength = ref(10);
 
