@@ -1,7 +1,7 @@
 <script setup>
 import {onMounted} from "vue";
 import loggedinuser from '@/modules/Dashboard/loggedinuser';
-let{fetchUserName, userName, userEmail}=loggedinuser
+let{fetchUserName, userName, userEmail, logoutUser}=loggedinuser
 onMounted(()=>{
 fetchUserName()
 })
@@ -229,7 +229,7 @@ fetchUserName()
             <li>
               <a class="dropdown-item d-flex align-items-center" href="#">
                 <i class="bi bi-box-arrow-right"></i>
-                <span>Sign Out</span>
+                <span @click="logoutUser">Sign Out</span>
               </a>
             </li>
 

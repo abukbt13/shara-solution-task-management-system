@@ -27,23 +27,23 @@ const deleteTask=async (id)=>{
     }
 }
 
-const todo=ref(null)
-const todo_id=ref(null)
+const todo = ref(null);
+const todo_id = ref(null);
+const error = ref(null);
 
-const submitTodo=async ()=> {
+const submitTodo = async () => {
+  const formData = new FormData();
+
+    formData.append('todo', todo.value.trim());
+        formData.append('todo_id', todo_id.value);
     
-    console.log(todo)
-    const formData = new FormData();
+        const res = await axios.post('http://127.0.0.1:8000/api/tasks', formData, { headers: headers });
+        if (res.status === 200) {
+          getTodos();
+        }
+};
 
-    formData.append('todo', todo.value);
-    formData.append('todo_id', todo_id.value);
 
-    const res = await axios.post('http://127.0.0.1:8000/api/tasks', formData,{headers:headers});
-    if(res.status==200){
-        getTodos()
-        // addtodo.value=false
-    }
-}
 function edit_Todo(id){
 
     todo_id.value=id
@@ -59,4 +59,4 @@ function edit_Todo(id){
 }
 
 
-export default { getTodos,submitTodo,deleteTask,tasks,todo,edit_Todo,todo_id}
+export default { getTodos,submitTodo,deleteTask,tasks,todo,edit_Todo,todo_id,error}

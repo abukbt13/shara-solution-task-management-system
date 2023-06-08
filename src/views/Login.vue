@@ -62,7 +62,7 @@ const submit = async  () => {
      alert('invalid details')
     }else {
       localStorage.setItem('token', res.data.token)
-      router.push('/')
+      router.push('/dashboard')
     }
   }
 
