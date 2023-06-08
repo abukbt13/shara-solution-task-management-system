@@ -7,11 +7,7 @@ import '@fortawesome/fontawesome-free/css/all.css'
 
 import dashboard from '../views/dashboard/dashboard.vue'
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: HomeView
-  },
+
   {
     path: '/about',
     name: 'about',
@@ -28,7 +24,7 @@ const routes = [
     component: Register
   },
     {
-    path: '/dashboard',
+    path: '/',
     name: 'dashboard',
     component: dashboard
   }

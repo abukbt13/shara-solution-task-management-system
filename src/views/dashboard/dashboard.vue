@@ -369,6 +369,33 @@ import {onMounted, ref} from "vue";
 import Header from "@/views/includes/header.vue";
 import Footer from "@/views/includes/Footer.vue";
 import axios from "axios";
+import {useRouter} from "vue-router";
+
+const router= useRouter()
+const token=localStorage.getItem('token');
+if(!token){
+  router.push('/login');
+}
+const auth = {
+  'Authorization': `Bearer ${token}`,
+};
+// #######   Authenticate user
+// const authUser = async () => {
+//
+//     const response = await axios.get('http://127.0.0.1:8000/api/user-auth', {
+//       headers: auth
+//     })
+//   .then(response => {
+//       const authenticate = response.data.authenticated;
+//       alert(authenticate)
+//       if (!authenticate) {
+//         localStorage.removeItem('token')
+//         router.push('/login');
+//       }
+//     })
+// };
+// End of Auth user
+
 
 let {getRandomWeekGoals, randomWeekGoals}=weeklygoalmodule
 let {currentDate,updateCurrentDate}=dateupdates
@@ -403,6 +430,7 @@ function truncatedDescription(description) {
 }
 
 onMounted(()=>{
+  // authUser()
   getReviews()
   getTodos()
   getRandomWeekGoals()
