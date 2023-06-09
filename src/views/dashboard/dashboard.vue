@@ -132,7 +132,7 @@
             <textarea name="todo" v-model="todo" id="" cols="30" rows="3" class="form-control" placeholder="Enter the to do here ....."></textarea>
             <span class="text-danger" v-if="error">{{ error }}</span>
             <br>
-            <button @click="submitTodoForm" type="submit" style="float:right" :data-bs-dismiss="checkModal" class="btn btn-primary ">Add to do</button>
+            <button @click="submitTodoForm" type="submit" style="float:right" :data-bs-dismiss="checkModal" class="btn btn-primary">Add to do</button>
            
         </div>
       </div>
