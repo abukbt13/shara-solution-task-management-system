@@ -160,7 +160,7 @@
           <div class="row">
             <div class="col-12">
 <!--            alert starts here-->
-              <div v-show="alertvalue" class="alert alert-warning alert-dismissible fade show" role="alert">
+              <div v-show="showSuccess" class="alert alert-warning alert-dismissible fade show" role="alert">
                 <strong>Holy guacamole!</strong> You have successfully added a task
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
@@ -373,7 +373,7 @@ let {currentDate,updateCurrentDate}=dateupdates
 
 
 
-let{getTodos,tasks,alertvalue,deleteTask,submitTodo,error,todo,edit_Todo,todo_id}=todomodules
+let{getTodos,tasks,showSuccess,deleteTask,submitTodo,error,todo,edit_Todo,todo_id}=todomodules
 let  {editreviews, reviews,editReview, markComplete, getReviews, show_single_review }=reviewsmodule
 const truncatedLength = ref(10);
 

@@ -9,10 +9,15 @@ import dashboard from '../views/dashboard/dashboard.vue'
 import Tests from "@/views/Tests.vue";
 const routes = [
 
+  // {
+  //   path: '/about',
+  //   name: 'about',
+  //   component: About
+  // },
   {
-    path: '/about',
-    name: 'about',
-    component: About
+    path: '/home',
+    name: 'home',
+    component: HomeView
   },
   {
     path: '/tests',
