@@ -3,6 +3,7 @@
 
   <!-- ======= Header ======= -->
 <Header />
+
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
 
@@ -132,8 +133,14 @@
             <textarea name="todo" v-model="todo" id="" cols="30" rows="3" class="form-control" placeholder="Enter the to do here ....."></textarea>
             <span class="text-danger" v-if="error">{{ error }}</span>
             <br>
-            <button @click="submitTodoForm" type="submit" style="float:right" :data-bs-dismiss="checkModal" class="btn btn-primary">Add to do</button>
-           
+
+              <div class="float-end" v-if="todo">
+                <button type="button" @click="submitTodo(todo_id)" class="btn btn-secondary" data-bs-dismiss="modal">Add</button>
+              </div>
+
+                 <div class="float-end" v-else="todo">
+                    <button type="button" @click="submitTodo(todo_id)" class="btn btn-secondary">Add</button>
+                </div>
         </div>
       </div>
     </div>
@@ -152,6 +159,12 @@
         <div class="col-lg-8">
           <div class="row">
             <div class="col-12">
+<!--            alert starts here-->
+              <div v-show="alertvalue" class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Holy guacamole!</strong> You have successfully added a task
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+<!--              alert ends here -->
 
               <h5  class="">Recent Tasks <span>| Today: {{currentDate}}</span></h5>
               <hr>
@@ -194,31 +207,8 @@
 
                           <!-- Button trigger modal -->
 
-                          <i @click="edit_Todo(task.id)" data-bs-toggle="modal" data-bs-target="#editTask" class="fa fa-pencil" aria-hidden="true" style="font-size: 25px; color: blue;" title="Edit to do"></i>
+                          <i @click="edit_Todo(task.id)" data-bs-toggle="modal" data-bs-target="#add" class="fa fa-pencil" aria-hidden="true" style="font-size: 25px; color: blue;" title="Edit to do"></i>
 
-
-                          <!-- Modal -->
-                          <div class="modal fade" id="editTask" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h1 class="modal-title fs-5" id="exampleModalLabel">Edit todo</h1>
-                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                  <form @submit.prevent="submitTodo">
-                                  <textarea  v-model="todo" cols="30" rows="10" class="form-control"></textarea>
-                                    <button data-bs-dismiss="modal" class="btn mt-2 w-100 btn-secondary">Save changes</button>
-
-                                  </form>
-                                </div>
-                                <div class="modal-footer">
-                                  <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal">Close</button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <!-- Modal -->
 
                         </td>
                         <td>
@@ -298,6 +288,7 @@
                         {{ truncatedDescription(review.description) }} .. <span class="spanview_review" style="border-bottom: 1px black solid;">click to view</span>
                       </div>
                   </div>
+
                   <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog">
                       <div class="modal-content">
@@ -355,26 +346,25 @@ import {useRouter} from "vue-router";
 const router= useRouter()
 const token=localStorage.getItem('token');
 if(!token){
-  router.push('/login');
+    window.location.href = '/login';
 }
 const auth = {
   'Authorization': `Bearer ${token}`,
 };
 // #######   Authenticate user
-// const authUser = async () => {
-//
-//     const response = await axios.get('http://127.0.0.1:8000/api/user-auth', {
-//       headers: auth
-//     })
-//   .then(response => {
-//       const authenticate = response.data.authenticated;
-//       alert(authenticate)
-//       if (!authenticate) {
-//         localStorage.removeItem('token')
-//         router.push('/login');
-//       }
-//     })
-// };
+const authUser = async () => {
+  const authHeader = { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } };
+
+  try {
+    const response = await axios.get('http://127.0.0.1:8000/api/user-auth', authHeader);
+    console.log('okay');
+  } catch (error) {
+    // localStorage.removeItem('token');
+    // Token is invalid or expired, logout the user
+    window.location.href = '/login';
+  }
+};
+
 // End of Auth user
 
 
@@ -383,7 +373,7 @@ let {currentDate,updateCurrentDate}=dateupdates
 
 
 
-let{getTodos,tasks,submitTodoForm,deleteTask,submitTodo,checkModal,error,todo,edit_Todo,todo_id}=todomodules
+let{getTodos,tasks,alertvalue,deleteTask,submitTodo,error,todo,edit_Todo,todo_id}=todomodules
 let  {editreviews, reviews,editReview, markComplete, getReviews, show_single_review }=reviewsmodule
 const truncatedLength = ref(10);
 
@@ -410,7 +400,7 @@ function truncatedDescription(description) {
 }
 
 onMounted(()=>{
-  // authUser()
+  authUser()
   getReviews()
   getTodos()
   getRandomWeekGoals()

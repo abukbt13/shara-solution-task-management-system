@@ -63,8 +63,8 @@ const submit = async  () => {
       message.value = true;
     }else {
       localStorage.setItem('token', res.data.token)
-      router.push('/dashboard')
-    }
+        window.location.href = '/';
+      }
   }
 
 }

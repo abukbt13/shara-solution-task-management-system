@@ -6,12 +6,18 @@ import Register from '../views/Register.vue'
 import '@fortawesome/fontawesome-free/css/all.css'
 
 import dashboard from '../views/dashboard/dashboard.vue'
+import Tests from "@/views/Tests.vue";
 const routes = [
 
   {
     path: '/about',
     name: 'about',
     component: About
+  },
+  {
+    path: '/tests',
+    name: 'test',
+    component: Tests
   },
   {
     path: '/login',
