@@ -23,7 +23,8 @@ const deleteTask=async (id)=>{
     const response = await axios.delete(`http://127.0.0.1:8000/api/tasks/${id}`);
     if(response.status===200){
         console.log(response.data)
-        alert()
+        getTodos()
+
     }
 }
 
@@ -31,29 +32,32 @@ const todo = ref(null);
 const todo_id = ref(null);
 const error = ref(null);
 let checkModal =ref(null)
+const alertvalue=ref(false)
 
-function submitTodoForm() {
-    //if input is empty give validation data otherwise call the submittodo function
+function clearFields(){
+    todo.value=null
+}
+const submitTodo = async (id) => {
+    // alert(id)
+
     if(todo.value === null || todo.value.trim() === ''){
         error.value = 'Todo cannot be empty';
     }
     else{
-        checkModal.value = 'modal'
-        submitTodo()
-        error.value=null
+        alertvalue.value = true
+        const formData = new FormData();
 
-    }
-}
-const submitTodo = async () => {
-  const formData = new FormData();
-
-    formData.append('todo', todo.value.trim());
+        formData.append('todo', todo.value.trim());
         formData.append('todo_id', todo_id.value);
 
         const res = await axios.post('http://127.0.0.1:8000/api/tasks', formData, { headers: headers });
         if (res.status === 200) {
-          getTodos();
+            todo_id.value=null
+            getTodos();
+            clearFields()
         }
+    }
+
 };
 
 
@@ -72,4 +76,4 @@ function edit_Todo(id){
 }
 
 
-export default { getTodos,submitTodoForm,checkModal,submitTodo,deleteTask,tasks,todo,edit_Todo,todo_id,error}
+export default { alert,getTodos,checkModal,submitTodo,deleteTask,tasks,todo,edit_Todo,todo_id,error}

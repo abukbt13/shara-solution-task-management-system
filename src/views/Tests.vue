@@ -8,6 +8,10 @@ const error=ref(null)
 function clearFields(){
   todo.value=null
 }
+const alert=ref(false)
+function showAlert(){
+  alert.value=true
+}
 
 function submit(){
   if(todo.value === '')
@@ -20,6 +24,7 @@ function submit(){
   }
 
 }
+
 </script>
 
 <template>
@@ -94,8 +99,12 @@ function submit(){
   <li  data-bs-toggle="modal" data-bs-target="#test1">Click me I am showing another</li>
 
 </ul>
+  <button @click="showAlert" class="btn btn-success">Show alert</button>
 
-
+  <div v-show="alert" class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
 
 </template>
 
