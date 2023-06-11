@@ -56,6 +56,8 @@ const submit = async  () => {
   const res = await axios.post('http://127.0.0.1:8000/api/login', formData)
   if(res.status === 200){
     // console.log(res.data.message)
+    const id_no=res.data.user.role_id;
+    const role=res.data.user.role;
 
     if (res.data.status === 'failed') {
      error.value=res.data.message
@@ -63,7 +65,11 @@ const submit = async  () => {
       message.value = true;
     }else {
       localStorage.setItem('token', res.data.token)
-        window.location.href = '/';
+
+      localStorage.setItem('token', res.data.token)
+      localStorage.setItem('role', role)
+      localStorage.setItem('id', id_no)
+      window.location.href = '/';
       }
   }
 

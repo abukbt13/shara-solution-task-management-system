@@ -7,13 +7,14 @@ import '@fortawesome/fontawesome-free/css/all.css'
 
 import dashboard from '../views/dashboard/dashboard.vue'
 import Tests from "@/views/Tests.vue";
+import Admindashboard from "@/views/dashboard/Admindashboard.vue";
 const routes = [
 
-  // {
-  //   path: '/about',
-  //   name: 'about',
-  //   component: About
-  // },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: Admindashboard
+  },
   {
     path: '/home',
     name: 'home',
