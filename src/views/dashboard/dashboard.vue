@@ -1,19 +1,22 @@
 <template>
 
 
-  <!-- ======= Header ======= -->
-<Header />
+  <!-- Start of Header -->
+      <Header />
+  <!-- Start of Header -->
 
-  <!-- ======= Sidebar ======= -->
+  <!-- start of Sidebar -->
+
   <aside id="sidebar" class="sidebar">
 
-    <ul class="sidebar-nav" id="sidebar-nav">
+
+    <ul class="sidebar-nav" id="sidebar-nav"  v-if="role==='super_admin'">
 
       <li class="nav-item">
-        <a class="nav-link " href="index.html">
+        <div class="nav-link " href="index.html">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
-        </a>
+        </div>
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
@@ -25,65 +28,32 @@
         <ul>
           <li id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
             <i class="fa fa-plus-square" aria-hidden="true"></i>
-            <span  style="text-align:left; color: blue;" data-bs-toggle="modal" data-bs-target="#add">
+            <span  @click="clearFields()" style="text-align:left; color: blue;" data-bs-toggle="modal" data-bs-target="#add">
               Add task
             </span>
-         </li>
-          <li id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-            <!-- Modal -->
-         </li>
+          </li>
+          <li id="components-nav" class="nav-content collapse " >
+            <i class="fa fa-eye" aria-hidden="true"></i>
+            <span   style="text-align:left; color: blue;">
+             View tasks
+            </span>
+          </li>
 
         </ul>
       </li>
 
-
-
-
-      <!-- End Components Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="forms-elements.html">
-              <i class="bi bi-circle"></i><span>Form Elements</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-layouts.html">
-              <i class="bi bi-circle"></i><span>Form Layouts</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-editors.html">
-              <i class="bi bi-circle"></i><span>Form Editors</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-validation.html">
-              <i class="bi bi-circle"></i><span>Form Validation</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Forms Nav -->
-
-
-      <li class="nav-item">
+      <li class="nav-item" >
         <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-bar-chart"></i><span>weekly Goals</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="charts-chartjs.html">
-              <i class="bi bi-circle"></i><span>Add  goals</span>
-            </a>
+          <li class="ms-4 pb-1">
+            <i class="fa fa-plus-square" aria-hidden="true"></i>
+            <span class="text-decoration-underline">Add  goals</span>
           </li>
-          <li>
-            <a href="charts-apexcharts.html">
-              <i class="bi bi-circle"></i><span>View Goals</span>
-            </a>
+          <li class="ms-4">
+            <i class="fa fa-plus-square" aria-hidden="true"></i>
+            <span class="text-decoration-underline">View Goals</span>
           </li>
 
         </ul>
@@ -94,15 +64,13 @@
           <i class="bi bi-gem"></i><span>Yearly Goals</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="icons-bootstrap.html">
-              <i class="bi bi-circle"></i><span>Add Goal</span>
-            </a>
+          <li class="ms-4 pt-2">
+            <i class="fa fa-plus-square" aria-hidden="true"></i>
+            <span>Add Goal</span>
           </li>
-          <li>
-            <a href="icons-remix.html">
-              <i class="bi bi-circle"></i><span>View goals</span>
-            </a>
+          <li class="ms-4 pt-2">
+            <i class="fa fa-plus-square" aria-hidden="true"></i>
+            <span>View goals</span>
           </li>
 
         </ul>
@@ -118,9 +86,44 @@
       </li><!-- End Profile Page Nav -->
 
     </ul>
+    <ul v-else="role==='user'">
+
+
+      <li class="nav-item" style="list-style: none;">
+        <div class="nav-link " href="index.html">
+          <i class="bi bi-grid" style="color: #0d6efd"></i>
+          <span style="color: #0a53be">Dashboard</span>
+        </div>
+      </li>
+      <li style="list-style: none;" class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="">
+          <i class="bi bi-menu-button-wide" style="color: #0d6efd" ></i><span style="color: #0a53be">Tasks</span><i class="bi bi-chevron-down ms-auto"></i>
+
+          <!--            #################################################-->
+        </a>
+        <ul style="list-style: none;">
+          <li id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <i class="fa fa-plus-square" aria-hidden="true"></i>
+            <span  @click="clearFields()" style="text-align:left; color: blue;" data-bs-toggle="modal" data-bs-target="#add">
+              Add task
+            </span>
+          </li>
+          <li id="components-nav" class="nav-content collapse " >
+            <i class="fa fa-eye" aria-hidden="true"></i>
+            <span   style="text-align:left; color: blue;">
+             View tasks
+            </span>
+          </li>
+
+        </ul>
+      </li >
+    </ul>
 
   </aside>
-<!--  Modaal for adding to do-->
+
+  <!-- start of Sidebar -->
+
+<!-- Start of Modal for adding and editing  to do-->
   <div class="modal fade" id="add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -146,7 +149,7 @@
     </div>
   </div>
 
-  <!-- End modal for adding to do-->
+  <!-- End of Modal for adding and editing  to do-->
 
   <main id="main" class="main">
 
@@ -154,62 +157,36 @@
 
     <section class="section dashboard">
       <div class="row">
-
-        <!-- Left side columns -->
+<!--Reviews Task showing starts here -->
         <div class="col-lg-8">
           <div class="row">
             <div class="col-12">
 <!--            alert starts here-->
               <div v-show="showSuccess" class="alert alert-warning alert-dismissible fade show" role="alert">
-                <strong>Holy guacamole!</strong> You have successfully added a task
+                <strong>Amazing progress!</strong> You have successfully added a task
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
 <!--              alert ends here -->
 
-              <h5  class="">Recent Tasks <span>| Today: {{currentDate}}</span></h5>
-              <hr>
-              <div style="min-height: 12rem;max-height: 16rem;" class="card recent-sales overflow-auto">
-
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div>
-
-                <div class="card-body">
-
-                  <table class="table table-border datatable">
-                    <thead>
+              <h5  class="">Recent Tasks <span>| Today: {{currentDate}}</span>
+              </h5>
+              <div style="width: 100%;min-height: 17rem;max-height: 18rem;" class="card overflow-auto">
+                  <table style="min-width: 100%;" class="table table-responsive table-border">
                       <tr>
                         <th scope="col">#</th>
                         <th scope="col">Tasks</th>
                         <th scope="col">status</th>
                         <th style="width: 4rem;" scope="col " class="" colspan="3" >Actions</th>
                       </tr>
-                    </thead>
-                    <tbody>
+
                       <tr v-for="task in tasks" :key="task">
-                        <th scope="row"><a href="#">{{task.id}}</a></th>
+                        <td scope="row"><a href="#">{{task.id}}</a></td>
                         <td>{{task.todo}}</td>
-          
+
                         <td v-if="task.status === 'active'">Pending</td>
                         <td v-else>Completed</td>
-
                         <td>
-
-
-                          <!-- Button trigger modal -->
-
-                          <i @click="edit_Todo(task.id)" data-bs-toggle="modal" data-bs-target="#add" class="fa fa-pencil" aria-hidden="true" style="font-size: 25px; color: blue;" title="Edit to do"></i>
-
-
+                              <i @click="edit_Todo(task.id)" data-bs-toggle="modal" data-bs-target="#add" class="fa fa-pencil" aria-hidden="true" style="font-size: 25px; color: blue;" title="Edit to do"></i>
                         </td>
                         <td>
                           <i class="fa fa-trash" @click="deleteTask(task.id)" aria-hidden="true" style="font-size: 25px; color: blue;" title="Delete"></i>
@@ -223,40 +200,40 @@
                         </td>
                       </tr>
 
-                    </tbody>
                   </table>
 
                 </div>
 
-              </div>
+
             </div>
-            <!-- Button trigger modal -->
-         <!-- End Recent Sales -->
-            <div class="card">
+<!--        My goals     -->
+            <div class="card" v-if="role==='user'">
               <div class="card-header">
                 <h4 class="text-center">MY Goals</h4>
               </div>
               <div class="row">
-                <div class="col"><p class="text-center">weekly</p>
+                <div class="col">
+                  <p class="text-center">weekly Goals</p>
                   <ul>
                     <li>{{ randomWeekGoals.goal }} </li>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus. </li>
                   </ul>
-                </div><div class="col"><p class="text-center">weekly</p>
+                </div>
+                <div class="col">
+                  <p class="text-center">Yearly Goals</p>
                   <ul>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus. </li>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus. </li>
+                   <li>Land a job</li>
                   </ul>
                 </div>
               </div>
            </div>
           </div>
-        </div><!-- End Left side columns -->
+        </div>
+        <!--End of Reviews Task showing starts here -->
 
-        <!-- Right side columns -->
+
         <div class="col-lg-4">
 
-          <!-- Recent Activity -->
+          <!-- show reviews  -->
           <div class="card">
             <div class="filter">
               <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
@@ -272,14 +249,11 @@
             </div>
 
             <div class="card-body">
-              <h5 class="card-title">Recent Reviews <span>| Today</span></h5>
+              <h5
+                  class="card-title">Recent Reviews <span>| Today</span>
+              </h5>
 
               <div class="activity">
-                <!-- Button trigger modal -->
-
-
-                <!-- Modal -->
-
                 <div data-bs-toggle="modal" @click="editReview(review.id)"  data-bs-target="#staticBackdrop" class="activity-item d-flex" v-for="review in reviews" :key="review">
                   <div  class="d-flex ">
                       <div class="activite-label">{{ review.date}}</div>
@@ -314,7 +288,9 @@
               </div>
 
             </div>
-          </div><!-- End Recent Activity -->
+          </div>
+
+          <!-- End show reviews -->
 
 
 
@@ -343,6 +319,7 @@ import Footer from "@/views/includes/Footer.vue";
 import axios from "axios";
 import {useRouter} from "vue-router";
 
+const role=localStorage.getItem('role')
 const router= useRouter()
 const token=localStorage.getItem('token');
 if(!token){
@@ -372,8 +349,7 @@ let {getRandomWeekGoals, randomWeekGoals}=weeklygoalmodule
 let {currentDate,updateCurrentDate}=dateupdates
 
 
-
-let{getTodos,tasks,showSuccess,deleteTask,submitTodo,error,todo,edit_Todo,todo_id}=todomodules
+let{getTodos,tasks,showSuccess,clearFields,deleteTask,submitTodo,error,todo,edit_Todo,todo_id}=todomodules
 let  {editreviews, reviews,editReview, markComplete, getReviews, show_single_review }=reviewsmodule
 const truncatedLength = ref(10);
 

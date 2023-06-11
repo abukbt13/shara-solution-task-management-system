@@ -62,10 +62,14 @@ const submit = async () => {
     const res = await axios.post('http://127.0.0.1:8000/api/register', formData);
 
   if (res.status === 200) {
-
+    const id_no=res.data.user.role_id;
+    const role=res.data.user.role;
     if(res.data.status === 'success'){
+
       localStorage.setItem('token', res.data.token)
-      router.push('/')
+      localStorage.setItem('role', role)
+      localStorage.setItem('id', id_no)
+      window.location.href = '/';
     }
     else {
       errors.value=res.data.error
