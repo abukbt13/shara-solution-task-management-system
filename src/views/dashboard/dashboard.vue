@@ -151,6 +151,34 @@
 
   <!-- End of Modal for adding and editing  to do-->
 
+  <!--modal for adding review -->
+  <div class="modal fade" id="addreview" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header w-100">
+          <h1 class="modal-title fs-5" id="exampleModalLabel" style="font-weight: bold; width: 100%; text-align: center; color:#0000FF;">Add Review</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <label style="padding-left: 20px;">Enter your Review </label>
+        <div class="modal-body">
+            <textarea name="description" v-model="description" id="" cols="30" rows="3" class="form-control" placeholder="Enter the review here ....."></textarea>
+            <span class="text-danger" v-if="error">{{ error }}</span>
+            <br>
+
+              <div class="float-end" v-if="description">
+                <button type="button" @click="submitReview(review_id)" class="btn btn-secondary" data-bs-dismiss="modal">Add</button>
+              </div>
+
+                 <div class="float-end" v-else="description">
+                    <button type="button" @click="submitReview(review_id)" class="btn btn-secondary">Add</button>
+                </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+   <!-- End of madal for adding review -->
+
   <main id="main" class="main">
 
     <!-- End Page Title -->
@@ -249,6 +277,11 @@
             </div>
 
             <div class="card-body">
+              
+              <h3 style="color: #0E122B;" class="text-center  text-decoration-underline">Add Review  
+                <span  @click="clearFields()" style="text-align:left; color: blue;" data-bs-toggle="modal" data-bs-target="#addreview">
+                  <i class="fas fa-primary  fa-plus"></i></span> </h3>
+  
               <h5
                   class="card-title">Recent Reviews <span>| Today</span>
               </h5>
@@ -349,8 +382,8 @@ let {getRandomWeekGoals, randomWeekGoals}=weeklygoalmodule
 let {currentDate,updateCurrentDate}=dateupdates
 
 
-let{getTodos,tasks,showSuccess,clearFields,deleteTask,submitTodo,error,todo,edit_Todo,todo_id}=todomodules
-let  {editreviews, reviews,editReview, markComplete, getReviews, show_single_review }=reviewsmodule
+let{getTodos,tasks,showSuccess,clearFields,deleteTask,submitTodo,error,todo,edit_Todo,todo_id,}=todomodules
+let  {editreviews, reviews,editReview, markComplete, getReviews, show_single_review,showReview,submitReview, review_id }=reviewsmodule
 const truncatedLength = ref(10);
 
 const edit_id = ref('')
