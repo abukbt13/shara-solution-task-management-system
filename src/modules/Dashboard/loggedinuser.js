@@ -28,7 +28,7 @@ const logoutUser = async () => {
    
     localStorage.removeItem('token')
     if(!token){
-      router.push('/login');
+      window.location.href( '/login');
     }
    
   } 

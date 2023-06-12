@@ -183,6 +183,7 @@
             <textarea name="todo" v-model="todo" id="" cols="30" rows="3" class="form-control" placeholder="Enter the to do here ....."></textarea>
             <span class="text-danger" v-if="error">{{ error }}</span>
             <br>
+
               <div class="float-end" v-if="todo">
                 <button type="button" @click="submitTodo(todo_id)" class="btn btn-secondary" data-bs-dismiss="modal">Add</button>
               </div>
@@ -196,6 +197,34 @@
   </div>
 
   <!-- End of Modal for adding and editing  to do-->
+
+  <!--modal for adding review -->
+  <div class="modal fade" id="addreview" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header w-100">
+          <h1 class="modal-title fs-5" id="exampleModalLabel" style="font-weight: bold; width: 100%; text-align: center; color:#0000FF;">Add Review</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <label style="padding-left: 20px;">Enter your Review </label>
+        <div class="modal-body">
+            <textarea name="description" v-model="description" id="" cols="30" rows="3" class="form-control" placeholder="Enter the review here ....."></textarea>
+            <span class="text-danger" v-if="error">{{ error }}</span>
+            <br>
+
+              <div class="float-end" v-if="description">
+                <button type="button" @click="submitReview(review_id)" class="btn btn-secondary" data-bs-dismiss="modal">Add</button>
+              </div>
+
+                 <div class="float-end" v-else="description">
+                    <button type="button" @click="submitReview(review_id)" class="btn btn-secondary">Add</button>
+                </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+   <!-- End of madal for adding review -->
 
   <main id="main" class="main">
 
@@ -278,7 +307,74 @@
 
 
         <div class="col-lg-4">
-            <p>My reviews here</p>
+
+
+          <!-- show reviews  -->
+          <div class="card">
+            <div class="filter">
+              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                <li class="dropdown-header text-start">
+                  <h6>Filter</h6>
+                </li>
+
+                <li><a class="dropdown-item" href="#">Today</a></li>
+                <li><a class="dropdown-item" href="#">This Month</a></li>
+                <li><a class="dropdown-item" href="#">This Year</a></li>
+              </ul>
+            </div>
+
+            <div class="card-body">
+              
+              <h3 style="color: #0E122B;" class="text-center  text-decoration-underline">Add Review  
+                <span  @click="clearFields()" style="text-align:left; color: blue;" data-bs-toggle="modal" data-bs-target="#addreview">
+                  <i class="fas fa-primary  fa-plus"></i></span> </h3>
+  
+              <h5
+                  class="card-title">Recent Reviews <span>| Today</span>
+              </h5>
+
+              <div class="activity">
+                <div data-bs-toggle="modal" @click="editReview(review.id)"  data-bs-target="#staticBackdrop" class="activity-item d-flex" v-for="review in reviews" :key="review">
+                  <div  class="d-flex ">
+                      <div class="activite-label">{{ review.date}}</div>
+                      <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+                      <div class="activity-content">
+                        {{ truncatedDescription(review.description) }} .. <span class="spanview_review" style="border-bottom: 1px black solid;">click to view</span>
+                      </div>
+                  </div>
+
+                  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="staticBackdropLabel">My review</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <div class="" v-for="editreview in editreviews" :key="editreview">
+                              {{editreview.description}}
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+
+              </div>
+
+            </div>
+          </div>
+
+          <!-- End show reviews -->
+
+
+
         </div>
 
       </div>
@@ -418,7 +514,7 @@ const authUser = async () => {
     const response = await axios.get('http://127.0.0.1:8000/api/user-auth', authHeader);
     console.log('okay');
   } catch (error) {
-    localStorage.removeItem('token');
+    // localStorage.removeItem('token');
     // Token is invalid or expired, logout the user
     window.location.href = '/login';
   }
@@ -432,8 +528,8 @@ let {currentDate,updateCurrentDate}=dateupdates
 let {users,editUser,username,email,user_id,getUsers}=super_admin
 
 
-let{getTodos,tasks,showSuccess,clearFields,deleteTask,submitTodo,error,todo,edit_Todo,todo_id}=todomodules
-let  {editreviews, reviews,editReview, markComplete, getReviews, show_single_review }=reviewsmodule
+let{getTodos,tasks,showSuccess,clearFields,deleteTask,submitTodo,error,todo,edit_Todo,todo_id,}=todomodules
+let  {editreviews, reviews,editReview, markComplete, getReviews, show_single_review,showReview,submitReview, review_id }=reviewsmodule
 const truncatedLength = ref(10);
 
 const edit_id = ref('')
