@@ -9,8 +9,6 @@ const headers = {
 // alert('')
 // fetching from db starts here
 const getUsers=async () =>{
-
-
     const res = await axios.get('http://127.0.0.1:8000/api/show-users', {
         headers
     });

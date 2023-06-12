@@ -87,7 +87,7 @@
 
     </ul>
     <ul class="sidebar-nav" id="sidebar-nav"  v-if="role==='super_admin'">
-
+      <h2>Super_Admin</h2>
       <li class="nav-item">
         <div class="nav-link " href="index.html">
           <i class="bi bi-grid"></i>
@@ -95,26 +95,6 @@
         </div>
       </li><!-- End Dashboard Nav -->
 
-      <li class="nav-item">
-        <div class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="">
-          <i class="bi bi-menu-button-wide"></i><span>Tasks</span><i class="bi bi-chevron-down ms-auto"></i>
-        </div>
-        <ul>
-          <li id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-            <i class="fa fa-plus-square" aria-hidden="true"></i>
-            <span   style="text-align:left; color: blue;" >
-            Create Task
-            </span>
-          </li>
-          <li id="components-nav" class="nav-content collapse " >
-            <i class="fa fa-eye" aria-hidden="true"></i>
-            <span   style="text-align:left; color: blue;">
-             View tasks
-            </span>
-          </li>
-
-        </ul>
-      </li>
 
       <li class="nav-item" >
         <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
@@ -140,12 +120,12 @@
         </a>
         <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li class="ms-4 pt-2">
-            <i class="fa fa-plus-square" aria-hidden="true"></i>
-            <span data-bs-toggle="modal" data-bs-target="#viewusers">View users</span>
+            <i class="fa fa-eye" aria-hidden="true"></i>
+            <span data-bs-toggle="modal" data-bs-target="#viewAdmin">View Admin</span>
           </li>
           <li class="ms-4 pt-2">
-            <i class="fa fa-plus-square" aria-hidden="true"></i>
-            <span>Add users</span>
+            <i class="fa fa-plus" aria-hidden="true"></i>
+                   <span data-bs-toggle="modal" data-bs-target="#viewAdmin">Create Admin  </span>
           </li>
 
         </ul>
@@ -161,8 +141,6 @@
       </li><!-- End Profile Page Nav -->
 
     </ul>
-
-
     <ul v-else>
       <li>Admin Zone</li>
     </ul>
@@ -378,76 +356,83 @@
         </div>
 
       </div>
-      <div class="row" v-if="role==='super_admin'">
-         <div class="user">
-           <div class="card-header">
-             <h2>Users</h2>
-           </div>
-           <div class="card-body">
-             <table class="table table-borderless datatable">
-               <thead>
-               <tr>
-                 <th scope="col">ID</th>
-                 <th scope="col">User Names</th>
-                 <th scope="col">Email</th>
-                 <th scope="col">Role</th>
-                 <th scope="col" colspan="2">Actions</th>
-               </tr>
-               </thead>
-               <tbody>
-               <tr v-for="user in users" :key="user">
-                 <th scope="row"><a href="#">#{{user.id}}</a></th>
-                 <td>{{user.name}}</td>
-                 <td>{{user.email}}</td>
-                 <td>{{user.role}}</td>
-                 <td>
+   <div class="row" v-if="role==='super_admin'">
+
+     <div class="d-flex">
+       <button class="btn me-1 btn-primary" ref="users_btn" @click="changeButtonValue">Users</button>
+     </div>
+          <div class="user">
+            <div class="card-header">
+              <h2>Users</h2>
+            </div>
+            <div class="card-body">
+              <table class="table table-borderless datatable">
+                <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">User Names</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Role</th>
+                  <th scope="col" colspan="2">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="user in users" :key="user">
+                  <th scope="row"><a href="#">#{{user.id}}</a></th>
+                  <td>{{user.name}}</td>
+                  <td>{{user.email}}</td>
+                  <td>{{user.role}}</td>
+                  <td>
                    <span class="badge bg-success p-2" @click="editUser(user.id)" data-bs-toggle="modal" data-bs-target="#editUser">
                    Edit Role</span>
-                 </td>
-                 <td><span class="badge bg-danger p-2" @click="updateUser">Delete</span></td>
-               </tr>
+                  </td>
+                  <td><span class="badge bg-danger p-2" @click="updateUser">Delete</span></td>
+                </tr>
 
-               </tbody>
-             </table>
+                </tbody>
+              </table>
 
-             <!-- Modal -->
-             <div class="modal fade" id="editUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-               <div class="modal-dialog">
-                 <div class="modal-content">
-                   <div class="modal-header">
-                     <h1 class="modal-title fs-5 text-primary" id="exampleModalLabel">Update User</h1>
-                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                   </div>
-                   <div class="modal-body">
-                       <h3 class="card-header">
-                         Edit User
-                       </h3>
-                         <Label>User Name</Label>
-                         <p>{{ username }}</p>
-                         <label for="">Email</label>
-                         <p>{{email}}</p>
-                         <label for="">Change Role</label>
-                     <div>
-                       <select v-model="selectedOption">
-                         <option v-for="option in options" :value="option.value" :key="option.value">{{ option.label }}</option>
-                       </select>
-                       <p>You selected: {{ selectedOption }}</p>
-                     </div>
-
-
-                     <button type="button" @click="updateUser(user_id)" class="btn bg-primary btn-secondary float-end" data-bs-dismiss="modal">Save changes</button>
+              <!-- Modal -->
+              <div class="modal fade" id="editUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5 text-primary" id="exampleModalLabel">Update User</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <h3 class="card-header">
+                        Edit User
+                      </h3>
+                      <Label>User Name</Label>
+                      <p>{{ username }}</p>
+                      <label for="">Email</label>
+                      <p>{{email}}</p>
+                      <label for="">Change Role</label>
+                      <div>
+                        <select v-model="selectedOption">
+                          <option v-for="option in options" :value="option.value" :key="option.value">{{ option.label }}</option>
+                        </select>
+                        <p>You selected: {{ selectedOption }}</p>
+                      </div>
 
 
-                   </div>
+                      <button type="button" @click="updateUser(user_id)" class="btn bg-primary btn-secondary float-end" data-bs-dismiss="modal">Save changes</button>
+
+
+                    </div>
 
 
 
 
-                 </div>
-               </div>
-             </div>
-           </div>
-         </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
       </div>
       <div class="row" v-else>
           <h2>Admin</h2>
@@ -481,7 +466,14 @@ const options = [
   { label: 'admin', value: 'admin' },
   { label: 'super_admin', value: 'super_admin' }
 ];
+const users_btn = ref(null);
+const admins_btn = ref(null);
 
+function changeButtonValue() {
+  users_btn.value.textContent = 'Add user';
+  // usersBtn.value.classList.remove('btn-primary');
+  users_btn.value.classList.toggle('btn-danger');
+}
 
 const role=localStorage.getItem('role')
 const router= useRouter()
