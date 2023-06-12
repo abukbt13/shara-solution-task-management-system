@@ -3,14 +3,14 @@
 
   <!-- Start of Header -->
       <Header />
-  <!-- Start of Header -->
+  <!-- end of Header -->
 
   <!-- start of Sidebar -->
 
   <aside id="sidebar" class="sidebar">
 
 
-    <ul class="sidebar-nav" id="sidebar-nav"  v-if="role==='super_admin'">
+    <ul class="sidebar-nav" id="sidebar-nav"  v-if="role==='user'">
 
       <li class="nav-item">
         <div class="nav-link " href="index.html">
@@ -20,7 +20,7 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="">
+        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse">
           <i class="bi bi-menu-button-wide"></i><span>Tasks</span><i class="bi bi-chevron-down ms-auto"></i>
 
           <!--            #################################################-->
@@ -86,26 +86,24 @@
       </li><!-- End Profile Page Nav -->
 
     </ul>
-    <ul v-else="role==='user'">
+    <ul class="sidebar-nav" id="sidebar-nav"  v-if="role==='super_admin'">
 
-
-      <li class="nav-item" style="list-style: none;">
+      <li class="nav-item">
         <div class="nav-link " href="index.html">
-          <i class="bi bi-grid" style="color: #0d6efd"></i>
-          <span style="color: #0a53be">Dashboard</span>
+          <i class="bi bi-grid"></i>
+          <span>Super admin Dashboard</span>
         </div>
-      </li>
-      <li style="list-style: none;" class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="">
-          <i class="bi bi-menu-button-wide" style="color: #0d6efd" ></i><span style="color: #0a53be">Tasks</span><i class="bi bi-chevron-down ms-auto"></i>
+      </li><!-- End Dashboard Nav -->
 
-          <!--            #################################################-->
-        </a>
-        <ul style="list-style: none;">
+      <li class="nav-item">
+        <div class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="">
+          <i class="bi bi-menu-button-wide"></i><span>Tasks</span><i class="bi bi-chevron-down ms-auto"></i>
+        </div>
+        <ul>
           <li id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
             <i class="fa fa-plus-square" aria-hidden="true"></i>
-            <span  @click="clearFields()" style="text-align:left; color: blue;" data-bs-toggle="modal" data-bs-target="#add">
-              Add task
+            <span   style="text-align:left; color: blue;" >
+            Create Task
             </span>
           </li>
           <li id="components-nav" class="nav-content collapse " >
@@ -116,9 +114,58 @@
           </li>
 
         </ul>
-      </li >
+      </li>
+
+      <li class="nav-item" >
+        <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-menu-button-wide"></i><span>Projects</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li class="ms-4 pb-1">
+            <i class="fa fa-plus-square" aria-hidden="true"></i>
+            <span class="text-decoration-underline">Create Project</span>
+          </li>
+          <li class="ms-4">
+            <i class="fa fa-plus-square" aria-hidden="true"></i>
+            <span class="text-decoration-underline">View Projects</span>
+          </li>
+
+        </ul>
+      </li><!-- End Charts Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+          <i class="fa fa-users" aria-hidden="true"></i>
+          <span>Users</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li class="ms-4 pt-2">
+            <i class="fa fa-plus-square" aria-hidden="true"></i>
+            <span data-bs-toggle="modal" data-bs-target="#viewusers">View users</span>
+          </li>
+          <li class="ms-4 pt-2">
+            <i class="fa fa-plus-square" aria-hidden="true"></i>
+            <span>Add users</span>
+          </li>
+
+        </ul>
+      </li><!-- End Icons Nav -->
+
+      <li class="nav-heading">Pages</li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="users-profile.html">
+          <i class="bi bi-person"></i>
+          <span>Profile</span>
+        </a>
+      </li><!-- End Profile Page Nav -->
+
     </ul>
 
+
+    <ul v-else>
+      <li>Admin Zone</li>
+    </ul>
   </aside>
 
   <!-- start of Sidebar -->
@@ -155,7 +202,7 @@
     <!-- End Page Title -->
 
     <section class="section dashboard">
-      <div class="row">
+      <div class="row" v-if="role==='user'">
 <!--Reviews Task showing starts here -->
         <div class="col-lg-8">
           <div class="row">
@@ -231,70 +278,83 @@
 
 
         <div class="col-lg-4">
-
-          <!-- show reviews  -->
-          <div class="card">
-            <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <li class="dropdown-header text-start">
-                  <h6>Filter</h6>
-                </li>
-
-                <li><a class="dropdown-item" href="#">Today</a></li>
-                <li><a class="dropdown-item" href="#">This Month</a></li>
-                <li><a class="dropdown-item" href="#">This Year</a></li>
-              </ul>
-            </div>
-
-            <div class="card-body">
-              <h5
-                  class="card-title">Recent Reviews <span>| Today</span>
-              </h5>
-
-              <div class="activity">
-                <div data-bs-toggle="modal" @click="editReview(review.id)"  data-bs-target="#staticBackdrop" class="activity-item d-flex" v-for="review in reviews" :key="review">
-                  <div  class="d-flex ">
-                      <div class="activite-label">{{ review.date}}</div>
-                      <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                      <div class="activity-content">
-                        {{ truncatedDescription(review.description) }} .. <span class="spanview_review" style="border-bottom: 1px black solid;">click to view</span>
-                      </div>
-                  </div>
-
-                  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h1 class="modal-title fs-5" id="staticBackdropLabel">My review</h1>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                          <div class="" v-for="editreview in editreviews" :key="editreview">
-                              {{editreview.description}}
-                          </div>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-
-
-              </div>
-
-            </div>
-          </div>
-
-          <!-- End show reviews -->
-
-
-
+            <p>My reviews here</p>
         </div>
 
+      </div>
+      <div class="row" v-if="role==='super_admin'">
+         <div class="user">
+           <div class="card-header">
+             <h2>Users</h2>
+           </div>
+           <div class="card-body">
+             <table class="table table-borderless datatable">
+               <thead>
+               <tr>
+                 <th scope="col">ID</th>
+                 <th scope="col">User Names</th>
+                 <th scope="col">Email</th>
+                 <th scope="col">Role</th>
+                 <th scope="col" colspan="2">Actions</th>
+               </tr>
+               </thead>
+               <tbody>
+               <tr v-for="user in users" :key="user">
+                 <th scope="row"><a href="#">#{{user.id}}</a></th>
+                 <td>{{user.name}}</td>
+                 <td>{{user.email}}</td>
+                 <td>{{user.role}}</td>
+                 <td>
+                   <span class="badge bg-success p-2" @click="editUser(user.id)" data-bs-toggle="modal" data-bs-target="#editUser">
+                   Edit Role</span>
+                 </td>
+                 <td><span class="badge bg-danger p-2" @click="updateUser">Delete</span></td>
+               </tr>
+
+               </tbody>
+             </table>
+
+             <!-- Modal -->
+             <div class="modal fade" id="editUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+               <div class="modal-dialog">
+                 <div class="modal-content">
+                   <div class="modal-header">
+                     <h1 class="modal-title fs-5 text-primary" id="exampleModalLabel">Update User</h1>
+                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                   </div>
+                   <div class="modal-body">
+                       <h3 class="card-header">
+                         Edit User
+                       </h3>
+                         <Label>User Name</Label>
+                         <p>{{ username }}</p>
+                         <label for="">Email</label>
+                         <p>{{email}}</p>
+                         <label for="">Change Role</label>
+                     <div>
+                       <select v-model="selectedOption">
+                         <option v-for="option in options" :value="option.value" :key="option.value">{{ option.label }}</option>
+                       </select>
+                       <p>You selected: {{ selectedOption }}</p>
+                     </div>
+
+
+                     <button type="button" @click="updateUser(user_id)" class="btn bg-primary btn-secondary float-end" data-bs-dismiss="modal">Save changes</button>
+
+
+                   </div>
+
+
+
+
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+      </div>
+      <div class="row" v-else>
+          <h2>Admin</h2>
       </div>
     </section>
 
@@ -317,6 +377,15 @@ import Header from "@/views/includes/header.vue";
 import Footer from "@/views/includes/Footer.vue";
 import axios from "axios";
 import {useRouter} from "vue-router";
+import super_admin from "@/modules/data_for_roles/super_admin";
+
+const selectedOption = ref(null);
+const options = [
+  { label: 'user', value: 'user' },
+  { label: 'admin', value: 'admin' },
+  { label: 'super_admin', value: 'super_admin' }
+];
+
 
 const role=localStorage.getItem('role')
 const router= useRouter()
@@ -327,6 +396,20 @@ if(!token){
 const auth = {
   'Authorization': `Bearer ${token}`,
 };
+const headers = {
+  'Authorization': `Bearer ${token}`,
+}
+const updateUser = async (id) =>{
+  const formData = new FormData()
+  formData.append('role', selectedOption.value);
+  const res = await axios.post(`http://127.0.0.1:8000/api/users/update-user/${id}`, formData, {
+    headers
+  });
+  // console.log(res)
+  if(res.status===200){
+    alert('success')
+  }
+}
 // #######   Authenticate user
 const authUser = async () => {
   const authHeader = { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } };
@@ -346,6 +429,7 @@ const authUser = async () => {
 
 let {getRandomWeekGoals, randomWeekGoals}=weeklygoalmodule
 let {currentDate,updateCurrentDate}=dateupdates
+let {users,editUser,username,email,user_id,getUsers}=super_admin
 
 
 let{getTodos,tasks,showSuccess,clearFields,deleteTask,submitTodo,error,todo,edit_Todo,todo_id}=todomodules
@@ -380,6 +464,7 @@ onMounted(()=>{
   getTodos()
   getRandomWeekGoals()
   updateCurrentDate()
+  getUsers()
 })
 
 </script>
