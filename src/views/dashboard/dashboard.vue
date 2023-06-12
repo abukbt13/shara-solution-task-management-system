@@ -209,15 +209,15 @@
         <label style="padding-left: 20px;">Enter your Review </label>
         <div class="modal-body">
             <textarea name="description" v-model="description" id="" cols="30" rows="3" class="form-control" placeholder="Enter the review here ....."></textarea>
-            <span class="text-danger" v-if="error">{{ error }}</span>
+            <!-- <span class="text-danger" v-if="error">{{ reviewerror }}</span> -->
             <br>
-
+            <label class="text-danger">{{ reviewerror }}</label>
               <div class="float-end" v-if="description">
-                <button type="button" @click="submitReview(review_id)" class="btn btn-secondary" data-bs-dismiss="modal">Add</button>
+                <button type="button" @click="submitReview()" class="btn btn-secondary" data-bs-dismiss="modal">Add</button>
               </div>
 
                  <div class="float-end" v-else="description">
-                    <button type="button" @click="submitReview(review_id)" class="btn btn-secondary">Add</button>
+                    <button type="button" @click="submitReview()" class="btn btn-secondary">Add</button>
                 </div>
         </div>
       </div>
@@ -529,7 +529,7 @@ let {users,editUser,username,email,user_id,getUsers}=super_admin
 
 
 let{getTodos,tasks,showSuccess,clearFields,deleteTask,submitTodo,error,todo,edit_Todo,todo_id,}=todomodules
-let  {editreviews, reviews,editReview, markComplete, getReviews, show_single_review,showReview,submitReview, review_id }=reviewsmodule
+let  {editreviews, reviews,editReview, markComplete, getReviews, show_single_review,showReview,submitReview,description,reviewerror, review_id }=reviewsmodule
 const truncatedLength = ref(10);
 
 const edit_id = ref('')
