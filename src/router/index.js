@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
+import About from '../views/about.vue'
+
 import '@fortawesome/fontawesome-free/css/all.css'
 import home from "@/views/dashboard/home.vue"
 import dashboard from '../views/dashboard/dashboard.vue'
@@ -60,6 +62,12 @@ const routes = [
       }
 
     ]
+  }
+  ,
+    {
+    path: '/about',
+    name: 'about',
+    component: About
   }
   ]
 
