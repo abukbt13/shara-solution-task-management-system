@@ -11,7 +11,9 @@ import Testing from "@/views/Testing.vue";
 import Users from "@/views/SuperAdmin/Users.vue";
 import Learn from "@/views/Learn"
 import Progress from "@/views/Progress"
+
 import Project from "@/views/SuperAdmin/Project.vue"
+
 const routes = [
 
   {
@@ -65,6 +67,7 @@ const routes = [
         path: '/projects',
         name: 'projects',
         component: Project,
+
       }
 
     ]
