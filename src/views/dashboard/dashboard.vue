@@ -86,7 +86,7 @@
       </li><!-- End Profile Page Nav -->
 
     </ul>
-    <ul class="sidebar-nav" id="sidebar-nav"  v-if="role==='super_admin'">
+    <ul class="sidebar-nav" id="sidebar-nav"  v-else="role==='super_admin'">
       <h2>Super_Admin</h2>
       <li class="nav-item">
         <div class="nav-link " href="index.html">
