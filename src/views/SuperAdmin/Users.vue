@@ -1,6 +1,5 @@
 <script setup>
 import {onMounted} from "vue";
-import Operations from "@/views/SuperAdmin/Operations.vue";
 import user from "@/modules/superadmin/user";
 
 let  {getUsers,users,admins,name,getAdmins,editUser,saveUser,role,assignRole,username,email,user_id}=user

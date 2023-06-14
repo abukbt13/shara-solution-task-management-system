@@ -2,7 +2,6 @@
 
 import {onMounted} from "vue";
 import user from "@/modules/superadmin/user";
-import operations from "@/views/SuperAdmin/Operations.vue";
 
 let  {getUsers,users,assignRole,admins,name,getAdmins,editUser,saveUser,role,username,email,user_id}=user
 
@@ -12,7 +11,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <Operations />
   <ul class="nav nav-pills">
     <li class="nav-item">
       <router-link to="/" class="nav-link active" aria-current="page" >Admins</router-link>
@@ -42,10 +40,10 @@ onMounted(() => {
             <td>{{admin.email}}</td>
             <td>{{admin.role}}</td>
             <td>
-                   <span class="badge bg-success p-2" @click="editUser(admin.id)" data-bs-toggle="modal" data-bs-target="#editUser">
-                   Edit Role</span>
+             <span class="badge bg-success p-2" @click="editUser(admin.id)" data-bs-toggle="modal" data-bs-target="#editUser">
+                 Edit Role
+             </span>
             </td>
-            <td><span class="badge bg-danger p-2" @click="updateUser">Delete</span></td>
           </tr>
 
           </tbody>
@@ -91,9 +89,9 @@ onMounted(() => {
         </div>
         <div class="modal-body">
           <h3 class="card-header">
-            Edit User
+            Edit Admin
           </h3>
-          <Label>User Name</Label>
+          <Label>Full names</Label>
           <p>{{ username }}</p>
           <label for="">Email</label>
           <p>{{email}}</p>
