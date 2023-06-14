@@ -11,7 +11,13 @@ import Testing from "@/views/Testing.vue";
 import Users from "@/views/SuperAdmin/Users.vue";
 import Learn from "@/views/Learn"
 import Progress from "@/views/Progress"
-import Projects from "@/views/SuperAdmin/Projects.vue"
+import Tasks from "@/views/SuperAdmin/manage/Tasks"
+import Overview from "@/views/SuperAdmin/manage/Overview"
+import project_users from "@/views/SuperAdmin/manage/Project_users"
+
+
+import Project from "@/views/SuperAdmin/Project.vue"
+
 const routes = [
 
   {
@@ -64,7 +70,25 @@ const routes = [
       {
         path: '/projects',
         name: 'projects',
-        component: Projects,
+        component: Project,
+        children:[
+            {
+              path: '/overview/:id',
+              name: 'overview',
+              component: Overview,
+            },
+            {
+              path: '/project_users:id',
+              name: 'project_users',
+              component: project_users,
+            },
+            {
+              path: 'tasks/:id',
+              name: 'tasks',
+              component: Tasks,
+            }
+        ]
+
       }
 
     ]

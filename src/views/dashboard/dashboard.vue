@@ -85,6 +85,12 @@
 
     </ul>
     <ul class="sidebar-nav" id="sidebar-nav"  v-else-if="role==='super_admin'">
+      <li class="nav-item">
+        <router-link to="/" class="nav-link ">
+          <i class="bi bi-grid"></i>
+          <span>Admins</span>
+        </router-link>
+      </li><!-- End Dashboard Nav -->
   
      <!-- End Dashboard Nav -->
       <li class="nav-item">
@@ -93,13 +99,15 @@
           <span>Users</span>
         </router-link>
       </li><!-- End Dashboard Nav -->
-
+<!-- End Dashboard Nav -->
       <li class="nav-item">
         <router-link to="projects" class="nav-link ">
           <i class="bi bi-grid"></i>
           <span>Projects</span>
         </router-link>
-      </li>
+      </li><!-- End Dashboard Nav -->
+
+
 
 
       <li class="nav-item" >
