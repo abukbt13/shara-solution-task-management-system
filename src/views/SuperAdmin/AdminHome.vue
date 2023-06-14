@@ -2,7 +2,7 @@
 
 import {onMounted} from "vue";
 import user from "@/modules/superadmin/user";
-import operations from "@/views/SuperAdmin/Operations.vue";
+
 
 let  {getUsers,users,assignRole,admins,name,getAdmins,editUser,saveUser,role,username,email,user_id}=user
 
@@ -12,7 +12,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <Operations />
+ 
   <ul class="nav nav-pills">
     <li class="nav-item">
       <router-link to="/" class="nav-link active" aria-current="page" >Admins</router-link>

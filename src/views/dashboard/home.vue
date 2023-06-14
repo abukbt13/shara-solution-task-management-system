@@ -130,7 +130,6 @@ let{ alert,getTodos,showSuccess,clearFields,submitTodo,deleteTask,tasks,todo,edi
 
   <div class="" v-else-if="role === 'super_admin'">
      <AdminHome />
-     <AdminHome />
   </div>
   <div class="" v-else>
 

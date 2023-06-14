@@ -85,25 +85,21 @@
 
     </ul>
     <ul class="sidebar-nav" id="sidebar-nav"  v-else-if="role==='super_admin'">
-      <h2>Super_Admin</h2>
-      <li class="nav-item">
-        <div class="nav-link " href="index.html">
-          <i class="bi bi-grid"></i>
-          <span>Super admin Dashboard</span>
-        </div>
-      </li><!-- End Dashboard Nav -->
-      <li class="nav-item">
-        <router-link to="projects" class="nav-link ">
-          <i class="bi bi-grid"></i>
-          <span>Projects</span>
-        </router-link>
-      </li><!-- End Dashboard Nav -->
+  
+     <!-- End Dashboard Nav -->
       <li class="nav-item">
         <router-link to="users" class="nav-link ">
           <i class="bi bi-grid"></i>
           <span>Users</span>
         </router-link>
       </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <router-link to="projects" class="nav-link ">
+          <i class="bi bi-grid"></i>
+          <span>Projects</span>
+        </router-link>
+      </li>
 
 
       <li class="nav-item" >
