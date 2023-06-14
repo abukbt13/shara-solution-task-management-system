@@ -16906,7 +16906,7 @@
       return isString(color) ? color : isObject(color) ? color.colorStops && (color.colorStops[0] || {}).color || defaultColor : defaultColor;
     }
     /**
-     * open new tab
+     * open new tabs
      * @param link url
      * @param target blank or self
      */

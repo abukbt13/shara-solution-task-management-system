@@ -4646,7 +4646,7 @@ Keyboard.DEFAULTS = {
     'italic': makeFormatHandler('italic'),
     'underline': makeFormatHandler('underline'),
     'indent': {
-      // highlight tab or tab at beginning of list, indent or blockquote
+      // highlight tabs or tabs at beginning of list, indent or blockquote
       key: Keyboard.keys.TAB,
       format: ['blockquote', 'indent', 'list'],
       handler: function handler(range, context) {
@@ -4658,7 +4658,7 @@ Keyboard.DEFAULTS = {
       key: Keyboard.keys.TAB,
       shiftKey: true,
       format: ['blockquote', 'indent', 'list'],
-      // highlight tab or tab at beginning of list, indent or blockquote
+      // highlight tabs or tabs at beginning of list, indent or blockquote
       handler: function handler(range, context) {
         if (context.collapsed && context.offset !== 0) return true;
         this.quill.format('indent', '-1', _quill2.default.sources.USER);

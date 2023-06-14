@@ -33,7 +33,7 @@
     const get$1 = customTabs => {
       const addTab = spec => {
         var _a;
-        const name = (_a = spec.name) !== null && _a !== void 0 ? _a : generate('tab-name');
+        const name = (_a = spec.name) !== null && _a !== void 0 ? _a : generate('tabs-name');
         const currentCustomTabs = customTabs.get();
         currentCustomTabs[name] = spec;
         customTabs.set(currentCustomTabs);
@@ -863,7 +863,7 @@
           }
           return t;
         } else {
-          const name = (_a = t.name) !== null && _a !== void 0 ? _a : generate('tab-name');
+          const name = (_a = t.name) !== null && _a !== void 0 ? _a : generate('tabs-name');
           newTabs[name] = t;
           return name;
         }

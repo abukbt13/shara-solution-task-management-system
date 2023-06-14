@@ -32107,7 +32107,7 @@
 
       if (el.style.display === 'none' || elRect.width === 0) {
         // if elRect.width=0, the chart is not rendered at all
-        // (it has either display none or hidden in a different tab)
+        // (it has either display none or hidden in a different tabs)
         // fixes https://github.com/apexcharts/apexcharts.js/issues/2825
         // fixes https://github.com/apexcharts/apexcharts.js/issues/2991
         // fixes https://github.com/apexcharts/apexcharts.js/issues/2992

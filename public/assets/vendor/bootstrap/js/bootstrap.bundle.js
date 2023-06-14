@@ -5834,7 +5834,7 @@
 
   /**
    * --------------------------------------------------------------------------
-   * Bootstrap tab.js
+   * Bootstrap tabs.js
    * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
    * --------------------------------------------------------------------------
    */
@@ -5845,7 +5845,7 @@
    */
 
   const NAME$1 = 'tab';
-  const DATA_KEY$1 = 'bs.tab';
+  const DATA_KEY$1 = 'bs.tabs';
   const EVENT_KEY$1 = `.${DATA_KEY$1}`;
   const EVENT_HIDE$1 = `hide${EVENT_KEY$1}`;
   const EVENT_HIDDEN$1 = `hidden${EVENT_KEY$1}`;
@@ -5868,7 +5868,7 @@
   const SELECTOR_TAB_PANEL = '.list-group, .nav, [role="tablist"]';
   const SELECTOR_OUTER = '.nav-item, .list-group-item';
   const SELECTOR_INNER = `.nav-link${NOT_SELECTOR_DROPDOWN_TOGGLE}, .list-group-item${NOT_SELECTOR_DROPDOWN_TOGGLE}, [role="tab"]${NOT_SELECTOR_DROPDOWN_TOGGLE}`;
-  const SELECTOR_DATA_TOGGLE = '[data-bs-toggle="tab"], [data-bs-toggle="pill"], [data-bs-toggle="list"]'; // TODO: could only be `tab` in v6
+  const SELECTOR_DATA_TOGGLE = '[data-bs-toggle="tabs"], [data-bs-toggle="pill"], [data-bs-toggle="list"]'; // TODO: could only be `tabs` in v6
   const SELECTOR_INNER_ELEM = `${SELECTOR_INNER}, ${SELECTOR_DATA_TOGGLE}`;
   const SELECTOR_DATA_TOGGLE_ACTIVE = `.${CLASS_NAME_ACTIVE}[data-bs-toggle="tab"], .${CLASS_NAME_ACTIVE}[data-bs-toggle="pill"], .${CLASS_NAME_ACTIVE}[data-bs-toggle="list"]`;
 
@@ -5904,7 +5904,7 @@
         return;
       }
 
-      // Search for active tab on same parent to deactivate it
+      // Search for active tabs on same parent to deactivate it
       const active = this._getActiveElem();
       const hideEvent = active ? EventHandler.trigger(active, EVENT_HIDE$1, {
         relatedTarget: innerElem

@@ -2243,8 +2243,8 @@
     const focusShifted = prefixName('focusmanager.shifted');
     const slotVisibility = prefixName('slotcontainer.visibility');
     const externalElementScroll = prefixName('system.external.element.scroll');
-    const changeTab = prefixName('change.tab');
-    const dismissTab = prefixName('dismiss.tab');
+    const changeTab = prefixName('change.tabs');
+    const dismissTab = prefixName('dismiss.tabs');
     const highlight$1 = prefixName('highlight');
     const dehighlight$1 = prefixName('dehighlight');
 
@@ -27154,7 +27154,7 @@
             },
             components: [Tabbar.parts.tabs({})],
             markers: {
-              tabClass: 'tox-tab',
+              tabClass: 'tox-tabs',
               selectedClass: 'tox-dialog__body-nav-item--active'
             },
             tabbarBehaviours: derive$1([Tabstopping.config({})])
