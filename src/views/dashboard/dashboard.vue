@@ -98,37 +98,24 @@
           <i class="bi bi-grid"></i>
           <span>Users</span>
         </router-link>
-      </li><!-- End Dashboard Nav -->
-<!-- End Dashboard Nav -->
-      <li class="nav-item">
-        <router-link to="projects" class="nav-link ">
-          <i class="bi bi-grid"></i>
-          <span>Projects</span>
-        </router-link>
-      </li><!-- End Dashboard Nav -->
-
-
-
-
-      <li class="nav-item" >
-        <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>Projects</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li class="ms-4 pb-1">
-            <i class="fa fa-plus-square" aria-hidden="true"></i>
-            <span class="text-decoration-underline">Create Project</span>
-          </li>
-          <li class="ms-4">
-            <i class="fa fa-plus-square" aria-hidden="true"></i>
-            <span class="text-decoration-underline">View Projects</span>
-          </li>
-
-        </ul>
+    <!-- End Dashboard Nav -->
       </li>
     </ul>
-    <ul v-else>
-      <li>Admin Zone</li>
+    <ul v-else class="sidebar-nav" id="sidebar-nav">
+      <li class="nav-item">
+        <div class="nav-link " href="index.html">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </div>
+      </li>
+        <li class="nav-item">
+          <router-link to="/" class="nav-link ">
+            <span>Projects</span>
+          </router-link>
+        </li><!-- End Dashboard Nav -->
+
+
+      <!-- End Dashboard Nav -->
     </ul>
   </aside>
 

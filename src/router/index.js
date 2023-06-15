@@ -11,12 +11,12 @@ import Testing from "@/views/Testing.vue";
 import Users from "@/views/SuperAdmin/Users.vue";
 import Learn from "@/views/Learn"
 import Progress from "@/views/Progress"
-import Tasks from "@/views/SuperAdmin/manage/Tasks"
-import Overview from "@/views/SuperAdmin/manage/Overview"
-import project_users from "@/views/SuperAdmin/manage/Project_users"
+import Tasks from "@/views/Admin/manage/Tasks"
+import Overview from "@/views/Admin/manage/Overview"
+import project_users from "@/views/Admin/manage/Project_users"
 
 
-import Project from "@/views/SuperAdmin/Project.vue"
+import Project from "@/views/Admin/Project.vue"
 
 const routes = [
 
@@ -63,12 +63,17 @@ const routes = [
         component: home,
       },
       {
-        path: '/projects/overview/:id',
+        path: 'overview/:id',
         name: 'overview',
         component: Overview,
       },
       {
-        path: '/projects/project_users:id',
+        path: 'tasks/:id',
+        name: 'tasks',
+        component: Tasks,
+      },
+      {
+        path: 'project_users/:id',
         name: 'project_users',
         component: project_users,
       },
@@ -87,11 +92,6 @@ const routes = [
     ]
   },
 
-  {
-    path: '/projects/tasks/:id',
-    name: 'tasks',
-    component: Tasks,
-  },
     {
     path: '/about',
     name: 'about',

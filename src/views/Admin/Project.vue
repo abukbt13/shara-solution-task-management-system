@@ -84,7 +84,7 @@ onMounted(()=>{
       <td>{{project.description}}</td>
       <td><button @click="project.id" class="btn btn-primary">Edit</button></td>
       <td>
-        <router-link :to="`/projects/overview/${project.id}`" class="btn btn-success">Manage</router-link>
+        <router-link :to="`/overview/${project.id}`" class="btn btn-success">Manage</router-link>
 </td>
 
     </tr>
