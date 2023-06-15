@@ -20,6 +20,7 @@ async function createProject (event) {
 
     if(res.status === 200){
         alert('Created successfully')
+      getProject()
     }
 }
 async function getProject(event){
@@ -39,7 +40,7 @@ onMounted(()=>{
 <template>
   <!-- Button trigger modal -->
   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-    Create New Project <span> <i class="fa fa-plus" aria-hidden="true"></i></span>
+    <span> <i class="fa fa-plus" aria-hidden="true"></i></span> Create New Project
   </button>
 
   <!-- Modal -->
@@ -60,7 +61,7 @@ onMounted(()=>{
               <label for="exampleInputPassword1" class="form-label">Description</label>
               <textarea type="description" v-model="description" class="form-control" id="exampleInputPassword1" />
             </div>  
-            <button type="submit"  class="btn btn-primary">Submit</button>
+            <button type="submit" data-bs-dismiss="modal"  class="btn btn-primary">Submit</button>
           </form>
         </div>
     
@@ -83,7 +84,7 @@ onMounted(()=>{
       <td>{{project.description}}</td>
       <td><button @click="project.id" class="btn btn-primary">Edit</button></td>
       <td>
-  <router-link :to="`projects/overview/${project.id}`" class="btn btn-success">Manage</router-link>
+        <router-link :to="`/projects/overview/${project.id}`" class="btn btn-success">Manage</router-link>
 </td>
 
     </tr>
