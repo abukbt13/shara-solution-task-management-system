@@ -1,5 +1,14 @@
 <script setup>
-
+// const formData = new FormData();
+// formData.append('name', name.value);
+// formData.append('description', description.value);
+// let url = `http://127.0.0.1:8000/api/edit_project/${edited_project_id}`
+// const res = await axios.put(url, formData,{ headers: headers })
+// if(res.status === 200)
+// {
+//   alert('Created successfully')
+//   getProject()
+// }
 </script>
 
 <template>

@@ -112,6 +112,11 @@
           <router-link to="/" class="nav-link ">
             <span>Projects</span>
           </router-link>
+        </li>
+        <li class="nav-item">
+          <router-link to="/project_tasks" class="nav-link ">
+            <span>Tasks</span>
+          </router-link>
         </li><!-- End Dashboard Nav -->
 
 
@@ -203,30 +208,7 @@ import axios from "axios";
 import {useRouter} from "vue-router";
 import user from "@/modules/superadmin/user";
 
-const selectedOption = ref(null);
-const options = [
-  { label: 'user', value: 'user' },
-  { label: 'admin', value: 'admin' },
-  { label: 'super_admin', value: 'super_admin' }
-];
-const users_btn = ref(null)
-const admins_btn = ref(null)
-const showUsers = ref(false)
-const showAdmins = ref(true)
-function populateUsers () {
-  users_btn.value.classList.add('bg-primary','text-white')
- admins_btn.value.classList.remove('bg-primary','text-white')
-  admins_btn.value.classList.remove('active')
-  showUsers.value = true
-  showAdmins.value = false
-}
-function populateAdmins () {
-  users_btn.value.classList.remove('bg-primary','text-white')
-  admins_btn.value.classList.add('bg-primary','text-white')
-  users_btn.value.classList.remove('active')
-  showUsers.value = false
-  showAdmins.value = true
-}
+
 
 const role=localStorage.getItem('role')
 const router= useRouter()

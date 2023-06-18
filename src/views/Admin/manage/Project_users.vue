@@ -2,9 +2,37 @@
 
 
 import {useRoute} from "vue-router";
+import {ref} from "vue";
+import axios from "axios";
 
+const token=localStorage.getItem('token');
+const headers = {
+  'Authorization': `Bearer ${token}`,
+};
 const  route = useRoute()
 const id = route.params.id
+// const  user_id = ref('')
+const project_id = id
+
+const users = ref([])
+
+const add_user_to_project = async () =>{
+  const response= await axios.get(`http://127.0.0.1:8000/api/users_withouth_projects/${project_id}`,{ headers: headers })
+  if(response.status == 200)
+  {
+    users.value=response.data
+  }
+}
+function add_user_project_users(id){
+  const formData = new FormData();
+  formData.append('user_id',id);
+  formData.append('project_id', project_id);
+  const response = axios.post( `http://127.0.0.1:8000/api/add_user_to_the_current_project`,{ headers: headers })
+  if(response.status == 200)
+  {
+
+  }
+}
 </script>
 
 <template>
@@ -23,9 +51,9 @@ const id = route.params.id
     <strong>Amazing progress!</strong> You have successfully added a task
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
-  <div class="admins" >
+  <div class="admins">
     <div class="card-body">
-      <button data-bs-toggle="modal" @click="assignRole('admin')" data-bs-target="#admin_add_user" class="button btn mt-2 btn-success"> <i class="fas fa-plus"></i> Add Admin</button>
+      <button data-bs-toggle="modal" @click="add_user_to_project(project_id)" data-bs-target="#add_user" class="button btn mt-2 btn-success"> <i class="fas fa-plus"></i>Add users </button>
       <table class="table table-bordered">
         <tr>
           <td colspan="6">Users in the Project</td>
@@ -33,9 +61,8 @@ const id = route.params.id
 
         <tr>
           <th scope="col">ID</th>
-          <th scope="col">User Names</th>
+          <th scope="col">User Name</th>
           <th scope="col">Email</th>
-          <th scope="col">Role</th>
           <th scope="col" colspan="2">Actions</th>
         </tr>
         <tbody>
@@ -44,78 +71,39 @@ const id = route.params.id
           <td>vcbnm</td>
           <td>gfhbjnkml</td>
           <td>vgbhjkl</td>
-          <td>
-                   <span class="badge bg-success p-2" @click="editUser(admin.id)" data-bs-toggle="modal" data-bs-target="#editUser">
-                   Edit Role</span>
-          </td>
-          <td><span class="badge bg-danger p-2" @click="updateUser">Delete</span></td>
+          <td><span class="badge bg-danger p-2" @click="removeUser">Remove</span></td>
         </tr>
-        <tr>
-          <th scope="row"><a href="#">#fdghjj</a></th>
-          <td>vcbnm</td>
-          <td>gfhbjnkml</td>
-          <td>vgbhjkl</td>
-          <td>
-                   <span class="badge bg-success p-2" @click="editUser(admin.id)" data-bs-toggle="modal" data-bs-target="#editUser">
-                   Edit Role</span>
-          </td>
-          <td><span class="badge bg-danger p-2" @click="updateUser">Delete</span></td>
-        </tr>
-        <tr>
-          <th scope="row"><a href="#">#fdghjj</a></th>
-          <td>vcbnm</td>
-          <td>gfhbjnkml</td>
-          <td>vgbhjkl</td>
-          <td>
-                   <span class="badge bg-success p-2" @click="editUser(admin.id)" data-bs-toggle="modal" data-bs-target="#editUser">
-                   Edit Role</span>
-          </td>
-          <td><span class="badge bg-danger p-2" @click="updateUser">Delete</span></td>
-        </tr>
-        <tr>
-          <th scope="row"><a href="#">#fdghjj</a></th>
-          <td>vcbnm</td>
-          <td>gfhbjnkml</td>
-          <td>vgbhjkl</td>
-          <td>
-                   <span class="badge bg-success p-2" @click="editUser(admin.id)" data-bs-toggle="modal" data-bs-target="#editUser">
-                   Edit Role</span>
-          </td>
-          <td><span class="badge bg-danger p-2" @click="updateUser">Delete</span></td>
-        </tr>
-
         </tbody>
       </table>
 
-      <!-- Modal -->
-<!--      <div class="modal fade" id="editUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
-<!--        <div class="modal-dialog">-->
-<!--          <div class="modal-content">-->
-<!--            <div class="modal-header">-->
-<!--              <h1 class="modal-title fs-5 text-primary" id="exampleModalLabel">Update User</h1>-->
-<!--              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-<!--            </div>-->
-<!--            <div class="modal-body">-->
-<!--              <h3 class="card-header">-->
-<!--                Edit User-->
-<!--              </h3>-->
-<!--              <Label>User Name</Label>-->
-<!--              <p>{{ username }}</p>-->
-<!--              <label for="">Email</label>-->
-<!--              <p>{{email}}</p>-->
-<!--              <label for="">Change Role</label>-->
-<!--              <div>-->
-<!--                <select v-model="selectedOption">-->
-<!--                  <option v-for="option in options" :value="option.value" :key="option.value">{{ option.label }}</option>-->
-<!--                </select>-->
-<!--                <p>You selected: {{ selectedOption }}</p>-->
-<!--              </div>-->
-<!--              <button type="button" @click="updateUser(user_id)"  class="btn bg-primary btn-secondary float-end" data-bs-dismiss="modal">Save changes</button>-->
-<!--            </div>-->
 
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
+      <div class="modal  fade" id="add_user" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5 text-primary" id="exampleModalLabel">Click Add to add the user on the project</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table-primary table-bordered">
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Action</th>
+                </tr>
+                <tr v-for="user in users" :key="user">
+                  <td>{{user.name}}</td>
+                  <td>{{user.email}}</td>
+                  <td>
+                    <button class="btn btn-primary" @click="add_user_project_users(user.id)">
+                      Add User
+                    </button>
+                  </td>
+                </tr>
+              </table>
+             </div>
+        </div>
+      </div>
     </div>
   </div>
 <!--  <div class="modal fade" id="editUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
@@ -180,7 +168,7 @@ const id = route.params.id
 <!--        </div>-->
 <!--      </div>-->
 <!--    </div>-->
-<!--  </div>-->
+  </div>
 
 </template>
 

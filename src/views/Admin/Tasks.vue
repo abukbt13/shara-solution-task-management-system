@@ -1,19 +1,51 @@
 <script setup>
+import router from "@/router";
 import axios from "axios"
 import {onMounted, ref} from "vue";
 const projects=ref([])
-const name = ref('')
-const description = ref('')
+const name = ref([])
+const description = ref([])
 const edited_project_id = ref(null)
 const token=localStorage.getItem('token');
 const headers = {
-'Authorization': `Bearer ${token}`,
+  'Authorization': `Bearer ${token}`,
 };
+
+
+async function createProject (event)
+{
+  const formData = new FormData();
+  formData.append('name', name.value);
+  formData.append('description', description.value);
+  let url = `http://127.0.0.1:8000/api/addprojects`
+
+  const res = await axios.post(url, formData,{ headers: headers })
+
+  if(res.status === 200)
+  {
+    alert('Created successfully')
+    getProject()
+  }
+}
+
+
+
+async function getProject(event)
+{
+  const response= await axios.get('http://127.0.0.1:8000/api/getprojects',{ headers: headers })
+  if(response.status == 200)
+  {
+    // console.log('DKJNDJBJKDNXNDJN')
+    projects.value=response.data.data
+    // console.log()
+  }
+
+}
+
+let modal_title= ref(null)
 
 function editProject(project)
 {
-  //alert(project.id) Trying to know which project exactly I am dealing with
-  //project here taken as parameter is a single project from the array of projects
   if (project !=null)
   {
     name.value = project.name
@@ -29,53 +61,6 @@ function editProject(project)
     edited_project_id.value = null
   }
 }
-
-            const createProject = async () =>
-              {
-
-               if(edited_project_id.value === null){
-                  const formData = new FormData();
-                    formData.append('name', name.value);
-                    formData.append('description', description.value);
-                    let url = `http://127.0.0.1:8000/api/add_project`
-                    const res = await axios.post(url, formData,{ headers: headers })
-                    if(res.status === 200)
-                    {
-                      getProject()
-                    }
-               }
-               else{
-                 console.log(edited_project_id.value)
-                  const formData = new FormData();
-                  formData.append('name', name.value);
-                  formData.append('description', description.value);
-
-                  let url = `http://127.0.0.1:8000/api/edit_project/${edited_project_id.value}`
-                  const res = await axios.post(url, formData,{ headers: headers })
-                  if(res.status === 200)
-                  {
-                    getProject()
-                  }
-               }
-
-                }
-
-
-
-      async function getProject(event)
-      {
-         const response= await axios.get('http://127.0.0.1:8000/api/getprojects',{ headers: headers })
-          if(response.status == 200)
-          {
-          // console.log('DKJNDJBJKDNXNDJN')
-              projects.value=response.data.data
-          // console.log()
-          }
-
-      }
-
-    let modal_title= ref(null)
-
 onMounted(()=>{
   getProject()
 })
@@ -85,7 +70,7 @@ onMounted(()=>{
   <!-- Button trigger modal -->
 
   <button type="button" @click="editProject(null)" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-    Create New Project <span> <i class="fa fa-plus" aria-hidden="true"></i></span>
+    Create New Task <span> <i class="fa fa-plus" aria-hidden="true"></i></span>
 
   </button>
 
