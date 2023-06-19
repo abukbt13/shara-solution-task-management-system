@@ -2,7 +2,7 @@
 
 
 import {useRoute} from "vue-router";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import axios from "axios";
 
 const token=localStorage.getItem('token');
@@ -11,28 +11,40 @@ const headers = {
 };
 const  route = useRoute()
 const id = route.params.id
-// const  user_id = ref('')
 const project_id = id
-
 const users = ref([])
+const projectusers = ref([])
 
-const add_user_to_project = async () =>{
-  const response= await axios.get(`http://127.0.0.1:8000/api/users_withouth_projects/${project_id}`,{ headers: headers })
-  if(response.status == 200)
+const list_users_not_in_project = async () =>{
+  const response= await axios.get(`http://127.0.0.1:8000/api/list_users_not_in_project/${project_id}`,{ headers: headers })
+  if(response.status === 200)
   {
     users.value=response.data
   }
 }
-function add_user_project_users(id){
-  const formData = new FormData();
-  formData.append('user_id',id);
-  formData.append('project_id', project_id);
-  const response = axios.post( `http://127.0.0.1:8000/api/add_user_to_the_current_project`,{ headers: headers })
-  if(response.status == 200)
+
+const fetchProjectUsers = async () =>{
+  const response= await axios.get(`http://127.0.0.1:8000/api/fetch_users_to_the_current_project/${project_id}`,{ headers: headers })
+  if(response.status === 200)
+  {
+    projectusers.value=response.data
+  }
+}
+
+function add_user_to_project_users(user_id){
+  const formData = new FormData()
+  formData.append('user_id',user_id)
+  formData.append('project_id',project_id)
+  const response =  axios.post(`http://127.0.0.1:8000/api/add_user_to_the_current_project`,formData,{ headers: headers })
+  if(response.status === 200)
   {
 
   }
 }
+onMounted(()=>{
+  fetchProjectUsers()
+  list_users_not_in_project()
+})
 </script>
 
 <template>
@@ -53,24 +65,21 @@ function add_user_project_users(id){
   </div>
   <div class="admins">
     <div class="card-body">
-      <button data-bs-toggle="modal" @click="add_user_to_project(project_id)" data-bs-target="#add_user" class="button btn mt-2 btn-success"> <i class="fas fa-plus"></i>Add users </button>
+      <button data-bs-toggle="modal" @click="list_users_not_in_project(project_id)" data-bs-target="#add_user" class="button btn mt-2 btn-success"> <i class="fas fa-plus"></i>Add users </button>
       <table class="table table-bordered">
         <tr>
           <td colspan="6">Users in the Project</td>
         </tr>
 
         <tr>
-          <th scope="col">ID</th>
           <th scope="col">User Name</th>
           <th scope="col">Email</th>
           <th scope="col" colspan="2">Actions</th>
         </tr>
         <tbody>
-        <tr>
-          <th scope="row"><a href="#">#fdghjj</a></th>
-          <td>vcbnm</td>
-          <td>gfhbjnkml</td>
-          <td>vgbhjkl</td>
+        <tr v-for="projectuser in projectusers" :key="projectuser">
+          <td>{{projectuser.name}}</td>
+          <td>{{projectuser.email}}</td>
           <td><span class="badge bg-danger p-2" @click="removeUser">Remove</span></td>
         </tr>
         </tbody>
@@ -95,7 +104,7 @@ function add_user_project_users(id){
                   <td>{{user.name}}</td>
                   <td>{{user.email}}</td>
                   <td>
-                    <button class="btn btn-primary" @click="add_user_project_users(user.id)">
+                    <button class="btn btn-primary" data-bs-dismiss="modal" @click="add_user_to_project_users(user.id)">
                       Add User
                     </button>
                   </td>
