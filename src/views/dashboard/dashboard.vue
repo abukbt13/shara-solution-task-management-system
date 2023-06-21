@@ -113,11 +113,7 @@
             <span>Projects</span>
           </router-link>
         </li>
-        <li class="nav-item">
-          <router-link to="/project_tasks" class="nav-link ">
-            <span>Tasks</span>
-          </router-link>
-        </li><!-- End Dashboard Nav -->
+       <!-- End Dashboard Nav -->
 
 
       <!-- End Dashboard Nav -->
@@ -255,7 +251,7 @@ let {currentDate,updateCurrentDate}=dateupdates
 let {users,editUser,getAdmins,admins,username,email,user_id,name,assignRole,saveUser,getUsers}=user
 
 
-let{getTodos,tasks,showSuccess,clearFields,deleteTask,submitTodo,error,todo,edit_Todo,todo_id,}=todomodules
+let{tasks,showSuccess,clearFields,deleteTask,submitTodo,error,todo,edit_Todo,todo_id,}=todomodules
 let  {editreviews, reviews,editReview, markComplete, getReviews, show_single_review,showReview,submitReview,description,reviewerror, review_id }=reviewsmodule
 // let {saveUser,name,email,role}=userdetails
 const truncatedLength = ref(10);
@@ -285,7 +281,6 @@ function truncatedDescription(description) {
 onMounted(()=>{
   authUser()
   getReviews()
-  getTodos()
   getRandomWeekGoals()
   updateCurrentDate()
   getUsers()

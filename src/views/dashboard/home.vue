@@ -22,38 +22,38 @@ let{ alert,getTodos,showSuccess,clearFields,submitTodo,deleteTask,tasks,todo,edi
                 <div class="card-body">
                 <h5 class="card-title">Recent Sales <span>| Today</span></h5>
 
-                <table class="table table-borderless datatable">
-                  <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                     <th scope="col">Tasks</th>
-                     <th scope="col">status</th>
-                    <th style="width: 4rem;" scope="col " class="" colspan="3" >Actions</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr v-for="task in tasks" :key="task">
-                    <td scope="row"><a href="#">{{task.id}}</a></td>
-                    <td>{{task.todo}}</td>
+<!--                <table class="table table-borderless datatable">-->
+<!--                  <thead>-->
+<!--                  <tr>-->
+<!--                    <th scope="col">#</th>-->
+<!--                     <th scope="col">Tasks</th>-->
+<!--                     <th scope="col">status</th>-->
+<!--                    <th style="width: 4rem;" scope="col " class="" colspan="3" >Actions</th>-->
+<!--                  </tr>-->
+<!--                  </thead>-->
+<!--                  <tbody>-->
+<!--                  <tr v-for="task in tasks" :key="task">-->
+<!--                    <td scope="row"><a href="#">{{task.id}}</a></td>-->
+<!--                    <td>{{task.todo}}</td>-->
 
-                    <td v-if="task.status === 'active'">Pending</td>
-                    <td v-else>Completed</td>
-                    <td>
-                      <i @click="edit_Todo(task.id)" data-bs-toggle="modal" data-bs-target="#add" class="fa fa-pencil" aria-hidden="true" style="font-size: 25px; color: blue;" title="Edit to do"></i>
-                    </td>
-                    <td>
-                      <i class="fa fa-trash" @click="deleteTask(task.id)" aria-hidden="true" style="font-size: 25px; color: blue;" title="Delete"></i>
-                    </td>
+<!--                    <td v-if="task.status === 'active'">Pending</td>-->
+<!--                    <td v-else>Completed</td>-->
+<!--                    <td>-->
+<!--                      <i @click="edit_Todo(task.id)" data-bs-toggle="modal" data-bs-target="#add" class="fa fa-pencil" aria-hidden="true" style="font-size: 25px; color: blue;" title="Edit to do"></i>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                      <i class="fa fa-trash" @click="deleteTask(task.id)" aria-hidden="true" style="font-size: 25px; color: blue;" title="Delete"></i>-->
+<!--                    </td>-->
 
-                    <td  v-if="task.status === 'active'">
-                      <i class="fa fa-check" @click="markComplete(task.id)" aria-hidden="true" style="font-size: 25px; color: blue;" title="Mark as completed"></i>
-                    </td>
-                    <td v-else>
-                      <i class="fa fa-check-double"  aria-hidden="true" style="font-size: 25px; color: blue;" title="Mark as completed"></i>
-                    </td>
-                  </tr>
-                  </tbody>
-                </table>
+<!--                    <td  v-if="task.status === 'active'">-->
+<!--                      <i class="fa fa-check" @click="markComplete(task.id)" aria-hidden="true" style="font-size: 25px; color: blue;" title="Mark as completed"></i>-->
+<!--                    </td>-->
+<!--                    <td v-else>-->
+<!--                      <i class="fa fa-check-double"  aria-hidden="true" style="font-size: 25px; color: blue;" title="Mark as completed"></i>-->
+<!--                    </td>-->
+<!--                  </tr>-->
+<!--                  </tbody>-->
+<!--                </table>-->
 
               </div>
 

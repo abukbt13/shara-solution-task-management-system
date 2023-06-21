@@ -14,7 +14,6 @@ import Progress from "@/views/Progress"
 import Tasks from "@/views/Admin/manage/Tasks"
 import Overview from "@/views/Admin/manage/Overview"
 import project_users from "@/views/Admin/manage/Project_users"
-import ProjectTask  from "@/views/Admin/Tasks.vue"
 
 import Project from "@/views/Admin/Project.vue"
 
@@ -86,12 +85,6 @@ const routes = [
         path: '/projects',
         name: 'projects',
         component: Project,
-
-      },
-      {
-        path: '/project_tasks',
-        name: 'project_tasks',
-        component: ProjectTask,
 
       }
 

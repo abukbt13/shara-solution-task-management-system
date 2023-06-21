@@ -7,23 +7,23 @@ const tasks=ref([])
 const headers = {
     'Authorization': `Bearer ${token}`,
 };
-const getTodos=async () =>{
-
-    const res = await axios.get('http://127.0.0.1:8000/api/show-tasks', {
-        headers
-    });
-    console.log(res)
-    if(res.status===200){
-        tasks.value=  res.data
-
-    }
-}
+// const getTodos=async () =>{
+//
+//     const res = await axios.get('http://127.0.0.1:8000/api/show-tasks', {
+//         headers
+//     });
+//     console.log(res)
+//     if(res.status===200){
+//         tasks.value=  res.data
+//
+//     }
+// }
 const deleteTask=async (id)=>{
     // alert(id)
     const response = await axios.delete(`http://127.0.0.1:8000/api/tasks/${id}`);
     if(response.status===200){
         console.log(response.data)
-        getTodos()
+        // getTodos()
 
     }
 }
@@ -51,7 +51,7 @@ const submitTodo = async () => {
 
         const res = await axios.post('http://127.0.0.1:8000/api/tasks', formData, { headers: headers });
         if (res.status === 200) {
-            getTodos();
+
             clearFields()
             todo_id.value=null
             todo.value=null
@@ -78,4 +78,4 @@ function edit_Todo(id){
 }
 
 
-export default { alert,getTodos,showSuccess,clearFields,submitTodo,deleteTask,tasks,todo,edit_Todo,todo_id,error}
+export default { alert,showSuccess,clearFields,submitTodo,deleteTask,tasks,todo,edit_Todo,todo_id,error}
