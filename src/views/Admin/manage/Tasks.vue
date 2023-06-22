@@ -32,11 +32,13 @@ const user_id = ref('')
 const time_line = ref('')
 const date_line = ref('')
 const description = ref('')
+const task_type = ref('Assigned')
 
 const createTask = async () =>{
   const formData= new FormData()
   formData.append('task',task.value)
   formData.append('user_id',user_id.value)
+  formData.append('task_type',task_type.value)
   formData.append('date_line',date_line.value)
   formData.append('time_line',time_line.value)
   formData.append('description',description.value)

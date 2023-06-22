@@ -1,3 +1,4 @@
+
 <template>
 
 
@@ -32,10 +33,17 @@
           </li>
           <li id="components-nav" class="nav-content collapse " >
             <i class="fa fa-eye" aria-hidden="true"></i>
-            <span   style="text-align:left; color: blue;">
-             View tasks
+            <span   style="text-align:left; color: blue;" @click="showActive">
+             Active Tasks
             </span>
           </li>
+          <li id="components-nav" class="nav-content collapse " >
+            <i class="fa fa-eye" aria-hidden="true"></i>
+            <span   style="text-align:left; color: blue;" @click="showCompleted">
+             Completed Tasks
+            </span>
+          </li>
+
 
         </ul>
       </li>
@@ -123,30 +131,6 @@
   <!-- start of Sidebar -->
 
 <!-- Start of Modal for adding and editing  to do-->
-  <div class="modal fade" id="add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header w-100">
-          <h1 class="modal-title fs-5" id="exampleModalLabel" style="font-weight: bold; width: 100%; text-align: center; color:#0000FF;">Add To Do</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <label style="padding-left: 20px;">Enter your todo </label>
-        <div class="modal-body">
-            <textarea name="todo" v-model="todo" id="" cols="30" rows="3" class="form-control" placeholder="Enter the to do here ....."></textarea>
-            <span class="text-danger" v-if="error">{{ error }}</span>
-            <br>
-
-              <div class="float-end" v-if="todo">
-                <button type="button" @click="submitTodo(todo_id)" class="btn btn-secondary" data-bs-dismiss="modal">Add</button>
-              </div>
-
-                 <div class="float-end" v-else="todo">
-                    <button type="button" @click="submitTodo(todo_id)" class="btn btn-secondary">Add</button>
-                </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- End of Modal for adding and editing  to do-->
 
@@ -180,10 +164,10 @@
 
   <main id="main" class="main">
 
-    <!-- End Page Title -->
     <router-view></router-view>
 
-  </main><!-- End #main -->
+  </main>
+  <!-- End #main -->
 
   <!-- ======= Footer ======= -->
   <Footer />
