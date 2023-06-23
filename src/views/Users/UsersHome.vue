@@ -150,7 +150,65 @@ const  markComplete = async (id)=>{
 function viewReview(review){
   description.value=review.description
 }
+const weeklygoal = ref ('')
+const Yearly_goal = ref ('')
+
+const saveWeeklyGoal = async () =>{
+  const formData = new FormData();
+
+  formData.append('goal', weeklygoal.value);
+
+
+  const res = await axios.post('http://127.0.0.1:8000/api/create_goal', formData, { headers });
+  if (res.status === 200) {
+     alert('success you created a goal')
+  }
+}
+const vid_name = ref()
+const youtube_link = ref()
+const saveYoutubeDetails = async () =>{
+  const formData = new FormData();
+
+  formData.append('name', vid_name.value);
+  formData.append('link', youtube_link.value);
+
+
+  const res = await axios.post('http://127.0.0.1:8000/api/save_youtube_video', formData, { headers });
+  if (res.status === 200) {
+     alert('success you created a goal')
+  }
+}
+const YearlyGoal = async () =>{
+  const formData = new FormData();
+
+  formData.append('goal', Yearly_goal.value);
+
+
+  const res = await axios.post('http://127.0.0.1:8000/api/create_yearly_goal', formData, { headers });
+  if (res.status === 200) {
+     alert('success you created a goal')
+  }
+}
+
+const randomWeekGoals = ref('');
+const getRandomWeekGoals= async () =>{
+
+    const response = await axios.get('http://127.0.0.1:8000/api/getRandomWeekGoal');
+    if (response.status === 200) {
+      randomWeekGoals.value = response.data;
+    }
+}
+const year_gooals = ref('');
+const getRandomyearGoals= async () =>{
+
+    const response = await axios.get('http://127.0.0.1:8000/api/getRandomYearGoal');
+    if (response.status === 200) {
+      year_gooals.value = response.data;
+    }
+}
 onMounted(() =>{
+  getRandomWeekGoals()
+  getRandomyearGoals()
   getuserTasks()
   getReviews()
   get_Completed_UserTasks()
@@ -160,6 +218,53 @@ onMounted(() =>{
 <template>
 
   <section class="section dashboard">
+    <!--             Add Google docs modal here-->
+    <div class="modal fade" id="google_docs" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <div class="modal-body">
+            <p class="border-bottom">Document details</p>
+
+            <label class="text-uppercase" for="">Document Name</label>
+            <input type="text" v-model="doc_name" class="form-control">
+            <label class="text-uppercase" for="">Document Link</label>
+            <input type="text" v-model="google_link" class="form-control" placeholder="Type your goal here .....">
+            <span class="text-danger" v-if="error">{{ error }}</span>
+            <div class="mt-1 float-end">
+
+              <button  v-if="title"  type="button" @click="submitGoogleDoc" class="btn btn-secondary">Save link</button>
+
+              <button v-else  type="button" @click="submitGoogleDoc" class="btn btn-secondary" data-bs-dismiss="modal">Save link</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--         End of   Google docs Video-->
+    <!--             Add Local docs modal here-->
+    <div class="modal fade" id="local_docs" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <div class="modal-body">
+            <p class="border-bottom">Upload Document here</p>
+            <label class="text-uppercase" for="">Document Name</label>
+            <input type="text" v-model="doc_name" class="form-control">
+            <label class="text-uppercase" for="">Enter Link</label>
+            <input  type="file"  class="form-control" placeholder="Type your goal here .....">
+            <span class="text-danger" v-if="error">{{ error }}</span>
+            <div class="mt-1 float-end">
+
+              <button  v-if="title"  type="button" @click="savelocalDocument" class="btn btn-secondary">Save link</button>
+
+              <button v-else  type="button" @click="savelocalDocument" class="btn btn-secondary" data-bs-dismiss="modal">Upload Document</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--         End of   Local docs Video-->
     <!--  modal for Task adding   -->
     <div class="modal fade" id="add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -175,17 +280,17 @@ onMounted(() =>{
           </div>
           <label style="padding-left: 20px;">Enter your todo </label>
           <div class="modal-body">
-            <textarea name="todo" v-model="todo" id="" cols="30" rows="3" class="form-control" placeholder="Enter the to do here ....."></textarea>
+            <textarea name="todo" v-model="todo" id="" cols="20" rows="3" class="form-control" placeholder="Enter the to do here ....."></textarea>
             <span class="text-danger" v-if="error">{{ error }}</span>
             <br>
 
-            <div class="float-end" v-if="todo">
-              <button v-if="title" type="button" @click="submitTodo(todo_id)" class="btn btn-secondary" data-bs-dismiss="modal">Add</button>
-            </div>
 
-            <div class="float-end" v-else="todo">
-              <button v-if="title" type="button" @click="submitTodo(todo_id)" class="btn btn-secondary">Add</button>
-            </div>
+            <div class="float-end">
+
+              <button  v-if="title"  type="button" @click="submitTodo(todo_id)" class="btn btn-secondary">Add</button>
+
+              <button v-else  type="button" @click="submitTodo(todo_id)" class="btn btn-secondary" data-bs-dismiss="modal">Add</button>
+             </div>
           </div>
         </div>
       </div>
@@ -197,31 +302,31 @@ onMounted(() =>{
       <div class="col-lg-8">
         <div class="row">
           <div class="col-12">
-            <div class="card recent-sales overflow-auto">
-              <div class="card-body">
-                <h5 class="card-title">Tasks At Hand <span>| Today</span></h5>
+            <p style="position: sticky;" class="pb-0 fw-bold text-lg-center border-bottom-1 border-black">Tasks At Hand <span>| Today</span></p>
 
-                <table class="table table-borderless datatable">
-                  <thead>
+            <div style="overflow: scroll; min-height: 20rem;max-height: 21rem" class="card-body border-top-4">
+
+                <table class="table  datatable">
+
                   <tr>
-                    <th scope="col">order</th>
-                    <th scope="col">Tasks</th>
-                    <th scope="col">Task Type</th>
-                    <th scope="col">status</th>
-                    <th scope="col">Action</th>
+                    <th class="border-1">#</th>
+                    <th class="border-1">Tasks</th>
+                    <th class="border-1">Task_Type</th>
+                    <th class="border-1" colspan="3">Action</th>
                 </tr>
-                  </thead>
                   <tbody v-show="active" style="display:none;">
                   <tr v-for="(task, index) in tasks" :key="task">
-                    <td>{{index + 1}}</td>
-                    <td>{{task.todo}}</td>
-                    <td>{{task.task_type}}</td>
+                    <td  class="border-1">{{index + 1}}</td>
+                    <td  class="border-1">{{task.todo}}</td>
+                    <td  class="border-1">{{task.task_type}}</td>
 
-                    <td>
+                    <td  class="border-1">
                       <i @click="edit_Todo(task)" data-bs-toggle="modal" data-bs-target="#add" class="fa fa-pencil" aria-hidden="true" style="font-size: 25px; color: blue;" title="Edit to do"></i>
                     </td>
-                    <td>
+                    <td  class="border-1">
                       <i class="fa fa-trash" @click="deleteTask(task.id)" aria-hidden="true" style="font-size: 25px; color: blue;" title="Delete"></i>
+                    </td>
+                    <td>
                       <i class="fa fa-check" @click="markComplete(task.id)" aria-hidden="true" style="font-size: 25px; color: blue;" title="Mark as completed"></i>
                     </td>
 
@@ -231,29 +336,87 @@ onMounted(() =>{
 
               </div>
 
+          </div>
+        <div class="">
+          <p class="text-center border-bottom border-primary text-primary text-uppercase">My goals that Keep me going</p>
+          <div class="row">
+
+            <div  class="col">
+                <div class="d-flex justify-content-between">
+                  <p class="p-2">Weekly Goals</p>
+                  <button data-bs-toggle="modal" data-bs-target="#weekly_goals" class="float-end" style="color: white;  background: blue;border-radius: 7px; height: 2rem; border: 1px solid">add goal</button>
+                </div>
+              <p>
+                {{randomWeekGoals.goal}}
+              </p>
+<!--                  Modal for adding weekly goals  -->
+              <div class="modal fade" id="weekly_goals" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+
+                    <div class="modal-body">
+                      <form @submit.prevent="saveWeeklyGoal">
+                      <label class="text-uppercase" for="">Create Weekly Goal here</label>
+                      <textarea name="todo" v-model="weeklygoal" id="" cols="20" rows="3" class="form-control" placeholder="Type your goal here ....."></textarea>
+                      <span class="text-danger" v-if="error">{{ error }}</span>
+
+
+                      <div class="mt-1 float-end">
+
+                        <button   type="submit" class="btn btn-secondary">Add Goal</button>
+
+<!--                        <button v-else  type="submit" @click="submitTodo(todo_id)" class="btn btn-secondary" data-bs-dismiss="modal">Add Goal</button>-->
+                      </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!--                End  Modal for adding weekly goals  -->
+
+            </div>
+            <div  class="col">
+                <div class="d-flex justify-content-between">
+                  <p class="p-2">Yearly Goals</p>
+                  <button data-bs-toggle="modal" data-bs-target="#weekly_goals" class="float-end" style="color: white;  background: blue;border-radius: 7px; height: 2rem; border: 1px solid">add goal</button>
+                </div>
+              <p>
+                {{year_gooals.goal}}
+              </p>
+              <!--             Yearly modal here-->
+              <div class="modal fade" id="yearly_goals" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+
+                    <div class="modal-body">
+                      <form @submit.prevent="YearlyGoal">
+
+                        <label class="text-uppercase" for="">Create Yearly Goal here</label>
+                        <textarea v-model="Yearly_goal" id="" cols="20" rows="3" class="form-control" placeholder="Type your goal here ....."></textarea>
+                        <span class="text-danger" v-if="error">{{ error }}</span>
+
+
+                        <div class="mt-1 float-end">
+
+                          <button    type="submit" class="btn btn-secondary">Add Goal</button>
+
+                          <!--                        <button v-else  type="button"  class="btn btn-secondary" data-bs-dismiss="modal">Add Goal</button>-->
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--         End of    Yearly modal here-->
+
             </div>
           </div>
-          <div class="card">
-            <div class="card-header">
-              <h4 class="text-center">MY Goals</h4>
-            </div>
-            <div class="row">
-              <div class="col">
-                <p class="text-center">weekly Goals</p>
-                <ul>
-                  <button class="btn btn-primary">Welcome</button>
-                  <li>random goal here</li>
-                </ul>
-              </div>
-              <div class="col">
-                <p class="text-center">Yearly Goals</p>
-                <ul>
-                  <li>Land a job</li>
-                </ul>
-              </div>
-            </div>
-            <!-- End Recent Sales -->
+          <div class="row border-top">
+            To customize, View and edit your goals click here <br>
+            <a href="#">Settings</a>
           </div>
+        </div>
         </div>
       </div>
       <!-- End Left side columns/ colum one -->
@@ -262,9 +425,9 @@ onMounted(() =>{
       <div class="col-lg-4">
 
         <!-- Recent Activity -->
-        <div class="card">
-          <div class="filter">
-            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+        <div class="card pb-0">
+          <div class="filter" style="position: sticky;">
+            <div class="icon float-end"  data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></div>
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
               <li class="dropdown-header text-start">
                 <h6>Filter</h6>
@@ -274,18 +437,18 @@ onMounted(() =>{
               <li><a class="dropdown-item" href="#">This Month</a></li>
               <li><a class="dropdown-item" href="#">This Year</a></li>
             </ul>
+            <p class="card-title">My reviews <span>| Today</span></p>
           </div>
 
-          <div class="card-body">
-            <h5 class="card-title">My reviews <span>| Today</span></h5>
-            <p data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <span><i class="fa fa-plus" aria-hidden="true"></i> </span>Add Review of your day <img src="assets/img/write.webp" width="54" height="57"></p>
+          <div style="min-height: 16rem;max-height: 19rem; overflow: scroll" class="card-body">
+            <p style="background: #D980FA;" class="border sticky-top shadow" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <span><i class="fa fa-plus" aria-hidden="true"></i> </span>Add Review of your day</p>
             <div class="activity">
               <div data-bs-toggle="modal" @click="viewReview(review)"  data-bs-target="#staticBackdrop" class="activity-item d-flex" v-for="review in reviews" :key="review">
                 <div  class="d-flex ">
-                  <div class="activite-label">{{ review.date}}</div>
-                  <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+                  <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
                   <div class="activity-content">
-                    {{ truncatedDescription(review.description) }} .. <span class="spanview_review" style="border-bottom: 1px black solid;">click to view</span>
+                    {{ truncatedDescription(review.description) }} <br>
+                    <span class="spanview_review" style="border-bottom: 1px black solid;">click to view</span>
                   </div>
                 </div>
 
@@ -305,8 +468,8 @@ onMounted(() =>{
                       <p class="ps-5 text-danger text-uppercase fw-bold">{{reviewerror}}</p>
 
                       <div class="modal-footer border-0">
-                       <button type="submit" class="btn btn-success" data-bs-dismiss="modal" v-if="description">Create review</button>
-                       <button type="submit" class="btn btn-outline-success"  v-else>Create review</button>
+                       <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" v-if="description">Create review</button>
+                       <button type="submit" class="btn btn-outline-primary"  v-else>Create review</button>
 
 
                       </div>
@@ -322,9 +485,41 @@ onMounted(() =>{
           </div>
         </div>
         <!-- End Recent Activity -->
+          <p>My favorite/learning Youtube videos <span><i data-bs-toggle="modal" data-bs-target="#youtube_video" class="fa fa-lg fa-plus"></i></span></p>
 
+        <button class="btn btn-primary m-1">How to win </button>
+        <button class="btn btn-primary m-1">How to win </button>
+        <button class="btn btn-primary m-1">Scoring </button>
+        <button class="btn btn-primary m-1">How to winow to winow to winow to win </button>
+        <button class="btn btn-primary m-1">Influence </button>
+        <!--             Add youtube Video modal here-->
+        <div class="modal fade" id="youtube_video" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
 
-      </div><!-- End Right side columns -->
+              <div class="modal-body">
+                <form @submit.prevent="saveYoutubeDetails">
+                  <p>You tube details</p>
+                  <label class="text-uppercase" for="">Name </label>
+                  <input type="text" class="form-control" v-model="vid_name" placeholder="Name of the viedeo">
+                  <label class="text-uppercase" for="">youtube link</label>
+                  <input name="todo" v-model="youtube_link"   class="form-control" placeholder="Enter link here .....">
+                  <span class="text-danger" v-if="error">{{ error }}</span>
+
+                  <div class="mt-1 float-end">
+
+                    <button  type="submit"  class="btn btn-secondary">Add Goal</button>
+
+<!--                    <button v-else  type="button"  class="btn btn-secondary" data-bs-dismiss="modal">Save Video</button>-->
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--         End of   Add youtube Video-->
+      </div>
+      <!-- End Right side columns -->
 
     </div>
   </section>

@@ -8,7 +8,7 @@
 
   <!-- start of Sidebar -->
 
-  <aside id="sidebar" class="sidebar">
+  <aside id="sidebar" ref="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav"  v-if="role==='user'">
 
       <li class="nav-item">
@@ -85,10 +85,34 @@
       <li class="nav-heading">Pages</li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
+        <div class="nav-link collapsed">
           <i class="bi bi-person"></i>
-          <span>Profile</span>
-        </a>
+          <span>Documents</span>
+        </div>
+        <div class="row">
+          <p class="sticky-bottom">Google Documents <span><i data-bs-toggle="modal" data-bs-target="#google_docs" class="fa fa-lg fa-plus"></i></span> </p>
+          <div style="min-height: 8rem;max-height: 9rem; overflow: auto;" class="div">
+
+            <button class="btn btn-primary m-1">How to win </button>
+            <button class="btn btn-primary m-1">How to win </button>
+            <button class="btn btn-primary m-1">Scoring </button>
+            <button class="btn btn-primary m-1">How to winow to winow to winow to win </button>
+            <button class="btn btn-primary m-1">Influence </button>
+
+          </div>
+
+          <div style="min-height: 10rem;max-height: 11rem; overflow: auto;" class="div">
+            <p class="sticky-bottom">Google Documents <span><i data-bs-toggle="modal" data-bs-target="#local_docs" class="fa fa-lg fa-plus"></i></span> </p>
+
+            <button class="btn btn-primary m-1">How to win </button>
+            <button class="btn btn-primary m-1">How to win </button>
+            <button class="btn btn-primary m-1">Scoring </button>
+            <button class="btn btn-primary m-1">How to winow to winow to winow to win </button>
+            <button class="btn btn-primary m-1">Influence </button>
+
+          </div>
+
+        </div>
       </li><!-- End Profile Page Nav -->
 
     </ul>
@@ -170,9 +194,11 @@
   <!-- End #main -->
 
   <!-- ======= Footer ======= -->
-  <Footer />
-  <!-- End Footer -->
+  <div  class="">
+    <Footer />
+  </div>
 
+  <!-- End Footer -->
 
 </template>
 <script setup>
@@ -210,7 +236,7 @@ const updateUser = async (id) =>{
   });
   // console.log(res)
   if(res.status===200){
-    alert('success')
+    alert('primary')
   }
 }
 // #######   Authenticate user

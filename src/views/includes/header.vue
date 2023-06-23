@@ -5,6 +5,10 @@ let{fetchUserName, userName, userEmail, logoutUser}=loggedinuser
 onMounted(()=>{
 fetchUserName()
 })
+// const sidebar = ref('')
+// function  showSidebar(){
+//   sidebar.classList.add('')
+// }
 </script>
 <template>
   <header id="header" class="header fixed-top d-flex align-items-center">
@@ -14,7 +18,7 @@ fetchUserName()
         <img src="assets/img/logo.png" alt="">
         <span class="d-none d-lg-block">Task Manager</span>
       </div>
-      <i class="bi bi-list toggle-sidebar-btn"></i>
+      <i class="bi bi-list toggle-sidebar-btn" @click="showSidebar"></i>
     </div><!-- End Logo -->
 
     <div class="search-bar">
