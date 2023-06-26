@@ -16,6 +16,7 @@ import Overview from "@/views/Admin/manage/Overview"
 import project_users from "@/views/Admin/manage/Project_users"
 
 import Project from "@/views/Admin/Project.vue"
+import Youtube from "@/views/Users/modules/Youtube.vue"
 
 const routes = [
 
@@ -23,24 +24,13 @@ const routes = [
     path: '/tests',
     name: 'test',
     component: Tests,
-    children: [
-      {
-        path: '',
-        name: 'testing',
-        component: Testing,
-      },
-      {
-        path: '/learn',
-        name: 'learn',
-        component: Learn,
-      },
-      {
-        path: '/progress',
-        name: 'progress',
-        component: Progress,
-      }
-    ]
   },
+  {
+    path: '/testing',
+    name: 'testing',
+    component: Testing,
+  },
+
   {
     path: '/login',
     name: 'login',
@@ -89,6 +79,13 @@ const routes = [
       }
 
     ]
+  }
+  ,
+  {
+    path: '/youtube/:id',
+    name: 'youtube',
+    component: Youtube,
+
   },
 
     {

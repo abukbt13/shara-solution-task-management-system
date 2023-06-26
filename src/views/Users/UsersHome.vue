@@ -1,5 +1,6 @@
 <script setup>
 import axios from "axios";
+import Youtube from "@/views/Users/modules/Youtube.vue";
 import {onMounted, ref} from "vue";
 const tasks = ref([])
 const reviews = ref([])
@@ -135,6 +136,12 @@ const getReviews = async () => {
   reviews.value = response.data
   console.log(response.data)
 }
+const youtubes=ref([])
+const getYoutube = async () => {
+  const response = await axios.get('http://127.0.0.1:8000/api/show_youtube_video',{headers});
+  youtubes.value = response.data
+  // console.log(response.data)
+}
 const  markComplete = async (id)=>{
   // alert(id)
   const res = await axios.get(`http://127.0.0.1:8000/api/mark_completed/${id}`,{
@@ -212,6 +219,7 @@ onMounted(() =>{
   getuserTasks()
   getReviews()
   get_Completed_UserTasks()
+  getYoutube()
 })
 </script>
 
@@ -487,11 +495,10 @@ onMounted(() =>{
         <!-- End Recent Activity -->
           <p>My favorite/learning Youtube videos <span><i data-bs-toggle="modal" data-bs-target="#youtube_video" class="fa fa-lg fa-plus"></i></span></p>
 
-        <button class="btn btn-primary m-1">How to win </button>
-        <button class="btn btn-primary m-1">How to win </button>
-        <button class="btn btn-primary m-1">Scoring </button>
-        <button class="btn btn-primary m-1">How to winow to winow to winow to win </button>
-        <button class="btn btn-primary m-1">Influence </button>
+
+           <router-link v-for="youtube in youtubes" :key="youtube" :to="`/youtube/${youtube.link}`" class="btn btn-primary m-1">{{ youtube.name}}</router-link>
+
+
         <!--             Add youtube Video modal here-->
         <div class="modal fade" id="youtube_video" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
@@ -508,7 +515,7 @@ onMounted(() =>{
 
                   <div class="mt-1 float-end">
 
-                    <button  type="submit"  class="btn btn-secondary">Add Goal</button>
+                    <button  type="submit"  class="btn btn-secondary">Save video link</button>
 
 <!--                    <button v-else  type="button"  class="btn btn-secondary" data-bs-dismiss="modal">Save Video</button>-->
                   </div>
