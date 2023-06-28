@@ -18,6 +18,7 @@
 
     </div>
   </form>
+    {{error}}
   </div>
 
   <router-link v-for="youtube in youtubes" :key="youtube" :to="`/youtube/${youtube.link}`" class="btn btn-primary m-1">{{ youtube.name}}</router-link>
@@ -25,9 +26,12 @@
 </template>
 
 <script setup>
-import { useCounter } from "@/use/useCounter";
+import {ref} from "vue";
 
-const { appTitle,getYoutube,numbers,saveYoutubeDetails,youtubes } = useCounter();
+// const error = ref('')
+import { youtube } from "@/composable/youtube";
+
+const { appTitle,error,getYoutube,numbers,saveYoutubeDetails,youtubes } = youtube();
 </script>
 
 <style scoped>

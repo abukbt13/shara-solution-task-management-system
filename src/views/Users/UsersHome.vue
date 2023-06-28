@@ -1,226 +1,28 @@
 <script setup>
-import axios from "axios";
-import Youtube from "@/views/Users/modules/Youtube.vue";
 import {onMounted, ref} from "vue";
-const tasks = ref([])
-const reviews = ref([])
-const completed_tasks = ref([])
 const active = ref(true)
-const completedTasks = ref(true)
-const token=localStorage.getItem('token');
-const headers = {
-  'Authorization': `Bearer ${token}`,
-};
- function showActive(){
-   alert('hey')
- }
-const getuserTasks=async () =>{
-  const res = await axios.get('http://127.0.0.1:8000/api/show_user_completed_tasks', {
-    headers
-  });
-  if(res.status===200){
-    completed_tasks.value=  res.data
-  }
-}
-const get_Completed_UserTasks=async () =>{
-  const res = await axios.get('http://127.0.0.1:8000/api/show_user_tasks', {
-    headers
-  });
-  if(res.status===200){
-    tasks.value=  res.data
-  }
-}
+const error =ref('')
+const reviewerror =ref('')
+ import {documentData} from "@/composable/documentData";
+ const {saveLocalDocument,doc_name,google_link}=documentData()
+import {taskData} from "@/composable/taskData";
 
-const deleteTask=async (id)=>{
-  // alert(id)
-  const response = await axios.delete(`http://127.0.0.1:8000/api/tasks/${id}`);
-  if(response.status===200){
-    console.log(response.data)
-    // getTodos()
+const {
+  todo,todo_id,tasks,markComplete,submitReview,submitTodo,task_type,title,showSuccess,getuserTasks,get_Completed_UserTasks,deleteTask,edit_Todo
+}=taskData()
+import {goalsData} from "@/composable/goalsData";
+const {year_gooals,saveWeeklyGoal,YearlyGoal,weeklygoal,Yearly_goal,randomWeekGoals,getRandomyearGoals,getRandomWeekGoals}=goalsData()
 
-  }
-}
-
-const todo = ref(null);
-const todo_id = ref(null);
-const task_type = ref('My Task');
-const title = ref(null);
-const error = ref(null);
-const showSuccess=ref(false)
-
-function edit_Todo(task){
-  title.value='Edit Todo'
-  todo.value=task.todo
-  todo_id.value=task.id
-}
-const submitTodo = async (id) => {
-  if(todo_id.value === null){
-
-    if(todo.value === null || todo.value.trim() === ''){
-      error.value = 'Todo cannot be empty';
-    }
-    else{
-      const formData = new FormData();
-
-      formData.append('todo', todo.value);
-      formData.append('task_type', task_type.value);
-
-      const res = await axios.post('http://127.0.0.1:8000/api/tasks', formData, { headers: headers });
-      if (res.status === 200) {
-        todo_id.value=null
-        todo.value=null
-      }
-    }
-  }
-  else {
-    if (todo.value === null || todo.value.trim() === '') {
-      error.value = 'Todo cannot be empty';
-    } else {
+import {reviewsData} from "@/composable/reviewsData";
+const {viewReview, reviews, description, truncatedDescription, getReviews} =reviewsData()
 
 
-      const formData = new FormData();
-
-      formData.append('todo', todo.value);
-
-      const res = await axios.post(`http://127.0.0.1:8000/api/update-tasks/${todo_id.value}`, formData, {headers});
-      if (res.status === 200) {
-        todo_id.value = null
-        todo.value = null
-      }
-    }
-  }
+import {youtube} from "@/composable/youtube"
+const {getYoutube,videoId,numbers,youtubes, youtube_link,
+  vid_name,vid_description,vid_error,
+  saveYoutubeDetails} =youtube()
 
 
-}
-
-const description = ref('')
-const reviewerror = ref('')
-const submitReview = async () => {
-
-  if(description.value === null || description.value.trim() === ''){
-    reviewerror.value = 'description cannot be empty ?';
-  }
-  else{
-    // showSuccess.value = true
-    const formData = new FormData();
-
-    formData.append('description', description.value);
-
-
-    const res = await axios.post('http://127.0.0.1:8000/api/addReview', formData, { headers });
-    if (res.status === 200) {
-      // getReviews();
-      // review_id.value=null
-      description.value=null
-
-    }
-  }
-
-};
-const truncatedLength = ref('10')
-function truncatedDescription(description) {
-  if (description.includes(reviews)) {
-    return description;
-  } else {
-    const words = description.split(' ');
-    if (words.length > truncatedLength.value) {
-      return words.slice(0, truncatedLength.value).join(' ');
-    } else {
-      return description;
-    }
-  }
-}
-
-const getReviews = async () => {
-  const response = await axios.get('http://127.0.0.1:8000/api/get-reviews',{headers});
-  reviews.value = response.data
-  console.log(response.data)
-}
-const youtubes=ref([])
-const getYoutube = async () => {
-  const response = await axios.get('http://127.0.0.1:8000/api/show_youtube_video',{headers});
-  youtubes.value = response.data
-  // console.log(response.data)
-}
-const  markComplete = async (id)=>{
-  // alert(id)
-  const res = await axios.get(`http://127.0.0.1:8000/api/mark_completed/${id}`,{
-    headers
-  });
-  if(res.status==200) {
-    alert('edited successfully')
-  }
-  else {
-    alert('error in network')
-  }
-}
-function viewReview(review){
-  description.value=review.description
-}
-const weeklygoal = ref ('')
-const Yearly_goal = ref ('')
-
-const saveWeeklyGoal = async () =>{
-  const formData = new FormData();
-
-  formData.append('goal', weeklygoal.value);
-
-
-  const res = await axios.post('http://127.0.0.1:8000/api/create_goal', formData, { headers });
-  if (res.status === 200) {
-     alert('success you created a goal')
-  }
-}
-const vid_name = ref()
-const youtube_link = ref()
-const saveYoutubeDetails = async () =>{
-  const formData = new FormData();
-
-  formData.append('name', vid_name.value);
-  formData.append('link', youtube_link.value);
-
-
-  const res = await axios.post('http://127.0.0.1:8000/api/save_youtube_video', formData, { headers });
-  if (res.status === 200) {
-     alert('success you created a goal')
-  }
-}
-const YearlyGoal = async () =>{
-  const formData = new FormData();
-
-  formData.append('goal', Yearly_goal.value);
-
-
-  const res = await axios.post('http://127.0.0.1:8000/api/create_yearly_goal', formData, { headers });
-  if (res.status === 200) {
-     alert('success you created a goal')
-  }
-}
-
-const randomWeekGoals = ref('');
-const getRandomWeekGoals= async () =>{
-
-    const response = await axios.get('http://127.0.0.1:8000/api/getRandomWeekGoal');
-    if (response.status === 200) {
-      randomWeekGoals.value = response.data;
-    }
-}
-const year_gooals = ref('');
-const getRandomyearGoals= async () =>{
-
-    const response = await axios.get('http://127.0.0.1:8000/api/getRandomYearGoal');
-    if (response.status === 200) {
-      year_gooals.value = response.data;
-    }
-}
-onMounted(() =>{
-  getRandomWeekGoals()
-  getRandomyearGoals()
-  getuserTasks()
-  getReviews()
-  get_Completed_UserTasks()
-  getYoutube()
-})
 </script>
 
 <template>
@@ -232,19 +34,20 @@ onMounted(() =>{
         <div class="modal-content">
 
           <div class="modal-body">
-            <p class="border-bottom">Document details</p>
+            <form @submit.prevent="">
+              <p class="border-bottom">Upload google Document </p>
 
-            <label class="text-uppercase" for="">Document Name</label>
-            <input type="text" v-model="doc_name" class="form-control">
-            <label class="text-uppercase" for="">Document Link</label>
-            <input type="text" v-model="google_link" class="form-control" placeholder="Type your goal here .....">
-            <span class="text-danger" v-if="error">{{ error }}</span>
-            <div class="mt-1 float-end">
+              <label class="text-uppercase" for="">Document Name</label>
+              <input type="text" v-model="doc_name" class="form-control">
+              <label class="text-uppercase" for="">Document Link</label>
+              <input type="text" v-model="google_link" class="form-control" placeholder="Type your goal here .....">
+              <span class="text-danger" v-if="error">{{ error }}</span>
+              <div class="mt-1 float-end">
 
-              <button  v-if="title"  type="button" @click="submitGoogleDoc" class="btn btn-secondary">Save link</button>
+                <button  type="button" @click="submitGoogleDoc" class="btn btn-secondary">Save link</button>
 
-              <button v-else  type="button" @click="submitGoogleDoc" class="btn btn-secondary" data-bs-dismiss="modal">Save link</button>
-            </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -256,18 +59,19 @@ onMounted(() =>{
         <div class="modal-content">
 
           <div class="modal-body">
-            <p class="border-bottom">Upload Document here</p>
-            <label class="text-uppercase" for="">Document Name</label>
-            <input type="text" v-model="doc_name" class="form-control">
-            <label class="text-uppercase" for="">Enter Link</label>
-            <input  type="file"  class="form-control" placeholder="Type your goal here .....">
-            <span class="text-danger" v-if="error">{{ error }}</span>
-            <div class="mt-1 float-end">
+            <form @submit.prevent="saveLocalDocument">
+              <p class="border-bottom">Upload local Document</p>
+              <label class="text-uppercase" for="">Document Name</label>
+              <input type="text" v-model="doc_name" class="form-control">
+              <label class="text-uppercase"  for="">Description </label>
+              <textarea v-model="doc_description" class="form-control" cols="10" rows="5"></textarea>
+              <label class="text-uppercase"  for="">Upload file </label>
+              <input  type="file" @change="captureFile" class="form-control" placeholder="Type your goal here .....">
+              <div class="mt-1 float-end">
 
-              <button  v-if="title"  type="button" @click="savelocalDocument" class="btn btn-secondary">Save link</button>
-
-              <button v-else  type="button" @click="savelocalDocument" class="btn btn-secondary" data-bs-dismiss="modal">Upload Document</button>
-            </div>
+                <button    type="submit" @click="savelocalDocument" class="btn btn-secondary">Save link</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -387,7 +191,7 @@ onMounted(() =>{
             <div  class="col">
                 <div class="d-flex justify-content-between">
                   <p class="p-2">Yearly Goals</p>
-                  <button data-bs-toggle="modal" data-bs-target="#weekly_goals" class="float-end" style="color: white;  background: blue;border-radius: 7px; height: 2rem; border: 1px solid">add goal</button>
+                  <button data-bs-toggle="modal" data-bs-target="#yearly_goals" class="float-end" style="color: white;  background: blue;border-radius: 7px; height: 2rem; border: 1px solid">add goal</button>
                 </div>
               <p>
                 {{year_gooals.goal}}
@@ -445,7 +249,7 @@ onMounted(() =>{
               <li><a class="dropdown-item" href="#">This Month</a></li>
               <li><a class="dropdown-item" href="#">This Year</a></li>
             </ul>
-            <p class="card-title">My reviews <span>| Today</span></p>
+            <p class="card-title">My reviewsData <span>| Today</span></p>
           </div>
 
           <div style="min-height: 16rem;max-height: 19rem; overflow: scroll" class="card-body">
@@ -505,19 +309,22 @@ onMounted(() =>{
             <div class="modal-content">
 
               <div class="modal-body">
-                <form @submit.prevent="saveYoutubeDetails">
-                  <p>You tube details</p>
-                  <label class="text-uppercase" for="">Name </label>
-                  <input type="text" class="form-control" v-model="vid_name" placeholder="Name of the viedeo">
-                  <label class="text-uppercase" for="">youtube link</label>
-                  <input name="todo" v-model="youtube_link"   class="form-control" placeholder="Enter link here .....">
-                  <span class="text-danger" v-if="error">{{ error }}</span>
 
-                  <div class="mt-1 float-end">
+                <form @submit.prevent="saveYoutubeDetails">
+                  <p class="text-center fst-italic fw-bolder">Upload Youtube details Here</p>
+                  <label class="text-uppercase mt-2" for="">Name </label>
+                  <input type="text" class="form-control" v-model="vid_name" placeholder="Name of the viedeo">
+                  <label class="text-uppercase mt-2" for="">youtube link</label>
+                  <input v-model="youtube_link"   class="form-control" placeholder="Enter link here .....">
+                  <label class="text-uppercase mt-2" for="">Description</label>
+                  <textarea rows="5" cols="10"  v-model="vid_description"   class="form-control" placeholder="Type description here"></textarea>
+                  <span class="error mt-2 text-uppercase" v-if="error">{{ vid_error }}</span>
+                    <p>{{videoId}}</p>
+                  <div class="mt-2 float-end me-3">
 
                     <button  type="submit"  class="btn btn-secondary">Save video link</button>
 
-<!--                    <button v-else  type="button"  class="btn btn-secondary" data-bs-dismiss="modal">Save Video</button>-->
+<!--                    <button v-else  type="submit"  class="btn btn-secondary" data-bs-dismiss="modal">Save Video link</button>-->
                   </div>
                 </form>
               </div>

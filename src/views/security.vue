@@ -91,7 +91,7 @@
     <div class="col-lg-4">
 
 
-      <!-- show reviews  -->
+      <!-- show reviewsData  -->
       <div class="card">
         <div class="filter">
           <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
@@ -117,7 +117,7 @@
           </h5>
 
           <div class="activity">
-            <div data-bs-toggle="modal" @click="editReview(review.id)"  data-bs-target="#staticBackdrop" class="activity-item d-flex" v-for="review in reviews" :key="review">
+            <div data-bs-toggle="modal" @click="editReview(review.id)"  data-bs-target="#staticBackdrop" class="activity-item d-flex" v-for="review in reviewsData" :key="review">
               <div  class="d-flex ">
                 <div class="activite-label">{{ review.date}}</div>
                 <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
@@ -153,7 +153,7 @@
         </div>
       </div>
 
-      <!-- End show reviews -->
+      <!-- End show reviewsData -->
 
 
 
