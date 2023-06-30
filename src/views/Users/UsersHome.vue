@@ -2,19 +2,19 @@
 import {onMounted, ref} from "vue";
 const active = ref(true)
 const error =ref('')
-const reviewerror =ref('')
- import {documentData} from "@/composable/documentData";
- const {saveLocalDocument,doc_name,google_link}=documentData()
-import {taskData} from "@/composable/taskData";
 
+
+import {documentData} from "@/composable/documentData";
+const {saveLocalDocument,google_name,google_link,google_description,saveGoogleDocument,filename,onFileChange,doc_name,doc_description}=documentData()
+import {taskData} from "@/composable/taskData";
 const {
-  todo,todo_id,tasks,markComplete,submitReview,submitTodo,task_type,title,showSuccess,getuserTasks,get_Completed_UserTasks,deleteTask,edit_Todo
+  todo,todo_id,tasks,markComplete,submitTodo,task_type,title,showSuccess,getuserTasks,get_Completed_UserTasks,deleteTask,edit_Todo
 }=taskData()
 import {goalsData} from "@/composable/goalsData";
 const {year_gooals,saveWeeklyGoal,YearlyGoal,weeklygoal,Yearly_goal,randomWeekGoals,getRandomyearGoals,getRandomWeekGoals}=goalsData()
 
 import {reviewsData} from "@/composable/reviewsData";
-const {viewReview, reviews, description, truncatedDescription, getReviews} =reviewsData()
+const {viewReview,submitReview, reviews, description, truncatedDescription, getReviews} =reviewsData()
 
 
 import {youtube} from "@/composable/youtube"
@@ -34,17 +34,18 @@ const {getYoutube,videoId,numbers,youtubes, youtube_link,
         <div class="modal-content">
 
           <div class="modal-body">
-            <form @submit.prevent="">
+            <form @submit.prevent="saveGoogleDocument">
               <p class="border-bottom">Upload google Document </p>
 
               <label class="text-uppercase" for="">Document Name</label>
-              <input type="text" v-model="doc_name" class="form-control">
+              <input type="text" v-model="google_name" class="form-control">
               <label class="text-uppercase" for="">Document Link</label>
               <input type="text" v-model="google_link" class="form-control" placeholder="Type your goal here .....">
+              <label class="text-uppercase" for="">Document Description</label>
+              <input type="text" v-model="google_description" class="form-control" placeholder="Type your goal here .....">
               <span class="text-danger" v-if="error">{{ error }}</span>
               <div class="mt-1 float-end">
-
-                <button  type="button" @click="submitGoogleDoc" class="btn btn-secondary">Save link</button>
+                <button  type="submit"  class="btn btn-secondary">Save link</button>
 
               </div>
             </form>
@@ -66,10 +67,9 @@ const {getYoutube,videoId,numbers,youtubes, youtube_link,
               <label class="text-uppercase"  for="">Description </label>
               <textarea v-model="doc_description" class="form-control" cols="10" rows="5"></textarea>
               <label class="text-uppercase"  for="">Upload file </label>
-              <input  type="file" @change="captureFile" class="form-control" placeholder="Type your goal here .....">
-              <div class="mt-1 float-end">
+              <input type="file" class="form-control"  @change="onFileChange"   placeholder="Enter The Company">              <div class="mt-1 float-end">
 
-                <button    type="submit" @click="savelocalDocument" class="btn btn-secondary">Save link</button>
+                <button    type="submit"  class="btn btn-secondary">Save link</button>
               </div>
             </form>
           </div>

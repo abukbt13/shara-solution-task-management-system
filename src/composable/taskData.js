@@ -14,6 +14,7 @@ const task_type = ref('My Task');
 const title = ref(null);
 const error = ref(null);
 const showSuccess =ref(false)
+const description =ref('')
 export function taskData(){
 
     const getuserTasks = async () =>{
@@ -90,29 +91,6 @@ export function taskData(){
 
     }
 
-    const submitReview = async () => {
-
-        if(description.value === null || description.value.trim() === ''){
-            reviewerror.value = 'description cannot be empty ?';
-        }
-        else{
-            // showSuccess.value = true
-            const formData = new FormData();
-
-            formData.append('description', description.value);
-
-
-            const res = await axios.post('http://127.0.0.1:8000/api/addReview', formData, { headers });
-            if (res.status === 200) {
-                // getReviews();
-                // review_id.value=null
-                description.value=null
-
-            }
-        }
-
-    };
-
     const  markComplete = async (id)=>{
         // alert(id)
         const res = await axios.get(`http://127.0.0.1:8000/api/mark_completed/${id}`,{
@@ -129,5 +107,5 @@ export function taskData(){
             getuserTasks(),
             get_Completed_UserTasks()
     })
- return{todo,todo_id,tasks,completed_tasks,markComplete,submitReview,submitTodo,task_type,title,showSuccess,getuserTasks,get_Completed_UserTasks,deleteTask,edit_Todo}
+ return{todo,todo_id,tasks,completed_tasks,markComplete,submitTodo,task_type,title,showSuccess,getuserTasks,get_Completed_UserTasks,deleteTask,edit_Todo}
 }
