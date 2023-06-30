@@ -93,22 +93,16 @@
           <p class="sticky-bottom">Google Documents <span><i data-bs-toggle="modal" data-bs-target="#google_docs" class="fa fa-lg fa-plus"></i></span> </p>
           <div style="min-height: 8rem;max-height: 9rem; overflow: auto;" class="div">
 
-            <button class="btn btn-primary m-1">How to win </button>
-            <button class="btn btn-primary m-1">How to win </button>
-            <button class="btn btn-primary m-1">Scoring </button>
-            <button class="btn btn-primary m-1">How to winow to winow to winow to win </button>
-            <button class="btn btn-primary m-1">Influence </button>
+
+            <button class="btn btn-primary m-1" v-for="google_document in google_documents" :key="google_document" >{{google_document.doc_name}}</button>
+
 
           </div>
 
           <div style="min-height: 10rem;max-height: 11rem; overflow: auto;" class="div">
             <p class="sticky-bottom">Google Documents <span><i data-bs-toggle="modal" data-bs-target="#local_docs" class="fa fa-lg fa-plus"></i></span> </p>
 
-            <button class="btn btn-primary m-1">How to win </button>
-            <button class="btn btn-primary m-1">How to win </button>
-            <button class="btn btn-primary m-1">Scoring </button>
-            <button class="btn btn-primary m-1">How to winow to winow to winow to win </button>
-            <button class="btn btn-primary m-1">Influence </button>
+            <button class="btn btn-primary m-1" v-for="local_document in local_documents" :key="local_document" >{{local_document.doc_name}}</button>
 
           </div>
 
@@ -228,17 +222,7 @@ const auth = {
 const headers = {
   'Authorization': `Bearer ${token}`,
 }
-const updateUser = async (id) =>{
-  const formData = new FormData()
-  formData.append('role', selectedOption.value);
-  const res = await axios.post(`http://127.0.0.1:8000/api/users/update-user/${id}`, formData, {
-    headers
-  });
-  // console.log(res)
-  if(res.status===200){
-    alert('primary')
-  }
-}
+
 // #######   Authenticate user
 const authUser = async () => {
   const authHeader = { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } };
@@ -263,30 +247,10 @@ let {users,editUser,getAdmins,admins,username,email,user_id,name,assignRole,save
 
 let{tasks,showSuccess,clearFields,deleteTask,submitTodo,error,todo,edit_Todo,todo_id,}=todomodules
 let  {editreviews, reviews,editReview, markComplete, getReviews, show_single_review,showReview,submitReview,description,reviewerror, review_id }=reviewsmodule
-// let {saveUser,name,email,role}=userdetails
-const truncatedLength = ref(10);
 
-const edit_id = ref('')
-const edit_task=ref([]);
 
-function editTask(id){
-
-  edit_id.value=id
-  // edit_id=id
-  edit_task.value=tasks.value.filter(tasks=>tasks.id === id)
-}
-function truncatedDescription(description) {
-  if (description.includes(reviews)) {
-    return description;
-  } else {
-    const words = description.split(' ');
-    if (words.length > truncatedLength.value) {
-      return words.slice(0, truncatedLength.value).join(' ');
-    } else {
-      return description;
-    }
-  }
-}
+import {documentData} from "@/composable/documentData";
+const {google_documents,local_documents}=documentData()
 
 onMounted(()=>{
   authUser()
