@@ -6,8 +6,14 @@ import { headers, token } from '@/composable/headers';
 const truncatedLength = ref('10')
 const reviews = ref([])
 const description = ref('')
+const reviewerror = ref('')
 export function reviewsData(){
+    function clearReview(){
+        description.value=''
+    }
     const submitReview = async () => {
+        clearReview()
+
 
         if(description.value === null || description.value.trim() === ''){
             reviewerror.value = 'description cannot be empty ?';
@@ -56,8 +62,10 @@ export function reviewsData(){
     return{
         submitReview,
         viewReview,
+        clearReview,
         reviews,
         description,
+        reviewerror,
         truncatedDescription,
         getReviews
     }

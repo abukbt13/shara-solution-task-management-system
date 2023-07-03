@@ -1,20 +1,18 @@
 <script setup>
 import {onMounted, ref} from "vue";
 const active = ref(true)
-const error =ref('')
-
 
 import {documentData} from "@/composable/documentData";
 const {saveLocalDocument,google_name,google_link,google_description,saveGoogleDocument,filename,onFileChange,doc_name,doc_description}=documentData()
 import {taskData} from "@/composable/taskData";
 const {
-  todo,todo_id,tasks,markComplete,submitTodo,task_type,title,showSuccess,getuserTasks,get_Completed_UserTasks,deleteTask,edit_Todo
+  todo,todo_id,tasks,error,showSuccess,markComplete,submitTodo,task_type,title,getuserTasks,get_Completed_UserTasks,deleteTask,edit_Todo
 }=taskData()
 import {goalsData} from "@/composable/goalsData";
 const {year_gooals,saveWeeklyGoal,YearlyGoal,weeklygoal,Yearly_goal,randomWeekGoals,getRandomyearGoals,getRandomWeekGoals}=goalsData()
 
 import {reviewsData} from "@/composable/reviewsData";
-const {viewReview,submitReview, reviews, description, truncatedDescription, getReviews} =reviewsData()
+const {viewReview,clearReview,submitReview, reviewerror,reviews, description, truncatedDescription, getReviews} =reviewsData()
 
 
 import {youtube} from "@/composable/youtube"
@@ -81,27 +79,33 @@ const {getYoutube,videoId,numbers,youtubes, youtube_link,
     <div class="modal fade" id="add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
-          <div class="modal-header w-100">
-            <p v-if="title" class="display-5" id="exampleModalLabel" style="font-weight: bold; width: 100%; text-align: center; color:#0000FF;">
+          <div class="mx-2 my-2 d-flex justify-content-between">
+            <h3 v-if="title" class="text-center">
               Edit Todo
-            </p>
-            <p v-else class="display-2" id="exampleModalLabel" style="font-weight: bold; width: 100%; text-align: center; color:#0000FF;">
-              Add To Do
-            </p>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </h3>
+            <h3 v-else class="text-center">
+              Create To Do
+            </h3>
+            <button type="button" class="btn-close btn-lg-danger" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <label style="padding-left: 20px;">Enter your todo </label>
+          <label class="ms-3 text-bg">To do </label>
           <div class="modal-body">
-            <textarea name="todo" v-model="todo" id="" cols="20" rows="3" class="form-control" placeholder="Enter the to do here ....."></textarea>
+            <textarea name="todo" v-model="todo" id="" cols="20" rows="3" class="form-control" placeholder="Type your  to do here ....."></textarea>
             <span class="text-danger" v-if="error">{{ error }}</span>
             <br>
 
 
             <div class="float-end">
 
-              <button  v-if="title"  type="button" @click="submitTodo(todo_id)" class="btn btn-secondary">Add</button>
+              <button  v-if="todo"  type="button" @click="submitTodo(todo_id)" data-bs-dismiss="modal" class="btn btn-secondary">
+                <span class="" v-if="title">Update</span>
+                <span class="" v-else >Save Todo</span>
+              </button>
+              <button v-else  type="button" @click="submitTodo(todo_id)" class="btn btn-secondary" >
+                <span class="" v-if="title">Update</span>
+                <span class="" v-else >Save Todo</span>
+              </button>
 
-              <button v-else  type="button" @click="submitTodo(todo_id)" class="btn btn-secondary" data-bs-dismiss="modal">Add</button>
              </div>
           </div>
         </div>
@@ -111,13 +115,23 @@ const {getYoutube,videoId,numbers,youtubes, youtube_link,
     <div class="row">
 
       <!-- Left side columns -->
-      <div class="col-lg-8">
+      <div class="col-lg-8" >
+
         <div class="row">
           <div class="col-12">
+            <div v-show="showSuccess" class="">
+              <div  class="d-flex bg-primary justify-content-between align-items-center">
+                <span class="text-uppercase">You have succcessfully created a todo</span>
+                <button class="btn"><i class="fas fa-close fa-lg"></i></button>
+              </div>
+            </div>
+
             <p style="position: sticky;" class="pb-0 fw-bold text-lg-center border-bottom-1 border-black">Tasks At Hand <span>| Today</span></p>
-
             <div style="overflow: scroll; min-height: 20rem;max-height: 21rem" class="card-body border-top-4">
-
+                  <button class="btn btn-primary">  <span @click="clearTask"  data-bs-toggle="modal" data-bs-target="#add">
+                     Add task
+                   </span>
+                  </button>
                 <table class="table  datatable">
 
                   <tr>
@@ -237,51 +251,55 @@ const {getYoutube,videoId,numbers,youtubes, youtube_link,
       <div class="col-lg-4">
 
         <!-- Recent Activity -->
-        <div class="card pb-0">
-          <div class="filter" style="position: sticky;">
-            <div class="icon float-end"  data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></div>
-            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-              <li class="dropdown-header text-start">
-                <h6>Filter</h6>
-              </li>
-
-              <li><a class="dropdown-item" href="#">Today</a></li>
-              <li><a class="dropdown-item" href="#">This Month</a></li>
-              <li><a class="dropdown-item" href="#">This Year</a></li>
-            </ul>
-            <p class="card-title">My reviewsData <span>| Today</span></p>
-          </div>
+          <p class="card-title">My reviewsData <span>| Today</span></p>
 
           <div style="min-height: 16rem;max-height: 19rem; overflow: scroll" class="card-body">
-            <p style="background: #D980FA;" class="border sticky-top shadow" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <span><i class="fa fa-plus" aria-hidden="true"></i> </span>Add Review of your day</p>
+            <p @click="clearReview" style="background: #D980FA;" class="border sticky-top shadow" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <span><i class="fa fa-plus" aria-hidden="true"></i> </span>Add Review of your day</p>
             <div class="activity">
-              <div data-bs-toggle="modal" @click="viewReview(review)"  data-bs-target="#staticBackdrop" class="activity-item d-flex" v-for="review in reviews" :key="review">
-                <div  class="d-flex ">
+              <div  class="activity-item d-flex" v-for="review in reviews" :key="review">
+                <div  class="d-flex">
                   <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
-                  <div class="activity-content">
+                  <div class="activity-content" @click="viewReview(review)" data-bs-target="#view" data-bs-toggle="modal">
                     {{ truncatedDescription(review.description) }} <br>
                     <span class="spanview_review" style="border-bottom: 1px black solid;">click to view</span>
                   </div>
                 </div>
 
               </div>
+
+               Button trigger modal
+
+
+              <!-- Modal -->
+              <div class="modal fade" id="view" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+
+                    <div class="modal-body">
+                      <p class="d-flex justify-content-between">My Review         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></p>
+                      {{description}}
+                    </div>
+
+                  </div>
+                </div>
+              </div>
               <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header border-0">
-                      <h1 class="modal-title" id="staticBackdropLabel">Review Your Day</h1>
+                      <h5 class="modal-title" id="staticBackdropLabel">Review Your Day</h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form @submit.prevent="submitReview">
                       <label for="" class="ms-3">Description</label>
                       <div class="modal-body">
-                        <textarea v-model="description" id="" cols="15" class="form-control" rows="10"></textarea>
+                        <textarea v-model="description" id="" cols="15" class="form-control" rows="5"></textarea>
                       </div>
-                      <p class="ps-5 text-danger text-uppercase fw-bold">{{reviewerror}}</p>
+                      <span style="font-size: 20px;" class="ps-2 text-danger text-uppercase fw-bold">{{reviewerror}}</span>
 
                       <div class="modal-footer border-0">
-                       <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" v-if="description">Create review</button>
-                       <button type="submit" class="btn btn-outline-primary"  v-else>Create review</button>
+                       <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" v-if="description">Create review w</button>
+                       <button type="submit" class="btn btn-outline-primary"  v-else >Review</button>
 
 
                       </div>
@@ -295,7 +313,6 @@ const {getYoutube,videoId,numbers,youtubes, youtube_link,
             </div>
 
           </div>
-        </div>
         <!-- End Recent Activity -->
           <p>My favorite/learning Youtube videos <span><i data-bs-toggle="modal" data-bs-target="#youtube_video" class="fa fa-lg fa-plus"></i></span></p>
 
@@ -311,6 +328,7 @@ const {getYoutube,videoId,numbers,youtubes, youtube_link,
               <div class="modal-body">
 
                 <form @submit.prevent="saveYoutubeDetails">
+
                   <p class="text-center fst-italic fw-bolder">Upload Youtube details Here</p>
                   <label class="text-uppercase mt-2" for="">Name </label>
                   <input type="text" class="form-control" v-model="vid_name" placeholder="Name of the viedeo">

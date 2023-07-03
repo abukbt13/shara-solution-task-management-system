@@ -16,41 +16,11 @@ const error = ref(null);
 const showSuccess =ref(false)
 const description =ref('')
 export function taskData(){
-
-    const getuserTasks = async () =>{
-        const res = await axios.get('http://127.0.0.1:8000/api/show_user_completed_tasks', {
-            headers
-        });
-        if(res.status===200){
-            completed_tasks.value=  res.data
-        }
+    function clearTask(){
+        todo.value =''
+        error.value =''
     }
-
-    const get_Completed_UserTasks = async () =>{
-        const res = await axios.get('http://127.0.0.1:8000/api/show_user_tasks', {
-            headers
-        });
-        if(res.status===200){
-            tasks.value=  res.data
-        }
-    }
-
-    const deleteTask=async (id)=>{
-        // alert(id)
-        const response = await axios.delete(`http://127.0.0.1:8000/api/tasks/${id}`);
-        if(response.status===200){
-            console.log(response.data)
-            // getTodos()
-
-        }
-    }
-
-
-    function edit_Todo(task){
-        title.value='Edit Todo'
-        todo.value=task.todo
-        todo_id.value=task.id
-    }
+    //save a Task
     const submitTodo = async (id) => {
         if(todo_id.value === null){
 
@@ -65,8 +35,10 @@ export function taskData(){
 
                 const res = await axios.post('http://127.0.0.1:8000/api/tasks', formData, { headers: headers });
                 if (res.status === 200) {
-                    todo_id.value=null
-                    todo.value=null
+                    showSuccess.value=true
+                    alert('You have created a task')
+                    get_task_athand()
+                    clearTask()
                 }
             }
         }
@@ -82,13 +54,52 @@ export function taskData(){
 
                 const res = await axios.post(`http://127.0.0.1:8000/api/update-tasks/${todo_id.value}`, formData, {headers});
                 if (res.status === 200) {
-                    todo_id.value = null
-                    todo.value = null
+                    alert('successfully Updated a task')
+                    showSuccess.value=true
+                    get_task_athand()
+                    clearTask()
                 }
             }
         }
 
 
+    }
+    // Get tasks for logged in User
+
+    const get_completed_tasks = async () =>{
+        const res = await axios.get('http://127.0.0.1:8000/api/show_user_completed_tasks', {
+            headers
+        });
+        if(res.status===200){
+            completed_tasks.value=  res.data
+        }
+    }
+
+    const get_task_athand = async () =>{
+        const res = await axios.get('http://127.0.0.1:8000/api/show_user_tasks', {
+            headers
+        });
+        if(res.status===200){
+            tasks.value=  res.data
+        }
+    }
+
+    const deleteTask=async (id)=>{
+        // alert(id)
+        const response = await axios.delete(`http://127.0.0.1:8000/api/tasks/${id}`);
+        if(response.status===200){
+            get_task_athand()
+            console.log(response.data)
+            // getTodos()
+
+        }
+    }
+
+
+    function edit_Todo(task){
+        title.value='Edit Todo'
+        todo.value=task.todo
+        todo_id.value=task.id
     }
 
     const  markComplete = async (id)=>{
@@ -97,15 +108,17 @@ export function taskData(){
             headers
         });
         if(res.status==200) {
+            get_task_athand()
             alert('edited successfully')
         }
         else {
             alert('error in network')
+            get_task_athand()
         }
     }
     onMounted(()=>{
-            getuserTasks(),
-            get_Completed_UserTasks()
+            get_completed_tasks(),
+            get_task_athand()
     })
- return{todo,todo_id,tasks,completed_tasks,markComplete,submitTodo,task_type,title,showSuccess,getuserTasks,get_Completed_UserTasks,deleteTask,edit_Todo}
+ return{todo,todo_id,error,showSuccess,clearTask,tasks,completed_tasks,markComplete,submitTodo,task_type,title,get_completed_tasks,get_task_athand,deleteTask,edit_Todo}
 }

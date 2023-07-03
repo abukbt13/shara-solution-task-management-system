@@ -17,7 +17,10 @@ import project_users from "@/views/Admin/manage/Project_users"
 
 import Project from "@/views/Admin/Project.vue"
 import Youtube from "@/views/Users/modules/Youtube.vue"
-
+import MyTasks from "@/views/Tasks/Tasks.vue"
+import ActiveTasks from "@/views/Tasks/ActiveTasks.vue"
+import CompletedTasks from "@/views/Tasks/CompletedTasks.vue"
+import TrashedTasks from "@/views/Tasks/TrashedTasks.vue"
 const routes = [
 
   {
@@ -25,6 +28,28 @@ const routes = [
     name: 'test',
     component: Tests,
   },
+  {
+    path: '/my-tasks',
+    name: 'my-tasks',
+    component: MyTasks,
+    children:[
+    {
+      path: '/my-tasks',
+      name: 'active_tasks',
+      component: ActiveTasks,
+    },
+    {
+      path: '/my-tasks/completed_tasks',
+      name: 'completed_tasks',
+      component: CompletedTasks,
+    },
+    {
+      path: '/my-tasks/trashed_tasks',
+      name: 'task_home',
+      component: TrashedTasks,
+    }
+  ]
+},
   {
     path: '/testing',
     name: 'testing',
@@ -47,7 +72,7 @@ const routes = [
     component: dashboard,
     children: [
       {
-        path: '',
+        path: '/',
         name: 'home',
         component: home,
       },

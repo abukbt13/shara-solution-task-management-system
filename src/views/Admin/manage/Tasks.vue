@@ -143,14 +143,14 @@ onMounted(()=>{
               <div class="group">
                 <label for="">Description</label><br>
                 <textarea v-model="description" style="border-radius:0px; color: #6C1705;color: #2C3A47; outline-color: #FDB0A0;" id="" cols="41" rows="5"></textarea>
-                  <p class="text-danger text-lg-start">*required </p>
+                <p class="text-danger text-lg-start">*required </p>
               </div>
             </div>
             <div class="form p-2 d-flex">
-            <div class="group">
-             <button style="border-radius: 0px; font-size: 22px;" type="submit" class="btn btn-success">Create</button>
+              <div class="group">
+                <button style="border-radius: 0px; font-size: 22px;" type="submit" class="btn btn-success">Create</button>
+              </div>
             </div>
-          </div>
           </form>
         </div>
       </div>
