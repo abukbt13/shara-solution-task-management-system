@@ -21,6 +21,12 @@ import MyTasks from "@/views/Tasks/Tasks.vue"
 import ActiveTasks from "@/views/Tasks/ActiveTasks.vue"
 import CompletedTasks from "@/views/Tasks/CompletedTasks.vue"
 import TrashedTasks from "@/views/Tasks/TrashedTasks.vue"
+import Project_in from "@/views/UsersProjects/project.vue"
+import UserProjects from "@/views/UsersProjects/UserProjects.vue";
+import ActiveProject from "@/views/UsersProjects/ActiveProject.vue";
+import Pending from "@/views/UsersProjects/Pending.vue";
+import Revision from "@/views/UsersProjects/Revision.vue";
+import Completed from "@/views/UsersProjects/Completed.vue";
 const routes = [
 
   {
@@ -117,6 +123,38 @@ const routes = [
     path: '/about',
     name: 'about',
     component: About
+  },
+  {
+    path: '/project_in',
+    name: 'project_in',
+    component: Project_in,
+    children: [
+      {
+        path: '/project_in',
+        name: 'user_project',
+        component: UserProjects,
+      },
+      {
+        path: '/project_in/active_project',
+        name: 'active_project',
+        component: ActiveProject,
+      },
+      {
+        path: '/project_in/pending',
+        name: 'pending',
+        component: Pending,
+      },
+      {
+        path: '/project_in/revision',
+        name: 'revision',
+        component: Revision,
+      },
+      {
+        path: '/project_in/completed',
+        name: 'completed',
+        component: Completed,
+      }
+    ]
   }
   ]
 

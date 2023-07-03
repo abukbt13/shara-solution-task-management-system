@@ -21,7 +21,7 @@ const {clearTask}=taskData()
     </router-link>
   </li>
   <li class="nav-item">
-    <router-link to="/My_projects" class="nav-link " href="index.html">
+    <router-link to="/project_in" class="nav-link " href="index.html">
       <i class="bi bi-table"></i>
       <span>Project</span>
     </router-link>
