@@ -1,5 +1,6 @@
 <script setup>
-
+import {taskData} from '@/composable/taskData'
+const {tasks}= taskData()
 </script>
 
 <template>
@@ -15,7 +16,26 @@
     </li>
 
   </ul>
-<p>Active tasks here</p>
+
+<table class="table table-borderless datatable">
+          <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Task</th>
+            <th scope="col">Date created</th>
+            <th scope="col">Time created</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="task in tasks" :key="task.id">
+            <td>{{task.id}}</td>
+            <td>{{task.todo}}</td>
+            <td>{{task.date}}</td>
+            <td>{{task.time}}</td>
+          </tr>
+
+          </tbody>
+        </table>
 </template>
 
 <style scoped>

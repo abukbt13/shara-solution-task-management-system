@@ -1,5 +1,6 @@
 <script setup>
-
+import {taskData} from '@/composable/taskData'
+const {completed_tasks}= taskData()
 </script>
 
 <template>
@@ -14,8 +15,25 @@
       <router-link to="/my-tasks/trashed_tasks" class="nav-link">Trashed</router-link>
     </li>
   </ul>
-  <p>Completed tasks here</p>
+  <table class="table table-borderless datatable">
+          <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Task</th>
+            <th scope="col">Date created</th>
+            <th scope="col">Time created</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="task in completed_tasks" :key="task.id">
+            <td>{{task.id}}</td>
+            <td>{{task.todo}}</td>
+            <td>{{task.date}}</td>
+            <td>{{task.time}}</td>
+          </tr>
 
+          </tbody>
+        </table>
 </template>
 
 <style scoped>

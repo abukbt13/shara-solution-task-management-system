@@ -84,6 +84,12 @@ export function taskData(){
         }
     }
 
+    const get_active_tasks =async()=>{
+        const response=await axios.get('http://127.0.0.1:8000/api/show_active_tasks', {headers});
+        if(response.status===200){
+        }
+    }
+
     const deleteTask=async (id)=>{
         // alert(id)
         const response = await axios.delete(`http://127.0.0.1:8000/api/tasks/${id}`);
