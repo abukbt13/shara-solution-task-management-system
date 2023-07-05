@@ -141,22 +141,22 @@ const routes = [
         component: UserProjects,
       },
       {
-        path: '/project_in/active_project',
+        path: '/project_in/active_project/:id',
         name: 'active_project',
         component: ActiveProject,
       },
       {
-        path: '/project_in/pending',
+        path: '/project_in/pending_projects/:id',
         name: 'pending',
         component: Pending,
       },
       {
-        path: '/project_in/revision',
+        path: '/project_in/revision_projects/:id',
         name: 'revision',
         component: Revision,
       },
       {
-        path: '/project_in/completed',
+        path: '/project_in/completed_projects/:id',
         name: 'completed',
         component: Completed,
       }
