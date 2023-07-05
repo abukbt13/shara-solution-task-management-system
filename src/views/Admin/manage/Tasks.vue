@@ -22,7 +22,7 @@ const getTodo = async () =>{
   }
 }
 const getUsers= async () =>{
-  const res = await axios.get('http://127.0.0.1:8000/api/users_to_be_added_to_task',{headers})
+  const res = await axios.get(`http://127.0.0.1:8000/api/users_to_be_added_to_task/${project_id}`,{headers})
   if(res.status===200){
     users.value=  res.data
   }
@@ -75,6 +75,7 @@ onMounted(()=>{
   <table class="table my-4 mx-4">
     <thead class="thead-dark">
     <tr>
+      <th scope="col">User _id</th>
       <th scope="col">Task Name</th>
       <th scope="col">Task Description</th>
       <th scope="col">dateline</th>
@@ -83,6 +84,7 @@ onMounted(()=>{
     </thead>
     <tbody>
     <tr v-for="todo in tasks" :key="todo">
+      <td>{{ todo.user_id }}</td>
       <td>{{ todo.todo }}</td>
       <td>{{ todo.description }}</td>
       <td>
@@ -90,14 +92,13 @@ onMounted(()=>{
       </td>
       <td>
         <Button class="btn btn-success">MarkComplete</Button>
-        <Button class="btn btn-primary">Edit</Button>
+        <Button class="btn btn-primary">Revision</Button>
       </td>
 
     </tr>
     </tbody>
+
   </table>
-
-
 
 
   <!-- Modal -->
