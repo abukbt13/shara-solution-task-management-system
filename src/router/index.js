@@ -27,12 +27,18 @@ import ActiveProject from "@/views/UsersProjects/ActiveProject.vue";
 import Pending from "@/views/UsersProjects/Pending.vue";
 import Revision from "@/views/UsersProjects/Revision.vue";
 import Completed from "@/views/UsersProjects/Completed.vue";
+import Profile from "@/views/Users/Profile.vue";
 const routes = [
 
   {
     path: '/tests',
     name: 'test',
     component: Tests,
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: Profile,
   },
   {
     path: '/my-tasks',
