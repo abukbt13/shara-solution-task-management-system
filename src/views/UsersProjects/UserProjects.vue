@@ -1,12 +1,11 @@
 <script setup>
-
+import {taskData} from '@/composable/taskData'
+const {user_projects_tasks}= taskData()
 </script>
 
 <template>
 
-  <p class="display-6" for="project">
-    Projects
-  </p>
+  <h2>Projects</h2>
   <table class="table table-bordered">
 
     <tr>
@@ -16,19 +15,14 @@
       <th class="border-1">Actions</th>
     </tr>
     <tbody>
-    <tr>
-      <td class="border-1">#4355356</td>
-      <td class="border-1">Shara</td>
-        <td class="border-1">Shara solution construction</td>
-        <td class="border-1"><router-link class="btn btn-sm bg-primary" to="/project_in/active_project">Manage</router-link>
+      <tr v-for="task in user_projects_tasks" :key="task.id">
+        <td>#{{task.project_id}}</td>
+        <td>{{task.name}}</td>
+        <td>{{task.description}}</td>
+        <td>
+          <router-link class="btn btn-sm bg-primary" :to="'/project_in/active_project/' + task.project_id">Manage</router-link>
         </td>
-    </tr> <tr>
-      <td class="border-1">#4355356</td>
-      <td class="border-1">Shara</td>
-        <td class="border-1">Shara solution construction</td>
-        <td class="border-1"><router-link class="btn btn-sm bg-primary" to="/project_in/active_project">Manage</router-link>
-        </td>
-    </tr>
+      </tr>
 
     </tbody>
 

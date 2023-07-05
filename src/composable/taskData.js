@@ -15,6 +15,8 @@ const title = ref(null);
 const error = ref(null);
 const showSuccess =ref(false)
 const description =ref('')
+const trashed_tasks =ref('')
+const user_projects_tasks =ref('')
 export function taskData(){
     function clearTask(){
         todo.value =''
@@ -83,16 +85,30 @@ export function taskData(){
             tasks.value=  res.data
         }
     }
+    const trashed_Tasks = async () =>{
+        const res = await axios.get('http://127.0.0.1:8000/api/trashed_tasks', {
+            headers
+        });
+        if(res.status===200){
+            trashed_tasks.value=  res.data
+        }
+    }
 
     const get_active_tasks =async()=>{
         const response=await axios.get('http://127.0.0.1:8000/api/show_active_tasks', {headers});
         if(response.status===200){
         }
     }
+    const get_user_tasks_in_projects =async()=>{
+        const response=await axios.get('http://127.0.0.1:8000/api/fetchUserProjects', {headers});
+        if(response.status===200){
+            user_projects_tasks.value=response.data
+        }
+    }
 
     const deleteTask=async (id)=>{
         // alert(id)
-        const response = await axios.delete(`http://127.0.0.1:8000/api/tasks/${id}`);
+        const response = await axios.get(`http://127.0.0.1:8000/api/delete_tasks/${id}`);
         if(response.status===200){
             get_task_athand()
             console.log(response.data)
@@ -123,8 +139,10 @@ export function taskData(){
         }
     }
     onMounted(()=>{
-            get_completed_tasks(),
+        get_completed_tasks()
             get_task_athand()
+        trashed_Tasks()
+        get_user_tasks_in_projects()
     })
- return{todo,todo_id,error,showSuccess,clearTask,tasks,completed_tasks,markComplete,submitTodo,task_type,title,get_completed_tasks,get_task_athand,deleteTask,edit_Todo}
+ return{todo,todo_id,error,user_projects_tasks,get_user_tasks_in_projects,trashed_tasks,trashed_Tasks,showSuccess,clearTask,tasks,completed_tasks,markComplete,submitTodo,task_type,title,get_completed_tasks,get_task_athand,deleteTask,edit_Todo}
 }
