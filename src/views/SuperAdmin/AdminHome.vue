@@ -13,7 +13,7 @@ onMounted(() => {
 
 <template>
  
-  <ul class="nav nav-pills">
+  <ul class="nav nav-tabs">
     <li class="nav-item">
       <router-link to="/" class="nav-link active" aria-current="page" >Admins</router-link>
     </li>

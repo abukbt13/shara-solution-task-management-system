@@ -28,6 +28,8 @@ import Pending from "@/views/UsersProjects/Pending.vue";
 import Revision from "@/views/UsersProjects/Revision.vue";
 import Completed from "@/views/UsersProjects/Completed.vue";
 import Profile from "@/views/Users/Profile.vue";
+import Document from "@/views/documents/Document.vue";
+import Goals from "@/views/goals/goals.vue"
 const routes = [
 
   {
@@ -87,6 +89,16 @@ const routes = [
         path: '/',
         name: 'home',
         component: home,
+      },
+      {
+        path: 'document',
+        name: 'document',
+        component: Document,
+      },
+      {
+        path: 'goal',
+        name: 'goal',
+        component: Goals
       },
       {
         path: 'overview/:id',

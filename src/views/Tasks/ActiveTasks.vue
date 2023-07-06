@@ -34,7 +34,11 @@ function confirmDelete(taskId) {
     </li>
 
   </ul>
-
+  <button class="btn btn-primary">
+    <span @click="clearTask"  data-bs-toggle="modal" data-bs-target="#add">
+       Add task
+    </span>
+  </button>
 <table class="table mt-2 table-bordered border-primary">
           <thead>
           <tr>
