@@ -46,7 +46,7 @@ onMounted(() => {
             <td>{{admin.role}}</td>
             <td>
                    <span class="badge bg-success p-2" @click="editUser(admin.id)" data-bs-toggle="modal" data-bs-target="#editUser">
-                   Edit Role</span>
+                   Update User</span>
             </td>
             <td><span class="badge bg-danger p-2" @click="updateUser">Delete</span></td>
           </tr>
@@ -141,7 +141,8 @@ onMounted(() => {
                 </div>
                 <input type="text" hidden="" v-model="role" class="form-control">
 
-                <button type="submit" @click="alertSuccess"  data-bs-dismiss="modal" class="btn btn-primary">Add</button>                          </form>
+                <button type="submit" @click="alertSuccess"  data-bs-dismiss="modal" class="btn btn-primary">Add</button> 
+              </form>
             </div>
           </div>
         </div>

@@ -32,25 +32,27 @@ const getUsers=async () =>{
 const username = ref('')
 const name = ref('')
 const user_id = ref('')
+const phone = ref('')
+const address = ref('')
 const email = ref('')
 const role = ref('user')
 
-function editUser(id){
+// function editUser(id){
 
 // alert(id)
-    user_id.value=id
+    // user_id.value=id
 
-    const user_to_edit = users.value.filter(users=>users.id === id)
-    // console.log(user_to_edit)
+    // const user_to_edit = users.value.filter(users=>users.id === id)
+    // // console.log(user_to_edit)
 
-    if (user_to_edit.length > 0) {
-        username.value = user_to_edit[0].name; // Replace "name" with the desired property
-        email.value = user_to_edit[0].email; // Replace "name" with the desired property
-    } else {
-        // Handle case when no matching task is found
-    }
+    // if (user_to_edit.length > 0) {
+    //     phone.value = user_to_edit[0].phone; 
+    //     address.value = user_to_edit[0].address; 
+    // } else {
+    //     // Handle case when no matching task is found
+    // }
     // console.log(user)
-}
+// }
 function assignRole(value){
     role.value=value
 }
@@ -68,7 +70,11 @@ const saveUser = async () => {
         getUsers()
     }
 }
+function editUser (user){
+    name.value=user.name
+    phone.value=user.phone
+    address.value=user.address
+}
 
 
-
-export default {getUsers,assignRole,users,admins,name,getAdmins,editUser,saveUser,role,username,email,user_id}
+export default {getUsers,assignRole,users,admins,name,editUser,getAdmins,editUser,saveUser,role,username,email,user_id}

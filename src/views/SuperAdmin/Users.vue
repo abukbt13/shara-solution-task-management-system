@@ -7,6 +7,7 @@ let  {getUsers,users,admins,name,getAdmins,editUser,saveUser,role,assignRole,use
 onMounted(() => {
   getUsers()
 })
+
 </script>
 
 <template>
@@ -48,8 +49,8 @@ onMounted(() => {
           <td>{{user.email}}</td>
           <td>{{user.role}}</td>
           <td>
-                   <span class="badge bg-success p-2" @click="editUser(user.id)" data-bs-toggle="modal" data-bs-target="#editUser">
-                   Edit Role</span>
+                   <span class="badge bg-success p-2" @click="editUser(user)" data-bs-toggle="modal" data-bs-target="#editUser">
+                   Update User</span>
           </td>
           <td><span class="badge bg-danger p-2" @click="updateUser">Delete</span></td>
         </tr>
@@ -72,19 +73,18 @@ onMounted(() => {
           <h3 class="card-header">
             Edit User
           </h3>
-          <Label>User Name</Label>
-          <p>{{ username }}</p>
-          <label for="">Email</label>
-          <p>{{email}}</p>
-          <label for="">Change Role</label>
-          <div>
-            <select v-model="selectedOption">
-              <option v-for="option in options" :value="option.value" :key="option.value">{{ option.label }}</option>
-            </select>
-            <p>You selected: {{ selectedOption }}</p>
+          <div class="mb-3">
+            <label class="form-label">Username</label>
+            <input type="text" v-model="name" class="form-control">
           </div>
-
-
+          <div class="mb-3">
+            <label class="form-label">Phone</label>
+            <input type="text" v-model="phone" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Address</label>
+            <input type="text" v-model="address" class="form-control">
+          </div>
           <button type="button" @click="updateUser(user_id)" class="btn bg-primary btn-secondary float-end" data-bs-dismiss="modal">Save changes</button>
 
 
