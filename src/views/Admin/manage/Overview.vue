@@ -37,24 +37,26 @@ onMounted(()=>{
     </li>
   </ul>
   <div>
-    <div class="m-5 card w-50">
-
-         <table >
-           <tr >
-              <td style="border: 1px solid pink;border-collapse: collapse;" colspan="2"> <h2 class="text-center">Project details</h2></td>
-           </tr>
+         <table class="table my-3 table-bordered border-black">
+           <thead>
            <tr>
-             <td style="border: 1px solid pink;border-collapse: collapse;">Project Name:</td>
-             <td style="border: 1px solid pink;border-collapse: collapse;">Project Details</td>
+             <th colspan="2"> <h2 class="text-center text-primary">Project details</h2></th>
            </tr>
-           <tr class="">
-             <td style="border: 1px solid pink;border-collapse: collapse;"> {{details.name}}</td>
-             <td style="border: 1px solid pink;border-collapse: collapse;">{{details.description}}</td>
-           </tr>
+           </thead>
+
+          <tbody>
+            <tr>
+              <td class="text-center">Project Name:</td>
+              <td class="text-primary">{{details.name}}</td>
+            </tr>
+            <tr>
+              <td class="text-center">Project Description</td>
+              <td class="text-primary">{{details.description}}</td>
+            </tr>
+          </tbody>
          </table>
 
     </div>
-  </div>
 
 </template>
 

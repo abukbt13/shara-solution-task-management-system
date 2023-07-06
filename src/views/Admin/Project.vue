@@ -83,10 +83,10 @@ onMounted(()=>{
 
 <template>
   <!-- Button trigger modal -->
-
+  <h1>Projects</h1>
   <button type="button" @click="editProject(null)" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-    Create New Project <span> <i class="fa fa-plus" aria-hidden="true"></i></span>
-
+    <span> <i class="fa fa-plus" aria-hidden="true"></i></span>
+    Create New Project
   </button>
 
   <!-- Modal -->

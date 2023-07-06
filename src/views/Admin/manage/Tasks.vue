@@ -56,7 +56,7 @@ onMounted(()=>{
 </script>
 
 <template>
-  <ul class="nav nav-pills">
+  <ul class="nav nav-tabs">
     <li class="nav-item">
       <router-link :to="`/overview/${id}`" class="nav-link" aria-current="page" >Overview</router-link>
     </li>

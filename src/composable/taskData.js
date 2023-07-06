@@ -17,6 +17,7 @@ const showSuccess =ref(false)
 const description =ref('')
 const trashed_tasks =ref('')
 const user_projects_tasks =ref('')
+const task_description =ref('')
 export function taskData(){
     const message = ref('')
     function clearMessage(){
@@ -151,5 +152,5 @@ export function taskData(){
         trashed_Tasks()
         get_user_tasks_in_projects()
     })
- return{todo,todo_id,clearMessage,message,error,user_projects_tasks,get_user_tasks_in_projects,trashed_tasks,trashed_Tasks,showSuccess,clearTask,tasks,completed_tasks,markComplete,submitTodo,task_type,title,get_completed_tasks,get_task_athand,deleteTask,edit_Todo}
+ return{todo,todo_id,clearMessage,message,task_description,error,user_projects_tasks,get_user_tasks_in_projects,trashed_tasks,trashed_Tasks,showSuccess,clearTask,tasks,completed_tasks,markComplete,submitTodo,task_type,title,get_completed_tasks,get_task_athand,deleteTask,edit_Todo}
 }

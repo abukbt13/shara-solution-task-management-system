@@ -48,7 +48,7 @@ onMounted(()=>{
 </script>
 
 <template>
-  <ul class="nav nav-pills">
+  <ul class="nav nav-tabs">
     <li class="nav-item">
       <router-link :to="`/overview/${id}`" class="nav-link" aria-current="page" >Overview</router-link>
     </li>
@@ -65,24 +65,33 @@ onMounted(()=>{
   </div>
   <div class="admins">
     <div class="card-body">
-      <button data-bs-toggle="modal" @click="list_users_not_in_project(project_id)" data-bs-target="#add_user" class="button btn mt-2 btn-success"> <i class="fas fa-plus"></i>Add users </button>
-      <table class="table table-bordered">
+      <button data-bs-toggle="modal" @click="list_users_not_in_project(project_id)" data-bs-target="#add_user" class="button btn mt-2 btn-primary">
+        <i class="fas fa-plus"></i>
+        Add user
+      </button>
+      <table class="table mt-2 table-bordered">
+        <thead>
         <tr>
-          <td colspan="6">Users in the Project</td>
+          <th colspan="6">Users in the Project</th>
         </tr>
-
+        </thead>
+        <tbody>
         <tr>
           <th scope="col">User Name</th>
           <th scope="col">Email</th>
           <th scope="col" colspan="2">Actions</th>
         </tr>
-        <tbody>
-        <tr v-for="projectuser in projectusers" :key="projectuser">
+        <tr  v-if="projectusers && projectusers.length > 0" v-for="projectuser in projectusers" :key="projectuser">
           <td>{{projectuser.name}}</td>
           <td>{{projectuser.email}}</td>
           <td><span class="badge bg-danger p-2" @click="removeUser">Remove</span></td>
         </tr>
+        <tr v-else class="no_user text-center">
+          <td colspan="3" data-bs-toggle="modal" @click="list_users_not_in_project(project_id)" data-bs-target="#add_user">There is no user in the project <button class="btn btn-primary">Add user now</button></td>
+        </tr>
+
         </tbody>
+
       </table>
 
 

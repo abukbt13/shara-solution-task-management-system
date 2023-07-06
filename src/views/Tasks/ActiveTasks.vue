@@ -1,6 +1,6 @@
 <script setup>
 import {taskData} from '@/composable/taskData'
-const {tasks,deleteTask,markComplete}= taskData()
+const {tasks,deleteTask,markComplete,task_description}= taskData()
 
 
 function confirmAndMarkComplete(taskId) {
@@ -39,7 +39,45 @@ function confirmDelete(taskId) {
        Add task
     </span>
   </button>
-<table class="table mt-2 table-bordered border-primary">
+  <div class="modal fade" id="add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="mx-2 my-2 d-flex justify-content-between">
+          <h3 v-if="title" class="text-center">
+            Edit Todo
+          </h3>
+          <h3 v-else class="text-center">
+            Create To Do
+          </h3>
+          <button type="button" class="btn-close btn-lg-danger" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <label class="ms-3 text-bg">To do </label>
+        <div class="modal-body">
+          <textarea name="todo" v-model="todo" id="" cols="20" rows="3" class="form-control" placeholder="Type your  to do here ....."></textarea>
+          <span class="text-danger" v-if="error">{{ error }}</span>
+
+          <label for="form-label">Description</label>
+          <textarea class="form-control" v-model="task_description"></textarea>
+
+
+          <div class="float-end">
+
+            <button  v-if="todo"  type="button" @click="submitTodo(todo_id)" data-bs-dismiss="modal" class="btn btn-secondary">
+              <span class="" v-if="title">Update</span>
+              <span class="" v-else >Save Todo</span>
+            </button>
+            <button v-else  type="button" @click="submitTodo(todo_id)" class="btn btn-secondary" >
+              <span class="" v-if="title">Update</span>
+              <span class="" v-else >Save Todo</span>
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <table class="table mt-2 table-bordered border-primary">
           <thead>
           <tr>
             <th scope="col">ID</th>
