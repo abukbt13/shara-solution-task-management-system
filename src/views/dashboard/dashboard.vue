@@ -73,7 +73,9 @@ const authUser = async () => {
     const response = await axios.get('http://127.0.0.1:8000/api/user-auth', authHeader);
     console.log('okay');
   } catch (error) {
-    // localStorage.removeItem('token');
+    localStorage.removeItem('token');
+    localStorage.removeItem('id');
+    localStorage.removeItem('role');
     // Token is invalid or expired, logout the user
     window.location.href = '/login';
   }

@@ -6,7 +6,7 @@ import {documentData} from "@/composable/documentData";
 const {saveLocalDocument,google_name,google_link,google_description,saveGoogleDocument,filename,onFileChange,doc_name,doc_description}=documentData()
 import {taskData} from "@/composable/taskData";
 const {
-  todo,todo_id,tasks,error,showSuccess,markComplete,submitTodo,task_type,title,getuserTasks,get_Completed_UserTasks,deleteTask,edit_Todo
+  todo,todo_id,clearMessage,message,tasks,error,showSuccess,markComplete,submitTodo,task_type,title,getuserTasks,get_Completed_UserTasks,deleteTask,edit_Todo
 }=taskData()
 import {goalsData} from "@/composable/goalsData";
 const {year_gooals,saveWeeklyGoal,YearlyGoal,weeklygoal,Yearly_goal,randomWeekGoals,getRandomyearGoals,getRandomWeekGoals}=goalsData()
@@ -121,8 +121,8 @@ const {getYoutube,videoId,numbers,youtubes, youtube_link,
           <div class="col-12">
             <div v-show="showSuccess" class="">
               <div  class="d-flex bg-primary justify-content-between align-items-center">
-                <span class="text-uppercase">You have succcessfully created a todo</span>
-                <button class="btn"><i class="fas fa-close fa-lg"></i></button>
+                <span class="text-uppercase">{{ message }}</span>
+                <button @click="clearMessage" class="btn bg-primary p-2 m-1 border-0 btn-success"><i class="fas fa-close fa-lg"></i></button>
               </div>
             </div>
 
@@ -150,17 +150,32 @@ const {getYoutube,videoId,numbers,youtubes, youtube_link,
                       <i @click="edit_Todo(task)" data-bs-toggle="modal" data-bs-target="#add" class="fa fa-pencil" aria-hidden="true" style="font-size: 25px; color: blue;" title="Edit to do"></i>
                     </td>
                     <td  class="border-1">
-                      <i class="fa fa-trash" @click="deleteTask(task.id)" aria-hidden="true" style="font-size: 25px; color: blue;" title="Delete"></i>
+                      <i class="fa fa-trash" data-bs-toggle="modal" data-bs-target="#delete" aria-hidden="true" style="font-size: 25px; color: blue;" title="Delete"></i>
                     </td>
                     <td>
                       <i class="fa fa-check" @click="markComplete(task.id)" aria-hidden="true" style="font-size: 25px; color: blue;" title="Mark as completed"></i>
                     </td>
+                    <div class="modal fade" id="delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
 
+                          <p style="font-size: 22px;" class="text-danger text-lg-start mt-5 ms-3">Are you sure you want to delete the Record ?</p>
+
+                          <div class="">
+                            <button @click="deleteTask(task.id)" data-bs-dismiss="modal" class="btn btn-danger m-2 float-end">Delete</button>
+
+                            <button data-bs-dismiss="modal" class="btn btn-primary m-2 float-end">Cancel</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </tr>
                   </tbody>
                 </table>
 
               </div>
+
+
 
           </div>
         <div class="">

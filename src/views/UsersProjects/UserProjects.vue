@@ -4,8 +4,9 @@ const {user_projects_tasks}= taskData()
 </script>
 
 <template>
-
+{{user_projects_tasks}}
   <h2>Projects</h2>
+
   <table class="table table-bordered">
 
     <tr>

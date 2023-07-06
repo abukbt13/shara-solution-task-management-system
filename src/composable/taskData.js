@@ -18,6 +18,10 @@ const description =ref('')
 const trashed_tasks =ref('')
 const user_projects_tasks =ref('')
 export function taskData(){
+    const message = ref('')
+    function clearMessage(){
+        showSuccess.value=false
+    }
     function clearTask(){
         todo.value =''
         error.value =''
@@ -38,7 +42,7 @@ export function taskData(){
                 const res = await axios.post('http://127.0.0.1:8000/api/tasks', formData, { headers: headers });
                 if (res.status === 200) {
                     showSuccess.value=true
-                    alert('You have created a task')
+                    message.value='You have successfully created a to do'
                     get_task_athand()
                     clearTask()
                 }
@@ -56,7 +60,7 @@ export function taskData(){
 
                 const res = await axios.post(`http://127.0.0.1:8000/api/update-tasks/${todo_id.value}`, formData, {headers});
                 if (res.status === 200) {
-                    alert('successfully Updated a task')
+                    message.value='successfully Updated a task'
                     showSuccess.value=true
                     get_task_athand()
                     clearTask()
@@ -111,6 +115,8 @@ export function taskData(){
         const response = await axios.get(`http://127.0.0.1:8000/api/delete_tasks/${id}`);
         if(response.status===200){
             get_task_athand()
+            message.value='You have succesfully deleted the task'
+
             console.log(response.data)
             // getTodos()
 
@@ -129,9 +135,10 @@ export function taskData(){
         const res = await axios.get(`http://127.0.0.1:8000/api/mark_completed/${id}`,{
             headers
         });
-        if(res.status==200) {
+        if(res.status===200) {
+            message.value='Task have been completed successfully'
             get_task_athand()
-            alert('edited successfully')
+
         }
         else {
             alert('error in network')
@@ -144,5 +151,5 @@ export function taskData(){
         trashed_Tasks()
         get_user_tasks_in_projects()
     })
- return{todo,todo_id,error,user_projects_tasks,get_user_tasks_in_projects,trashed_tasks,trashed_Tasks,showSuccess,clearTask,tasks,completed_tasks,markComplete,submitTodo,task_type,title,get_completed_tasks,get_task_athand,deleteTask,edit_Todo}
+ return{todo,todo_id,clearMessage,message,error,user_projects_tasks,get_user_tasks_in_projects,trashed_tasks,trashed_Tasks,showSuccess,clearTask,tasks,completed_tasks,markComplete,submitTodo,task_type,title,get_completed_tasks,get_task_athand,deleteTask,edit_Todo}
 }
