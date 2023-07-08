@@ -4,7 +4,7 @@ import {onMounted} from "vue";
 import user from "@/modules/superadmin/user";
 
 
-let  {getUsers,users,showSuccess,alertSuccess,assignRole,admins,name,getAdmins,editUser,saveUser,role,username,email,user_id}=user
+let  {deleteUser,getUsers,updateUser,updateAdmin,phone,address,users,showSuccess,alertSuccess,assignRole,admins,name,getAdmins,editUser,saveUser,editAdmin,role,username,email,user_id}=user
 
 onMounted(() => {
   getUsers()
@@ -45,81 +45,49 @@ onMounted(() => {
             <td>{{admin.email}}</td>
             <td>{{admin.role}}</td>
             <td>
-                   <span class="badge bg-success p-2" @click="editUser(admin.id)" data-bs-toggle="modal" data-bs-target="#editUser">
-                   Update User</span>
+                   <span class="badge bg-success p-2" @click="editAdmin(admin)" data-bs-toggle="modal" data-bs-target="#editUser">
+                    Edit user</span>
             </td>
-            <td><span class="badge bg-danger p-2" @click="updateUser">Delete</span></td>
+            <td><span class="badge bg-danger p-2" @click="deleteUser(admin.id)">Delete</span></td>
           </tr>
 
           </tbody>
         </table>
-
+      </div>
+    </div>
         <!-- Modal -->
         <div class="modal fade" id="editUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
                 <h1 class="modal-title fs-5 text-primary" id="exampleModalLabel">Update User</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <h3 class="card-header">
-                  Edit User
-                </h3>
-                <Label>User Name</Label>
-                <p>{{ username }}</p>
-                <label for="">Email</label>
-                <p>{{email}}</p>
-                <label for="">Change Role</label>
-                <div>
-                  <select v-model="selectedOption">
-                    <option v-for="option in options" :value="option.value" :key="option.value">{{ option.label }}</option>
-                  </select>
-                  <p>You selected: {{ selectedOption }}</p>
-                </div>
-                <button type="button" @click="updateUser(user_id)"  class="btn bg-primary btn-secondary float-end" data-bs-dismiss="modal">Save changes</button>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  <div class="modal fade" id="editUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5 text-primary" id="exampleModalLabel">Update User</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <form @submit.prevent="updateAdmin(user_id)">
         <div class="modal-body">
           <h3 class="card-header">
-            Edit User
+            Edit Admin
           </h3>
-          <Label>User Name</Label>
-          <p>{{ username }}</p>
-          <label for="">Email</label>
-          <p>{{email}}</p>
-          <label for="">Change Role</label>
-          <div>
-            <select v-model="selectedOption">
-              <option v-for="option in options" :value="option.value" :key="option.value">{{ option.label }}</option>
-            </select>
-            <p>You selected: {{ selectedOption }}</p>
+          <div class="mb-3">
+            <label class="form-label">Username</label>
+            <input type="text" v-model="name" class="form-control">
           </div>
-
-
-          <button type="button" @click="updateUser(user_id)" class="btn bg-primary btn-secondary float-end" data-bs-dismiss="modal">Save changes</button>
-
-
+          <div class="mb-3">
+            <label class="form-label">Phone</label>
+            <input type="text" v-model="phone" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Address</label>
+            <input type="text" v-model="address" class="form-control">
+          </div>
+          <button type="submit"  class="btn bg-primary btn-secondary float-end" data-bs-dismiss="modal">Save changes</button>
         </div>
-
-
-
-
+      </form>
       </div>
     </div>
   </div>
+      
+   
   <div class="modal fade" id="admin_add_user" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">

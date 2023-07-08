@@ -3,7 +3,7 @@ import {onMounted} from "vue";
 
 import user from "@/modules/superadmin/user";
 
-let  {getUsers,users,admins,name,getAdmins,editUser,saveUser,role,assignRole,username,email,user_id}=user
+let  {deleteUser,getUsers,users,updateUser,phone,address,admins,name,getAdmins,editUser,saveUser,role,assignRole,username,email,user_id}=user
 onMounted(() => {
   getUsers()
 })
@@ -38,7 +38,6 @@ onMounted(() => {
           <th scope="col">ID</th>
           <th scope="col">User Names</th>
           <th scope="col">Email</th>
-          <th scope="col">Role</th>
           <th scope="col" colspan="2">Actions</th>
         </tr>
         </thead>
@@ -47,12 +46,11 @@ onMounted(() => {
           <th scope="row"><a href="#">#{{user.id}}</a></th>
           <td>{{user.name}}</td>
           <td>{{user.email}}</td>
-          <td>{{user.role}}</td>
           <td>
                    <span class="badge bg-success p-2" @click="editUser(user)" data-bs-toggle="modal" data-bs-target="#editUser">
-                   Update User</span>
+                   Edit User</span>
           </td>
-          <td><span class="badge bg-danger p-2" @click="updateUser">Delete</span></td>
+          <td><span class="badge bg-danger p-2" @click="deleteUser(user.id)">Delete</span></td>
         </tr>
 
         </tbody>
@@ -69,9 +67,10 @@ onMounted(() => {
           <h1 class="modal-title fs-5 text-primary" id="exampleModalLabel">Update User</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <form @submit.prevent="updateUser(user_id)">
         <div class="modal-body">
           <h3 class="card-header">
-            Edit User
+            Edit User 8888
           </h3>
           <div class="mb-3">
             <label class="form-label">Username</label>
@@ -85,12 +84,10 @@ onMounted(() => {
             <label class="form-label">Address</label>
             <input type="text" v-model="address" class="form-control">
           </div>
-          <button type="button" @click="updateUser(user_id)" class="btn bg-primary btn-secondary float-end" data-bs-dismiss="modal">Save changes</button>
-
-
+          <button type="submit"  class="btn bg-primary btn-secondary float-end" data-bs-dismiss="modal">Save changes</button>
         </div>
 
-
+      </form>
 
 
       </div>

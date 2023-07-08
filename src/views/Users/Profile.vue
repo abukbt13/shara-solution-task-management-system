@@ -74,8 +74,40 @@ const {name,email,phone,address,photo}=profileData()
 
         </div>
     </div>
-    
 </div>
+<div class="modal fade" id="editProfile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 text-primary" id="exampleModalLabel">Update User</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form @submit.prevent="updateUser(user_id)">
+        <div class="modal-body">
+          <h3 class="card-header">
+            Edit User 8888
+          </h3>
+          <div class="mb-3">
+            <label class="form-label">Username</label>
+            <input type="text" v-model="name" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Phone</label>
+            <input type="text" v-model="phone" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Address</label>
+            <input type="text" v-model="address" class="form-control">
+          </div>
+          <button type="submit"  class="btn bg-primary btn-secondary float-end" data-bs-dismiss="modal">Save changes</button>
+        </div>
+
+      </form>
+
+
+      </div>
+    </div>
+  </div>
 </template>
 <style scoped>
 

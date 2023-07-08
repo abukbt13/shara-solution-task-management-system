@@ -19,8 +19,30 @@ const getProfile = async () => {
     photo.value = response.data.photo
     }
 }
+const updateUser= async (id) =>{
+    // alert('creating new user')
+
+    const formData = new FormData();
+
+    formData.append('name', name.value);
+    formData.append('phone', phone.value);
+    formData.append('address', address.value);
+
+    const res = await axios.post(`http://127.0.0.1:8000/api/updateUserDetails/${id}`, formData,{ headers: headers });
+    if(res.status === 200){
+        getUsers()
+    }
+}
+function editUser (user){
+    name.value=user.name;
+    user_id.value=user.id;
+    phone.value=user.phone;
+    address.value=user.address;
+   
+}
+
 onMounted(()=>{
     getProfile()
 })
-return {name,email,phone,address,photo}
+return {name,email,phone,address,photo,updateUser}
 }

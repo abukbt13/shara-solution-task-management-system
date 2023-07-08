@@ -31,6 +31,7 @@ const getUsers=async () =>{
 // finding single user
 const username = ref('')
 const name = ref('')
+const message = ref('')
 const user_id = ref('')
 const phone = ref('')
 const address = ref('')
@@ -68,13 +69,71 @@ const saveUser = async () => {
     const res = await axios.post('http://127.0.0.1:8000/api/create_users', formData,{ headers: headers });
     if(res.status === 200){
         getUsers()
+        // Clear the fields
+        name.value = '';
+        phone.value = '';
+        address.value = '';
+    }
+}
+
+
+const updateUser= async (id) =>{
+    // alert('creating new user')
+
+    const formData = new FormData();
+
+    formData.append('name', name.value);
+    formData.append('phone', phone.value);
+    formData.append('address', address.value);
+
+    const res = await axios.post(`http://127.0.0.1:8000/api/updateUserDetails/${id}`, formData,{ headers: headers });
+    if(res.status === 200){
+        getUsers()
     }
 }
 function editUser (user){
-    name.value=user.name
-    phone.value=user.phone
-    address.value=user.address
+    name.value=user.name;
+    user_id.value=user.id;
+    phone.value=user.phone;
+    address.value=user.address;
+   
+}
+function editAdmin (admins){
+    name.value=admins.name;
+    user_id.value=admins.id;
+    phone.value=admins.phone;
+    address.value=admins.address; 
+}
+const updateAdmin = async (id) => {
+    const formData = new FormData();
+
+    formData.append('name', name.value);
+    formData.append('phone', phone.value);
+    formData.append('address', address.value);
+
+    const res = await axios.post(`http://127.0.0.1:8000/api/updateUserDetails/${id}`, formData, { headers: headers });
+
+    if (res.status === 200) {
+        getAdmins();
+
+    }
+}
+
+const deleteUser=async (id)=>{
+    // alert(id)
+    const response = await axios.get(`http://127.0.0.1:8000/api/deleteUser/${id}`,{headers});
+    if(response.status===200){
+        getAdmins()
+        message.value='You have succesfully deleted the task'
+
+        console.log(response.data)
+        // getTodos()
+
+    }
 }
 
 
-export default {getUsers,assignRole,users,admins,name,editUser,getAdmins,editUser,saveUser,role,username,email,user_id}
+
+
+
+export default {message,deleteUser,getUsers,updateUser,updateAdmin,assignRole,users,admins,name,phone,address,editUser,getAdmins,editAdmin,saveUser,role,username,email,user_id}
