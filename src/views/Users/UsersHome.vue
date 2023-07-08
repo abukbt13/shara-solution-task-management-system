@@ -6,7 +6,7 @@ import {documentData} from "@/composable/documentData";
 const {saveLocalDocument,google_name,google_link,google_description,saveGoogleDocument,filename,onFileChange,doc_name,doc_description}=documentData()
 import {taskData} from "@/composable/taskData";
 const {
-  todo,todo_id,clearMessage,message,tasks,error,showSuccess,markComplete,submitTodo,task_type,title,getuserTasks,get_Completed_UserTasks,deleteTask,edit_Todo
+  todo,todo_id,clearTask,clearMessage,message,tasks,error,showSuccess,markComplete,submitTodo,task_type,title,getuserTasks,get_Completed_UserTasks,todo_name,deleteTask,edit_Todo
 }=taskData()
 import {goalsData} from "@/composable/goalsData";
 const {year_gooals,saveWeeklyGoal,YearlyGoal,weeklygoal,Yearly_goal,randomWeekGoals,getRandomyearGoals,getRandomWeekGoals}=goalsData()
@@ -84,12 +84,15 @@ const {getYoutube,videoId,numbers,youtubes, youtube_link,
               Edit Todo
             </h3>
             <h3 v-else class="text-center">
-              Create To Dohhhhh
+              Create To Do
             </h3>
             <button type="button" class="btn-close btn-lg-danger" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <label class="ms-3 text-bg">To do </label>
+
           <div class="modal-body">
+            <label for="">To do Name</label>
+            <input type="text" class="form-control" v-model="todo_name">
+            <label class="text-bg">To do Description</label>
             <textarea name="todo" v-model="todo" id="" cols="20" rows="3" class="form-control" placeholder="Type your  to do here ....."></textarea>
             <span class="text-danger" v-if="error">{{ error }}</span>
             <br>
@@ -97,14 +100,14 @@ const {getYoutube,videoId,numbers,youtubes, youtube_link,
 
             <div class="float-end">
 
-              <button  v-if="todo"  type="button" @click="submitTodo(todo_id)" data-bs-dismiss="modal" class="btn btn-secondary">
-                <span class="" v-if="title">Update</span>
-                <span class="" v-else >Save Todo</span>
-              </button>
-              <button v-else  type="button" @click="submitTodo(todo_id)" class="btn btn-secondary" >
-                <span class="" v-if="title">Update</span>
-                <span class="" v-else >Save Todo</span>
-              </button>
+              <div  v-if="todo_name"   @click="submitTodo(todo_id)" data-bs-dismiss="modal" >
+                <span class="btn btn-primary" v-if="title">Update</span>
+                <span class="btn btn-primary" v-else >Save Todo</span>
+              </div>
+              <div v-else @click="submitTodo(todo_id)">
+                <span class="btn btn-primary" v-if="title">Update</span>
+                <span class="btn btn-primary" v-else >Save Todo</span>
+              </div>
 
              </div>
           </div>

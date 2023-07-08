@@ -2,8 +2,8 @@
 import axios from "axios";
 import {onMounted, ref} from "vue";
 
-
 import { headers, token } from '@/composable/headers';
+import Swal from "sweetalert2";
 
 
 const tasks = ref([]);
@@ -14,7 +14,7 @@ const task_type = ref('My Task');
 const title = ref(null);
 const error = ref(null);
 const showSuccess =ref(false)
-const description =ref('')
+const todo_name =ref('')
 const trashed_tasks =ref('')
 const user_projects_tasks =ref('')
 const task_description =ref('')
@@ -25,39 +25,48 @@ export function taskData(){
     }
     function clearTask(){
         todo.value =''
+        todo_name.value =''
         error.value =''
     }
     //save a Task
     const submitTodo = async (id) => {
         if(todo_id.value === null){
 
-            if(todo.value === null || todo.value.trim() === ''){
-                error.value = 'Todo cannot be empty';
+            if (todo_name.value === null || todo_name.value.trim() === ''  ) {
+                error.value = 'Todo cannot be empty ensure you fill all the fields?';
             }
             else{
                 const formData = new FormData();
 
-                formData.append('todo', todo.value);
+                formData.append('name', todo_name.value);
+                formData.append('description', todo.value);
                 formData.append('task_type', task_type.value);
 
                 const res = await axios.post('http://127.0.0.1:8000/api/tasks', formData, { headers: headers });
                 if (res.status === 200) {
+
                     showSuccess.value=true
                     message.value='You have successfully created a to do'
                     get_task_athand()
                     clearTask()
+                    Swal.fire(
+                        'Sucess!',
+                        'You have created a todo',
+                        'success'
+                    )
                 }
             }
         }
         else {
-            if (todo.value === null || todo.value.trim() === '') {
-                error.value = 'Todo cannot be empty';
+            if (todo_name.value === null || todo_name.value.trim() === ''  ) {
+                error.value = 'Todo cannot be empty ensure you fill all the fields?';
             } else {
 
 
                 const formData = new FormData();
-
-                formData.append('todo', todo.value);
+                formData.append('name', todo_name.value);
+                formData.append('description', todo.value);
+                formData.append('task_type', task_type.value);
 
                 const res = await axios.post(`http://127.0.0.1:8000/api/update-tasks/${todo_id.value}`, formData, {headers});
                 if (res.status === 200) {
@@ -127,7 +136,8 @@ export function taskData(){
 
     function edit_Todo(task){
         title.value='Edit Todo'
-        todo.value=task.todo
+        todo.value=task.description
+        todo_name.value=task.todo
         todo_id.value=task.id
     }
 
@@ -152,5 +162,5 @@ export function taskData(){
         trashed_Tasks()
         get_user_tasks_in_projects()
     })
- return{todo,todo_id,clearMessage,message,task_description,error,user_projects_tasks,get_user_tasks_in_projects,trashed_tasks,trashed_Tasks,showSuccess,clearTask,tasks,completed_tasks,markComplete,submitTodo,task_type,title,get_completed_tasks,get_task_athand,deleteTask,edit_Todo}
+ return{todo,todo_id,clearMessage,message,todo_name,task_description,error,user_projects_tasks,get_user_tasks_in_projects,trashed_tasks,trashed_Tasks,showSuccess,clearTask,tasks,completed_tasks,markComplete,submitTodo,task_type,title,get_completed_tasks,get_task_athand,deleteTask,edit_Todo}
 }
