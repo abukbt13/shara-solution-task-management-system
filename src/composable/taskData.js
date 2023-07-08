@@ -44,16 +44,16 @@ export function taskData(){
 
                 const res = await axios.post('http://127.0.0.1:8000/api/tasks', formData, { headers: headers });
                 if (res.status === 200) {
-
-                    showSuccess.value=true
-                    message.value='You have successfully created a to do'
-                    get_task_athand()
-                    clearTask()
                     Swal.fire(
                         'Sucess!',
                         'You have created a todo',
                         'success'
                     )
+                    showSuccess.value=true
+                    message.value='You have successfully created a to do'
+                    get_task_athand()
+                    clearTask()
+
                 }
             }
         }
@@ -70,6 +70,11 @@ export function taskData(){
 
                 const res = await axios.post(`http://127.0.0.1:8000/api/update-tasks/${todo_id.value}`, formData, {headers});
                 if (res.status === 200) {
+                    Swal.fire(
+                        'Sucess!',
+                        'You have Updated the tasks succssfully',
+                        'success'
+                    )
                     message.value='successfully Updated a task'
                     showSuccess.value=true
                     get_task_athand()
