@@ -1,6 +1,7 @@
 <script setup>
 import {profileData} from '@/composable/profileData'
-const {name,email,phone,address,photo}=profileData()
+
+let {name,email,user_id,phone,captureImage,address,photo,updateUser}=profileData()
 
 
 
@@ -64,7 +65,9 @@ const {name,email,phone,address,photo}=profileData()
                   <hr>
                   <div class="row">
                     <div class="col-sm-12">
-                      <a class="btn btn-info " target="__blank" href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
+                      {{ user }}
+                      <span class="badge bg-success p-2" data-bs-toggle="modal" data-bs-target="#editProfile">
+                   Edit User</span>
                     </div>
                   </div>
                 </div>
@@ -85,8 +88,9 @@ const {name,email,phone,address,photo}=profileData()
         <form @submit.prevent="updateUser(user_id)">
         <div class="modal-body">
           <h3 class="card-header">
-            Edit User 8888
+            Edit Profile
           </h3>
+          iiii{{ user_id }}
           <div class="mb-3">
             <label class="form-label">Username</label>
             <input type="text" v-model="name" class="form-control">
@@ -98,6 +102,10 @@ const {name,email,phone,address,photo}=profileData()
           <div class="mb-3">
             <label class="form-label">Address</label>
             <input type="text" v-model="address" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Image</label>
+            <input type="file" @change="captureImage" class="form-control">
           </div>
           <button type="submit"  class="btn bg-primary btn-secondary float-end" data-bs-dismiss="modal">Save changes</button>
         </div>

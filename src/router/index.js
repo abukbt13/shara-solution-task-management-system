@@ -38,11 +38,6 @@ const routes = [
     component: Tests,
   },
   {
-    path: '/profile',
-    name: 'profile',
-    component: Profile,
-  },
-  {
     path: '/my-tasks',
     name: 'my-tasks',
     component: MyTasks,
@@ -125,6 +120,11 @@ const routes = [
         name: 'projects',
         component: Project,
 
+      },
+      {
+        path: '/profile',
+        name: 'profile',
+        component: Profile,
       }
 
     ]

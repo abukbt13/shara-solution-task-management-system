@@ -70,7 +70,7 @@ onMounted(() => {
         <form @submit.prevent="updateUser(user_id)">
         <div class="modal-body">
           <h3 class="card-header">
-            Edit User 8888
+            Edit User
           </h3>
           <div class="mb-3">
             <label class="form-label">Username</label>
