@@ -1,7 +1,7 @@
 <script setup>
 import todomodule from "@/modules/Dashboard/todomodule";
-import AdminHome from "@/views/SuperAdmin/AdminHome.vue";
-import Project from "@/views/Admin/Project.vue";
+import SuperAdmin from "@/views/SuperAdmin/SuperAdmin.vue";
+import AdminHome from "@/views/Admin/AdminHome.vue";
 import UsersHome from "@/views/Users/UsersHome.vue";
 const role = localStorage.getItem('role')
 let{ alert,getTodos,showSuccess,clearFields,submitTodo,deleteTask,tasks,todo,edit_Todo,todo_id,error}= todomodule
@@ -16,10 +16,10 @@ let{ alert,getTodos,showSuccess,clearFields,submitTodo,deleteTask,tasks,todo,edi
   </div>
 
   <div class="" v-else-if="role === 'super_admin'">
-     <AdminHome />
+     <SuperAdmin />
   </div>
   <div class="" v-else>
-    <Project />
+    <AdminHome />
   </div>
 </template>
 

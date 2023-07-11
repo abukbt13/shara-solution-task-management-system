@@ -18,12 +18,14 @@ const headers = {
 const getTodo = async () =>{
   const res = await axios.get(`http://127.0.0.1:8000/api/show-tasks/${project_id}`,{headers})
   if(res.status===200){
+    console.log(res)
     tasks.value=  res.data
   }
 }
 const getUsers= async () =>{
   const res = await axios.get('http://127.0.0.1:8000/api/usersNotAssignedTask/'+project_id,{headers})
  if(res.status===200){
+   console.log(res)
     users.value=  res.data
   }
 }
@@ -76,6 +78,7 @@ onMounted(()=>{
     <thead class="thead-dark">
     <tr>
       <th scope="col">User _id</th>
+      <th scope="col">id</th>
       <th scope="col">Task Name</th>
       <th scope="col">Task Description</th>
       <th scope="col">dateline</th>
@@ -85,14 +88,15 @@ onMounted(()=>{
     <tbody>
     <tr v-for="todo in tasks" :key="todo">
       <td>{{ todo.user_id }}</td>
+      <td>{{ todo.id }}</td>
       <td>{{ todo.todo }}</td>
       <td>{{ todo.description }}</td>
       <td>
         {{ todo.date }}Time{{todo.time }}
       </td>
       <td>
-        <Button class="btn btn-success">MarkComplete</Button>
-        <Button class="btn btn-primary">Revision</Button>
+        <Button class="btn btn-primary">Edit Task</Button>
+        <Button class="btn btn-danger ms-1">Delete Task</Button>
       </td>
 
     </tr>
@@ -146,7 +150,7 @@ onMounted(()=>{
         <textarea v-model="description"  rows="5" class="form-control"></textarea>
      </div>
      <div class="group mb-3">
-        <button style="border-radius: 0px; font-size: 22px;" type="submit" class="btn btn-success">Create</button>
+        <button style="border-radius: 0px; font-size: 22px;" type="submit" data-bs-dismiss="modal"  c class="btn btn-success">Create</button>
     </div>
     </form>
         </div>

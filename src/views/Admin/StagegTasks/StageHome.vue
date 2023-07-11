@@ -1,6 +1,7 @@
 <script setup>
+
+import AdminNavbar from "@/views/navbar/AdminNavbar.vue";
 import Header from "@/views/includes/header.vue";
-import UsersNavbar from "@/views/navbar/UsersNavbar.vue";
 import Footer from "@/views/includes/Footer.vue";
 </script>
 <template>
@@ -15,7 +16,7 @@ import Footer from "@/views/includes/Footer.vue";
   <aside id="sidebar" ref="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
-      <UsersNavbar />
+      <AdminNavbar />
     </ul>
   </aside>
 

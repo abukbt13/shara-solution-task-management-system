@@ -1,7 +1,5 @@
 <script setup>
 
-import SuperAdminNavbar from "@/views/navbar/SuperAdminNavbar.vue";
-import AdminNavbar from "@/views/navbar/AdminNavbar.vue";
 import Header from "@/views/includes/header.vue";
 import UsersNavbar from "@/views/navbar/UsersNavbar.vue";
 import Footer from "@/views/includes/Footer.vue";

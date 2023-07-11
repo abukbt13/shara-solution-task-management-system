@@ -15,7 +15,7 @@ import Tasks from "@/views/Admin/manage/Tasks"
 import Overview from "@/views/Admin/manage/Overview"
 import project_users from "@/views/Admin/manage/Project_users"
 
-import Project from "@/views/Admin/Project.vue"
+import Project from "@/views/Admin/AdminHome.vue"
 import Youtube from "@/views/Users/modules/Youtube.vue"
 import MyTasks from "@/views/Tasks/Tasks.vue"
 import ActiveTasks from "@/views/Tasks/ActiveTasks.vue"
@@ -30,6 +30,11 @@ import Completed from "@/views/UsersProjects/Completed.vue";
 import Profile from "@/views/Users/Profile.vue";
 import Document from "@/views/documents/Document.vue";
 import Goals from "@/views/goals/goals.vue"
+import StageHome from "@/views/Admin/StagegTasks/StageHome.vue"
+import Stage_pending from "@/views/Admin/StagegTasks/Pending.vue"
+import Stage_active from "@/views/Admin/StagegTasks/Active.vue"
+import Stage_completed from "@/views/Admin/StagegTasks/Completed.vue"
+import Stage_revision from "@/views/Admin/StagegTasks/Revision.vue"
 const routes = [
 
   {
@@ -125,11 +130,38 @@ const routes = [
         name: 'projects',
         component: Project,
 
-      }
+      },
 
     ]
-  }
-  ,
+  },
+
+  {
+    path: '/stage-projects',
+    name: 'stage-projects',
+    component:StageHome,
+    children:[
+      {
+        path: '/stage-projects',
+        name: 'stage_active',
+        component: Stage_active,
+      },
+      {
+        path: '/stage-projects/pending',
+        name: 'stage_pending',
+        component: Stage_pending,
+      },
+      {
+        path: '/stage-projects/revision',
+        name: 'stage_revision',
+        component: Stage_revision,
+      },
+      {
+        path: '/stage-projects/completed',
+        name: 'stage_completed',
+        component: Stage_completed,
+      }
+    ]
+  },
   {
     path: '/youtube/:id',
     name: 'youtube',
@@ -142,6 +174,7 @@ const routes = [
     name: 'about',
     component: About
   },
+
   {
     path: '/project_in',
     name: 'project_in',
