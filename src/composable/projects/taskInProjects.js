@@ -17,8 +17,7 @@ export function taskInProjects() {
     }
     const mark_complete = async (id) =>{
         // alert(id)
-
-        const res = await axios.post(  `http://127.0.0.1:8000/api/mark_complete/${id}`, { headers });
+        const res = await axios.get(`http://127.0.0.1:8000/api/projects/mark_complete/${id}`, { headers });
         if (res.status === 200) {
             alert('Marked Complete successfully')
         }

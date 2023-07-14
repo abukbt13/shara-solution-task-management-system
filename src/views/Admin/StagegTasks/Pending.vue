@@ -1,5 +1,6 @@
 <script setup>
-
+import {stageTask} from "@/composable/projects/stageTask";
+const{pending_tasks}=stageTask()
 </script>
 
 <template>
@@ -30,18 +31,19 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-      <td>9</td>
-      <td>Wash</td>
-      <td>General</td>
+    <tr v-for="pending in pending_tasks" :key="pending">
+      <td>{{pending.user_id}}</td>
+      <td>{{ pending.todo }}</td>
+      <td>{{ pending.description }}</td>
       <td>
         <button class="btn btn-primary">
-          <i class="bi bi-check-lg"></i> Mark Complete
+          <i class="bi bi-check-lg"></i>
+          Mark Completed
         </button>
       </td>
 
       <td>
-        <button class="btn btn-danger"><i class="bi bi-trash"></i>Delete</button>
+        <button class="btn btn-danger"><i class="bi bi-trash"></i>Return Revision</button>
       </td>
     </tr>
 

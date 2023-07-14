@@ -41,28 +41,27 @@ const {clearTask}=taskData()
 
 
 
-<!--Please ensure to fix the document somewhere good in the dashboard-->
 
-<!--    <div class="row">-->
-<!--      <p class="sticky-bottom">Google Documents <span><i data-bs-toggle="modal" data-bs-target="#google_docs" class="fa fa-lg fa-plus"></i></span> </p>-->
-<!--      <div style="min-height: 8rem;max-height: 9rem; overflow: auto;" class="div">-->
-
-
-<!--        <button class="btn btn-primary m-1" v-for="google_document in google_documents" :key="google_document" >{{google_document.doc_name}}</button>-->
+   <div class="row">
+     <p class="sticky-bottom"> Google Documents  </p>
+     <div style="min-height: 8rem;max-height: 9rem; overflow: auto;" class="div">
 
 
-<!--      </div>-->
+       <button class="btn btn-primary m-1" v-for="google_document in google_documents" :key="google_document" >{{google_document.doc_name}}</button>
 
-<!--      <div style="min-height: 10rem;max-height: 11rem; overflow: auto;" class="div">-->
-<!--        <p class="sticky-bottom">Local  Documents <span><i data-bs-toggle="modal" data-bs-target="#local_docs" class="fa fa-lg fa-plus"></i></span> </p>-->
 
-<!--        <button class="btn btn-primary m-1" v-for="local_document in local_documents" :key="local_document" >{{local_document.doc_name}}</button>-->
+     </div>
 
-<!--      </div>-->
+     <div style="min-height: 10rem;max-height: 11rem; overflow: auto;" class="div">
+       <p class="sticky-bottom">Local  Documents </p>
 
-<!--    </div>-->
+      <button class="btn btn-primary m-1" v-for="local_document in local_documents" :key="local_document" >{{local_document.doc_name}}</button>
 
-  <!-- End Profile Page Nav -->
+     </div>
+
+   </div> 
+
+  End Profile Page Nav
 
 </template>
 

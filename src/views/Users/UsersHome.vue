@@ -26,55 +26,6 @@ const {getYoutube,videoId,numbers,youtubes, youtube_link,
 <template>
 
   <section class="section dashboard">
-    <!--             Add Google docs modal here-->
-    <div class="modal fade" id="google_docs" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-
-          <div class="modal-body">
-            <form @submit.prevent="saveGoogleDocument">
-              <p class="border-bottom">Upload google Document </p>
-
-              <label class="text-uppercase" for="">Document Name</label>
-              <input type="text" v-model="google_name" class="form-control">
-              <label class="text-uppercase" for="">Document Link</label>
-              <input type="text" v-model="google_link" class="form-control" placeholder="Type your goal here .....">
-              <label class="text-uppercase" for="">Document Description</label>
-              <input type="text" v-model="google_description" class="form-control" placeholder="Type your goal here .....">
-              <span class="text-danger" v-if="error">{{ error }}</span>
-              <div class="mt-1 float-end">
-                <button  type="submit"  class="btn btn-secondary">Save link</button>
-
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--         End of   Google docs Video-->
-    <!--             Add Local docs modal here-->
-    <div class="modal fade" id="local_docs" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-
-          <div class="modal-body">
-            <form @submit.prevent="saveLocalDocument">
-              <p class="border-bottom">Upload local Document</p>
-              <label class="text-uppercase" for="">Document Name</label>
-              <input type="text" v-model="doc_name" class="form-control">
-              <label class="text-uppercase"  for="">Description </label>
-              <textarea v-model="doc_description" class="form-control" cols="10" rows="5"></textarea>
-              <label class="text-uppercase"  for="">Upload file </label>
-              <input type="file" class="form-control"  @change="onFileChange"   placeholder="Enter The Company">              <div class="mt-1 float-end">
-
-                <button    type="submit"  class="btn btn-secondary">Save link</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--         End of   Local docs Video-->
     <!--  modal for Task adding   -->
     <div class="modal fade" id="add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -181,85 +132,27 @@ const {getYoutube,videoId,numbers,youtubes, youtube_link,
 
 
           </div>
-        <div class="">
-          <p class="text-center border-bottom border-primary text-primary text-uppercase">My goals that Keep me going</p>
-          <div class="row">
+          <p style="line-height: 1;" class="text-center text-uppercase border-bottom border-primary text-primary ">My goals that Keep me going</p>
 
-            <div  class="col">
-                <div class="d-flex justify-content-between">
-                  <p class="p-2">Weekly Goals</p>
-                  <button data-bs-toggle="modal" data-bs-target="#weekly_goals" class="float-end" style="color: white;  background: blue;border-radius: 7px; height: 2rem; border: 1px solid">add goal</button>
-                </div>
-              <p>
-                {{randomWeekGoals.goal}}
-              </p>
-<!--                  Modal for adding weekly goals  -->
-              <div class="modal fade" id="weekly_goals" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
+        <div class="">        
+            <div style="position: relative;" class="row">
 
-                    <div class="modal-body">
-                      <form @submit.prevent="saveWeeklyGoal">
-                      <label class="text-uppercase" for="">Create Weekly Goal here</label>
-                      <textarea name="todo" v-model="weeklygoal" id="" cols="20" rows="3" class="form-control" placeholder="Type your goal here ....."></textarea>
-                      <span class="text-danger" v-if="error">{{ error }}</span>
-
-
-                      <div class="mt-1 float-end">
-
-                        <button   type="submit" class="btn btn-secondary">Add Goal</button>
-
-<!--                        <button v-else  type="submit" @click="submitTodo(todo_id)" class="btn btn-secondary" data-bs-dismiss="modal">Add Goal</button>-->
-                      </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
+            <div   class="col"> 
+              
+              <small style="position: absolute;top: -17px;" class="text-secondary">Weekly Goal</small>            
+                {{randomWeekGoals.goal}}            
               </div>
-
-              <!--                End  Modal for adding weekly goals  -->
-
-            </div>
-            <div  class="col">
-                <div class="d-flex justify-content-between">
-                  <p class="p-2">Yearly Goals</p>
-                  <button data-bs-toggle="modal" data-bs-target="#yearly_goals" class="float-end" style="color: white;  background: blue;border-radius: 7px; height: 2rem; border: 1px solid">add goal</button>
-                </div>
-              <p>
-                {{year_gooals.goal}}
-              </p>
-              <!--             Yearly modal here-->
-              <div class="modal fade" id="yearly_goals" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-
-                    <div class="modal-body">
-                      <form @submit.prevent="YearlyGoal">
-
-                        <label class="text-uppercase" for="">Create Yearly Goal here</label>
-                        <textarea v-model="Yearly_goal" id="" cols="20" rows="3" class="form-control" placeholder="Type your goal here ....."></textarea>
-                        <span class="text-danger" v-if="error">{{ error }}</span>
-
-
-                        <div class="mt-1 float-end">
-
-                          <button    type="submit" class="btn btn-secondary">Add Goal</button>
-
-                          <!--                        <button v-else  type="button"  class="btn btn-secondary" data-bs-dismiss="modal">Add Goal</button>-->
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!--         End of    Yearly modal here-->
-
+            <div class="col">  
+              
+              <small style="position: absolute;top: -17px;" class="text-secondary">Yealy Goal</small>            
+                {{year_gooals.goal}}            
             </div>
           </div>
-          <div class="row border-top">
-            To customize, View and edit your goals click here <br>
-            <a href="#">Settings</a>
-          </div>
+
+          <p>To customize, View and edit your goals click here 
+            <a href="goal">Settings</a></p>
+              
+         
         </div>
         </div>
       </div>

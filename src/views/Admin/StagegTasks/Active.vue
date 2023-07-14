@@ -1,5 +1,6 @@
 <script setup>
-
+import {stageTask} from "@/composable/projects/stageTask";
+const{active_tasks}=stageTask()
 </script>
 
 <template>
@@ -30,18 +31,14 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-      <td>9</td>
-      <td>Wash</td>
-      <td>General</td>
+    <tr v-for="active in active_tasks" :key="active">
+      <td>{{active.user_id}}</td>
+      <td>{{ active.todo }}</td>
+      <td>{{ active.description }}</td>
       <td>
         <button class="btn btn-primary">
-          <i class="bi bi-check-lg"></i> Mark Complete
+          <i class="bi bi-check-lg"></i> Drop Task
         </button>
-      </td>
-
-      <td>
-        <button class="btn btn-danger"><i class="bi bi-trash"></i>Delete</button>
       </td>
     </tr>
 

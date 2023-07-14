@@ -31,9 +31,8 @@
   <!-- End #main -->
 
   <!-- ======= Footer ======= -->
-  <div  class="">
+
     <Footer />
-  </div>
 
   <!-- End Footer -->
 
@@ -118,4 +117,5 @@ onMounted(()=>{
   top: 25%;
   left: -100%;
 }
+
 </style>
