@@ -1,6 +1,6 @@
 <script setup>
 import {stageTask} from "@/composable/projects/stageTask";
-const{pending_tasks}=stageTask()
+const{pending_tasks,mark_Task_complete,mark_Task_Revision}=stageTask()
 </script>
 
 <template>
@@ -36,15 +36,17 @@ const{pending_tasks}=stageTask()
       <td>{{ pending.todo }}</td>
       <td>{{ pending.description }}</td>
       <td>
-        <button class="btn btn-primary">
+        <button @click="mark_Task_complete(pending.id)" class="btn btn-primary">
           <i class="bi bi-check-lg"></i>
           Mark Completed
         </button>
       </td>
 
       <td>
-        <button class="btn btn-danger"><i class="bi bi-trash"></i>Return Revision</button>
-      </td>
+        <button @click="mark_Task_Revision(pending.id)" class="btn btn-primary">
+          <i class="bi bi-check-lg"></i>
+          Mark Revision
+        </button>      </td>
     </tr>
 
     </tbody>

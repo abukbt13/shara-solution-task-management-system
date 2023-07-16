@@ -1,5 +1,6 @@
 <script setup>
-
+import {stageTask} from "@/composable/projects/stageTask";
+const{completed_tasks}=stageTask()
 </script>
 
 <template>
@@ -26,28 +27,17 @@
       <th scope="col">User Id</th>
       <th scope="col">Task Name</th>
       <th scope="col">Task Description</th>
-      <th scope="col" colspan="2">Actions</th>
     </tr>
     </thead>
     <tbody>
-    <tr>
-      <td>9</td>
-      <td>Wash</td>
-      <td>General</td>
-      <td>
-        <button class="btn btn-primary">
-          <i class="bi bi-check-lg"></i> Mark Complete
-        </button>
-      </td>
-
-      <td>
-        <button class="btn btn-danger"><i class="bi bi-trash"></i>Delete</button>
-      </td>
+    <tr v-for="pending in completed_tasks" :key="pending">
+      <td>{{pending.user_id}}</td>
+      <td>{{ pending.todo }}</td>
+      <td>{{ pending.description }}</td>
     </tr>
 
     </tbody>
   </table>
-
 </template>
 
 <style scoped>

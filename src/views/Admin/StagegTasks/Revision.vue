@@ -1,5 +1,6 @@
 <script setup>
-
+import {stageTask} from "@/composable/projects/stageTask";
+const{revision_tasks,mark_Task_complete}=stageTask()
 </script>
 
 <template>
@@ -26,22 +27,19 @@
       <th scope="col">User Id</th>
       <th scope="col">Task Name</th>
       <th scope="col">Task Description</th>
-      <th scope="col" colspan="2">Actions</th>
     </tr>
     </thead>
     <tbody>
-    <tr>
-      <td>9</td>
-      <td>Wash</td>
-      <td>General</td>
+    <tr v-for="revision in revision_tasks" :key="revision">
+      <td>{{revision.user_id}}</td>
+      <td>{{ revision.todo }}</td>
+      <td>{{ revision.description }}</td>
       <td>
-        <button class="btn btn-primary">
-          <i class="bi bi-check-lg"></i> Mark Complete
-        </button>
-      </td>
-
-      <td>
-        <button class="btn btn-danger"><i class="bi bi-trash"></i>Delete</button>
+          <button @click="mark_Task_complete(revision.id)" class="btn btn-primary">
+            <i class="bi bi-check-lg"></i>
+            Mark Completed
+          </button>
+    
       </td>
     </tr>
 
