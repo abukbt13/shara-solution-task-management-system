@@ -1,14 +1,11 @@
 <script setup>
-import {onMounted} from "vue";
+import {onMounted, ref} from "vue";
 import loggedinuser from '@/modules/Dashboard/loggedinuser';
 let{fetchUserName, userName, userEmail, logoutUser}=loggedinuser
 onMounted(()=>{
 fetchUserName()
 })
-// const sidebar = ref('')
-// function  showSidebar(){
-//   sidebar.classList.add('')
-// }
+
 </script>
 <template>
   <header id="header" class="header fixed-top d-flex align-items-center">
@@ -18,24 +15,15 @@ fetchUserName()
         <img src="assets/img/logo.png" alt="">
         <span class="d-none d-lg-block">Task Manager</span>
       </div>
-      <i class="bi bi-list toggle-sidebar-btn" @click="showSidebar"></i>
+      <i class="bi  d-block d-lg-none d-md-block bi-list toggle-sidebar-btn" @click="showSidebar"></i>
     </div><!-- End Logo -->
 
-    <div class="search-bar">
-      <form class="search-form d-flex align-items-center" method="POST" action="#">
-        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-      </form>
-    </div><!-- End Search Bar -->
+    <!-- End Search Bar -->
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
 
-        <li class="nav-item d-block d-lg-none">
-          <a class="nav-link nav-icon search-bar-toggle " href="#">
-            <i class="bi bi-search"></i>
-          </a>
-        </li><!-- End Search Icon-->
+      <!-- End Search Icon-->
 
         <li class="nav-item dropdown">
 

@@ -48,6 +48,10 @@ import Footer from "@/views/includes/Footer.vue";
 import axios from "axios";
 import {useRouter} from "vue-router";
 import user from "@/modules/superadmin/user";
+const sidebar = ref()
+function showSidebar (){
+  sidebar.style.display ='block'
+}
 
 
 

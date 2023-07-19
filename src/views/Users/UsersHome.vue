@@ -9,7 +9,7 @@ const {
   todo,todo_id,clearTask,clearMessage,message,tasks,error,showSuccess,markComplete,submitTodo,task_type,title,getuserTasks,get_Completed_UserTasks,todo_name,deleteTask,edit_Todo
 }=taskData()
 import {goalsData} from "@/composable/goalsData";
-const {year_gooals,saveWeeklyGoal,YearlyGoal,weeklygoal,Yearly_goal,randomWeekGoals,getRandomyearGoals,getRandomWeekGoals}=goalsData()
+const {year_gooals,randomWeekGoals}=goalsData()
 
 import {reviewsData} from "@/composable/reviewsData";
 const {viewReview,clearReview,submitReview, reviewerror,reviews, description, truncatedDescription, getReviews} =reviewsData()
@@ -139,13 +139,18 @@ const {getYoutube,videoId,numbers,youtubes, youtube_link,
 
             <div   class="col"> 
               
-              <small style="position: absolute;top: -17px;" class="text-secondary">Weekly Goal</small>            
-                {{randomWeekGoals.goal}}            
+              <small style="position: absolute;top: -17px;" class="text-secondary">Weekly Goal</small>
+              <p v-for="weekly in randomWeekGoals " :key="year_gooals">
+                {{weekly.goal}}
+              </p>
+
               </div>
             <div class="col">  
               
-              <small style="position: absolute;top: -17px;" class="text-secondary">Yealy Goal</small>            
-                {{year_gooals.goal}}            
+              <small style="position: absolute;top: -17px;" class="text-secondary">Yealy Goal</small>
+               <p v-for="year_gooal in year_gooals " :key="year_gooals">
+                 {{year_gooal.goal}}
+               </p>
             </div>
           </div>
 
@@ -178,16 +183,13 @@ const {getYoutube,videoId,numbers,youtubes, youtube_link,
 
               </div>
 
-               Button trigger modal
-
-
-              <!-- Modal -->
+                            <!-- Modal -->
               <div class="modal fade" id="view" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
 
                     <div class="modal-body">
-                      <p class="d-flex justify-content-between">My Review         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></p>
+                      <p class="d-flex justify-content-between">My Review <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></p>
                       {{description}}
                     </div>
 
@@ -225,7 +227,9 @@ const {getYoutube,videoId,numbers,youtubes, youtube_link,
 
           </div>
         <!-- End Recent Activity -->
-          <p>My favorite/learning Youtube videos <span><i data-bs-toggle="modal" data-bs-target="#youtube_video" class="fa fa-lg fa-plus"></i></span></p>
+          <p>
+            My favorite/learning Youtube videos <span><i data-bs-toggle="modal" data-bs-target="#youtube_video" class="fa fa-lg fa-plus"></i></span>
+          </p>
 
 
            <router-link v-for="youtube in youtubes" :key="youtube" :to="`/youtube/${youtube.link}`" class="btn btn-primary m-1">{{ youtube.name}}</router-link>
@@ -237,7 +241,6 @@ const {getYoutube,videoId,numbers,youtubes, youtube_link,
             <div class="modal-content">
 
               <div class="modal-body">
-
                 <form @submit.prevent="saveYoutubeDetails">
 
                   <p class="text-center fst-italic fw-bolder">Upload Youtube details Here</p>

@@ -1,5 +1,7 @@
 <script setup>
 import Swal from 'sweetalert2'
+import {ref} from "vue";
+import Work from "@/views/Work.vue";
 
 function markComplete(){
   Swal.fire({
@@ -20,10 +22,13 @@ function markComplete(){
     }
   })
 }
+// import {mine,changeColor} from '@/views/Testing.vue'
 
+const changeColor = () => {
+  mine.value.style.backgroundColor = 'yellow';
+};
 </script>
 <template>
   <h2>hello world</h2>
-  <button @click="markComplete" class="btn btn-success">Test Sweet alert</button>
-
+<Work />
 </template>

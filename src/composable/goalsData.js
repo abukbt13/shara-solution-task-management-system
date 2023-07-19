@@ -9,6 +9,8 @@ const weeklygoal = ref ('')
 const Yearly_goal = ref ('')
 const randomWeekGoals = ref('');
 const year_gooals = ref('');
+const weeklygoals = ref('');
+const yearlygoals = ref('');
 
 export function goalsData(){
 
@@ -39,6 +41,12 @@ export function goalsData(){
             randomWeekGoals.value = response.data;
         }
     }
+    const getWeekGoals= async () =>{
+        const response = await axios.get('http://127.0.0.1:8000/api/all_weeks_goals');
+        if (response.status === 200) {
+            weeklygoals.value = response.data;
+        }
+    }
 
     const getRandomyearGoals= async () =>{
 
@@ -47,10 +55,19 @@ export function goalsData(){
             year_gooals.value = response.data;
         }
     }
+    const getyearGoals= async () =>{
+
+        const response = await axios.get('http://127.0.0.1:8000/api/all_yearly_goals');
+        if (response.status === 200) {
+            yearlygoals.value = response.data;
+        }
+    }
     onMounted(() =>{
         getRandomWeekGoals()
+        getWeekGoals()
+        getyearGoals()
         getRandomyearGoals()
     })
 
-    return{weeklygoal,saveWeeklyGoal,YearlyGoal,Yearly_goal, year_gooals,randomWeekGoals,getRandomyearGoals,getRandomWeekGoals}
+    return{weeklygoal,weeklygoals,yearlygoals,saveWeeklyGoal,YearlyGoal,Yearly_goal, year_gooals,randomWeekGoals,getRandomyearGoals,getRandomWeekGoals}
 }

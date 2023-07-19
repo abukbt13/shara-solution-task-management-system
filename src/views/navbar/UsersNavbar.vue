@@ -43,25 +43,21 @@ const {clearTask}=taskData()
 
 
    <div class="row">
-     <p class="sticky-bottom"> Google Documents  </p>
-     <div style="min-height: 8rem;max-height: 9rem; overflow: auto;" class="div">
-
-
-       <button class="btn btn-primary m-1" v-for="google_document in google_documents" :key="google_document" >{{google_document.doc_name}}</button>
-
-
+     <span class="sticky-bottom"> Google Documents  </span>
+     <div class="d-flex" style="min-height: 3rem;max-height: 9rem; overflow: auto;">
+       <div class="" v-for="google_document in google_documents" :key="google_document">
+         <a :href="google_document.doc_link" class="btn btn-primary m-1" target="_blank">{{ google_document.doc_name }}</a>
+       </div>
      </div>
 
-     <div style="min-height: 10rem;max-height: 11rem; overflow: auto;" class="div">
-       <p class="sticky-bottom">Local  Documents </p>
-
-      <button class="btn btn-primary m-1" v-for="local_document in local_documents" :key="local_document" >{{local_document.doc_name}}</button>
-
+     <div style="min-height: 4rem;max-height: 11rem; overflow: auto;" class="div">
+       <span class="sticky-bottom"> Local Documents  </span><br>
+       <a  v-for="local_document in local_documents" :href="`http://127.0.0.1:8000/storage/Documents/${local_document.filename}`" target="_blank"  class="text-decoration-none btn btn-primary m-1">
+         {{local_document.doc_name}}
+       </a>
      </div>
 
-   </div> 
-
-  End Profile Page Nav
+   </div>
 
 </template>
 

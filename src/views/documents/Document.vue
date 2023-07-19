@@ -1,7 +1,17 @@
 <script setup>
 import Footer from "@/views/includes/Footer.vue"
 import {documentData,} from "@/composable/documentData";
-const {google_documents,local_documents}=documentData()
+import {ref} from "vue";
+const {doc_name,doc_description,filename, onFileChange,google_link, google_name, google_description, google_documents,saveGoogleDocument,saveLocalDocument,local_documents}=documentData()
+
+function showExtension(name) {
+  const filenameParts = name.split('.');
+  const extension = filenameParts[filenameParts.length - 1];
+  return extension;
+}
+const valid_extensions =[
+    'pdf','png','jpeg','jpg'
+]
 
 </script>
 <template>
@@ -15,9 +25,19 @@ const {google_documents,local_documents}=documentData()
         Upload document
       </button>
         <br>
-      <button class="btn btn-primary m-1" v-for="local_document in local_documents" :key="local_document" >{{local_document.doc_name}}</button>
+      <div class="d-flex ">
+        <div  class="border m-1" v-for="local_document in local_documents" :key="local_document">
+          <p class="text-center">{{local_document.doc_name}}</p>
+          <p v-if="valid_extensions.includes(showExtension(local_document.filename))">
+            <a :href="`http://127.0.0.1:8000/storage/Documents/${local_document.filename}`" target="_blank"  class="text-decoration-none">Read Now</a>
+          </p>
+          <p v-else>
+            <a :href="`http://127.0.0.1:8000/storage/Documents/${local_document.filename}`" class="text-decoration-none">Download {{ local_document.doc_name }}</a>
+          </p>
+        </div>
+      </div>
 
-    </div>
+   </div>
     <div class="col">
       <h2 class="text-center">Internet documents and links</h2>
       <button data-bs-toggle="modal" data-bs-target="#google_docs" class="btn btn-primary">
@@ -27,7 +47,6 @@ const {google_documents,local_documents}=documentData()
       </button>
     <br>
       <button class="btn btn-primary m-1" v-for="google_document in google_documents" :key="google_document" >{{google_document.doc_name}}</button>
-
 
     </div>
   </div>

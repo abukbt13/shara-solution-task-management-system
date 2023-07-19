@@ -12,7 +12,6 @@ export function reviewsData(){
         description.value=''
     }
     const submitReview = async () => {
-        clearReview()
 
 
         if(description.value === null || description.value.trim() === ''){
