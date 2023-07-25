@@ -36,13 +36,13 @@ export function goalsData(){
     }
 
     const getRandomWeekGoals= async () =>{
-        const response = await axios.get('http://127.0.0.1:8000/api/getRandomWeekGoal');
+        const response = await axios.get('http://127.0.0.1:8000/api/getRandomWeekGoal',{headers});
         if (response.status === 200) {
             randomWeekGoals.value = response.data;
         }
     }
     const getWeekGoals= async () =>{
-        const response = await axios.get('http://127.0.0.1:8000/api/all_weeks_goals');
+        const response = await axios.get('http://127.0.0.1:8000/api/all_weeks_goals',{headers});
         if (response.status === 200) {
             weeklygoals.value = response.data;
         }
@@ -50,14 +50,14 @@ export function goalsData(){
 
     const getRandomyearGoals= async () =>{
 
-        const response = await axios.get('http://127.0.0.1:8000/api/getRandomYearGoal');
+        const response = await axios.get('http://127.0.0.1:8000/api/getRandomYearGoal',{headers});
         if (response.status === 200) {
             year_gooals.value = response.data;
         }
     }
     const getyearGoals= async () =>{
 
-        const response = await axios.get('http://127.0.0.1:8000/api/all_yearly_goals');
+        const response = await axios.get('http://127.0.0.1:8000/api/all_yearly_goals',{headers});
         if (response.status === 200) {
             yearlygoals.value = response.data;
         }
