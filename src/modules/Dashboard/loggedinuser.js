@@ -8,7 +8,7 @@ const headers = {
 };
 
 const userName = ref('');
-const router = useRouter();
+const rout = useRouter();
 const userEmail=ref([]);
 async function fetchUserName() {
   try {
@@ -21,21 +21,14 @@ async function fetchUserName() {
     console.error('Error fetching user name:', error);
   }
 }
-const logoutUser = async () => {
-  try {
+function logoutUser  () {
 
-   await axios.get('http://127.0.0.1:8000/api/logout',{headers:headers});
-   
+
+   const res =  axios.get('http://127.0.0.1:8000/api/logout',{headers:headers});
+
     localStorage.removeItem('token')
-    if(!token){
-      window.location.href( '/login');
-    }
-   
-  } 
-  
-  catch (error) {
-    console.error('Error fetching user name:', error);
-  }
-};
+      window.location='/login'
+
+}
 
 export default {userName,fetchUserName,userEmail, logoutUser}

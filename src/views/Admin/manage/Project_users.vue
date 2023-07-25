@@ -22,12 +22,21 @@ const list_users_not_in_project = async () =>{
     users.value=response.data
   }
 }
+const removeUser = async (id) =>{
+  alert(id)
+  const response= await axios.get(`http://127.0.0.1:8000/api/remove_user_in_project/${id}`,{ headers: headers })
+  if(response.status === 200)
+  {
+    fetchProjectUsers()
+  }
+}
 
 const fetchProjectUsers = async () =>{
   const response= await axios.get(`http://127.0.0.1:8000/api/fetch_users_to_the_current_project/${project_id}`,{ headers: headers })
   if(response.status === 200)
   {
     projectusers.value=response.data
+    // console.log(projectusers)
   }
 }
 
@@ -84,7 +93,7 @@ onMounted(()=>{
         <tr  v-if="projectusers && projectusers.length > 0" v-for="projectuser in projectusers" :key="projectuser">
           <td>{{projectuser.name}}</td>
           <td>{{projectuser.email}}</td>
-          <td><span class="badge bg-danger p-2" @click="removeUser">Remove</span></td>
+          <td><span class="badge bg-danger p-2" @click="removeUser(projectuser.id)">Remove</span></td>
         </tr>
         <tr v-else class="no_user text-center">
           <td colspan="3" data-bs-toggle="modal" @click="list_users_not_in_project(project_id)" data-bs-target="#add_user">There is no user in the project <button class="btn btn-primary">Add user now</button></td>
